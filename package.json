@@ -1,0 +1,42 @@
+{
+    "name": "expo-googlenearby-connection",
+    "version": "0.1.0",
+    "description": "Expo module for Google Nearby Connection SDK",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "scripts": {
+        "build": "expo-module build",
+        "clean": "expo-module clean",
+        "lint": "expo-module lint",
+        "test": "expo-module test",
+        "prepare": "expo-module prepare",
+        "prepublishOnly": "expo-module prepublishOnly",
+        "expo-module": "expo-module",
+        "open:ios": "xed example/ios",
+        "open:android": "open -a \"Android Studio\" example/android"
+    },
+    "keywords": [
+        "react-native",
+        "expo",
+        "expo-googlenearby-connection",
+        "ExpoGoogleNearbyConnection"
+    ],
+    "repository": "https://example.com",
+    "bugs": {
+        "url": "https://example.com/issues"
+    },
+    "author": "Fabrizio Iacobucci <fabrizio.iacobucci1990@gmail.com> (fabrizioiacobucci)",
+    "license": "MIT",
+    "homepage": "https://example.com#readme",
+    "devDependencies": {
+        "@types/react": "~18.3.12",
+        "expo": "~52.0.26",
+        "expo-module-scripts": "^4.0.2",
+        "react-native": "0.76.6"
+    },
+    "peerDependencies": {
+        "expo": "*",
+        "react": "^18.3.1",
+        "react-native": "*"
+    }
+}

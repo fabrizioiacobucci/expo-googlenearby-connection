@@ -1,0 +1,9 @@
+{
+    "platforms": ["android"],
+    "apple": {
+        "modules": ["ExpoGoogleNearbyConnectionModule"]
+    },
+    "android": {
+        "modules": ["expo.modules.googlenearbyconnection.ExpoGoogleNearbyConnectionModule"]
+    }
+}
