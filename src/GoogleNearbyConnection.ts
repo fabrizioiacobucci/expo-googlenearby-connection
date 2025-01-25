@@ -1,5 +1,11 @@
 import { PermissionResponse, createPermissionHook } from "expo-modules-core";
-import { AdvertisingOptions, ConnectionOptions, DiscoveringOptions, PayloadInfo } from "./GoogleNearbyConnection.types";
+import {
+    AdvertisingOptions,
+    ConnectionOptions,
+    DiscoveringOptions,
+    PayloadInfo,
+    PayloadProperty,
+} from "./GoogleNearbyConnection.types";
 
 import ExpoGoogleNearbyConnection from "./ExpoGoogleNearbyConnection";
 
@@ -219,7 +225,7 @@ export function payloadExists(payloadId: string): boolean {
  * @param {string} name - The name of the property.
  * @param {string} value - The value of the property.
  */
-export function setPayloadProperty(payloadId: string, name: string, value: string) {
+export function setPayloadProperty(payloadId: string, name: PayloadProperty, value: string) {
     ExpoGoogleNearbyConnection.setPayloadProperty(payloadId, name, value);
 }
 

@@ -61,6 +61,21 @@ export type PayloadInfo = {
 };
 
 /**
+ * Enum representing the properties of a payload.
+ *
+ * @enum {string}
+ * @property {string} OFFSET - Represents the offset property of the payload.
+ * @property {string} FILENAME - Represents the filename property of the payload.
+ * @property {string} PARENTFOLDER - Represents the parent folder property of the payload.
+ * @property {string} SENSITIVE - Represents the sensitivity property of the payload.
+ */
+export enum PayloadProperty {
+    OFFSET = "OFFSET",
+    FILENAME = "FILENAME",
+    PARENTFOLDER = "PARENTFOLDER",
+    SENSITIVE = "SENSITIVE",
+}
+/**
  * Type representing the options for a connection.
  *
  * @property connectionType - The type of the connection.
