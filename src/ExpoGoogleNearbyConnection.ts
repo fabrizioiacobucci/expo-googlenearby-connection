@@ -1,2 +1,3 @@
 import { requireNativeModule } from "expo-modules-core";
-export default requireNativeModule("ExpoGoogleNearbyConnection");
+import { ExpoGoogleNearbyConnectionModuleClass } from "./GoogleNearbyConnection.events";
+export default requireNativeModule<ExpoGoogleNearbyConnectionModuleClass>("ExpoGoogleNearbyConnection");
