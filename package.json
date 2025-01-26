@@ -1,6 +1,6 @@
 {
     "name": "expo-googlenearby-connection",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Expo module for Google Nearby Connection SDK",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -21,13 +21,13 @@
         "expo-googlenearby-connection",
         "ExpoGoogleNearbyConnection"
     ],
-    "repository": "https://example.com",
+    "repository": "https://github.com/fabrizioiacobucci/expo-googlenearby-connection",
     "bugs": {
-        "url": "https://example.com/issues"
+        "url": "https://github.com/fabrizioiacobucci/expo-googlenearby-connection/issues"
     },
     "author": "Fabrizio Iacobucci <fabrizio.iacobucci1990@gmail.com> (fabrizioiacobucci)",
     "license": "MIT",
-    "homepage": "https://example.com#readme",
+    "homepage": "https://github.com/fabrizioiacobucci/expo-googlenearby-connection/blob/main/README.md",
     "devDependencies": {
         "@types/react": "~18.3.12",
         "expo": "~52.0.26",

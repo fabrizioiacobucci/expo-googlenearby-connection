@@ -1,5 +1,5 @@
-import module from "./ExpoGoogleNearbyConnection";
-export default module;
+import ExpoGoogleNearbyConnection from "./ExpoGoogleNearbyConnection";
+export default ExpoGoogleNearbyConnection;
 
 export * from "./GoogleNearbyConnection";
 export * from "./GoogleNearbyConnection.types";

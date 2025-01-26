@@ -27,8 +27,8 @@ export async function getPermissionsAsync(): Promise<PermissionResponse> {
 }
 
 export const usePermissions = createPermissionHook({
-    getMethod: getPermissionsAsync,
     requestMethod: requestPermissionsAsync,
+    getMethod: getPermissionsAsync,
 });
 
 /**
