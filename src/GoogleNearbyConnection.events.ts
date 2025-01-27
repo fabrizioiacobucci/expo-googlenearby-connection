@@ -274,18 +274,6 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
     LocationRequestUnknown(): void;
 
     /**
-     * @function LocationSettingsChangedToEnabled
-     * @description Called when the location settings are changed to enabled.
-     */
-    LocationSettingsChangedToEnabled(): void;
-
-    /**
-     * @function LocationSettingsChangedToDisabled
-     * @description Called when the location settings are changed to disabled.
-     */
-    LocationSettingsChangedToDisabled(): void;
-
-    /**
      * @function LocationPromptAccepted
      * @description Called when the location prompt is accepted.
      */

@@ -32,6 +32,7 @@ import com.google.android.gms.nearby.connection.PayloadCallback
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate
 import com.google.android.gms.nearby.connection.Strategy
 import expo.modules.core.interfaces.ActivityEventListener
+import expo.modules.core.interfaces.services.UIManager
 import expo.modules.interfaces.permissions.Permissions
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.Promise
@@ -52,6 +53,9 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
 
     private val _safeReactContext: Context
         get() = appContext.reactContext ?: throw IllegalStateException("ReactContext is not initialized!")
+
+    private val _uiManager: UIManager
+        get() = appContext.legacyModule<UIManager>() ?: throw IllegalStateException("UIManager is not initialized!")
 
     private lateinit var _connectionsClient: ConnectionsClient
 
@@ -481,13 +485,10 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
      */
     private fun startDiscovering(serviceId: String, jsDiscoveringOptions: JSDiscoveringOptions) {
 
-        // For testing. Location permission will be handled externally with Expo Location module
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
-            if(!isLocationEnabled()) {
-                Log.w("startDiscovering", "Location is not enabled")
-                promptEnableLocation()
-                return
-            }
+        if(!isLocationEnabled()) {
+            Log.w("startDiscovering", "Location is not enabled")
+            promptEnableLocation()
+            return
         }
 
         val discoveryOptions = DiscoveryOptions.Builder().setStrategy(
@@ -779,28 +780,12 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
                     sendEvent("LocationRequestUnknown")
                 }
             }
+
+            _uiManager.unregisterActivityEventListener(this)
         }
     }
 
-    /**
-     * Handles new intents received by the module.
-     * If the intent action is "android.settings.LOCATION_SOURCE_SETTINGS",
-     * it checks the current location status and sends an event indicating
-     * whether location settings were changed to enabled or disabled.
-     *
-     * @param intent The new intent received by the module.
-     */
-    override fun onNewIntent(intent: Intent?) {
-        intent?.let {
-            if (it.action == "android.settings.LOCATION_SOURCE_SETTINGS") {
-                if (isLocationEnabled()) {
-                    sendEvent("LocationSettingsChangedToEnabled")
-                } else {
-                    sendEvent("LocationSettingsChangedToDisabled")
-                }
-            }
-        }
-    }
+    override fun onNewIntent(intent: Intent?) { }
 
     // endregion Callbacks
 
@@ -835,7 +820,9 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
         .addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
                 try {
-                    exception.startResolutionForResult(_safeCurrentActivity,
+                    _uiManager.registerActivityEventListener(this@ExpoGoogleNearbyConnectionModule)
+                    exception.startResolutionForResult(
+                        _safeCurrentActivity,
                         REQUEST_CHECK_SETTINGS
                     )
                 } catch (e: IntentSender.SendIntentException) {
