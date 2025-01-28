@@ -4,6 +4,9 @@ Expo module for Google Nearby Connection SDK.
 
 **GENERAL INFO:** since the SDK provides some callback objects for the main functionality, in which we were able to use only Expo events in order to know what's going on in JS, we've choosen to use events for the whole module as uniform medium of communication between native and JS.
 
+**PAYLOADS:** since we cannot represent a Payload object in JS, the API functions and events handle the Payloads ID which is a Long number represented as string (to avoid rounding and losing the reference).
+We then keep an internal queue of inbound and outbound Payloads that can be queried with the related functions.
+
 **NOTE:** on Google SDK documentation, it is shown that the SDK doesn't need Location permissions to work on API 32 and up. However, it seems that the documention is not 100% up to date.
 When testing this without Location permissions, we are not able to start discovering.
 Therefore, the API is requesting Location permissions as well as GPS on.
@@ -535,8 +538,3 @@ The Expo API can be found in the [`src`](src) folder. It provides the JavaScript
 ## License
 
 This project is licensed under the MIT License.
-
-```
-
-Similar code found with 2 license types
-```
