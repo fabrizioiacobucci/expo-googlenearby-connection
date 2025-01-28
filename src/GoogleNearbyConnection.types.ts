@@ -113,14 +113,6 @@ export type EndpointEvent = {
 };
 
 /**
- * Represents an event that occurs at an endpoint and includes an error.
- *
- * This type combines the properties of `EndpointEvent` and `Error` to provide
- * detailed information about an error event at a specific endpoint.
- */
-export type EndpointEventError = EndpointEvent & Error;
-
-/**
  * @typedef EndpointFound
  * @description Represents an event when an endpoint is found.
  * @property {Uint8Array} endpointInfo - Information about the found endpoint.
