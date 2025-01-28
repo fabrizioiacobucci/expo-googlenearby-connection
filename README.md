@@ -1,15 +1,20 @@
 # expo-googlenearby-connection
 
-Expo module for Google Nearby Connection SDK
+Expo module for Google Nearby Connection SDK.
 
-# API documentation
+**GENERAL INFO:** since the SDK provides some callback objects for the main functionality, in which we were able to use only Expo events in order to know what's going on in JS, we've choosen to use events for the whole module as uniform medium of communication between native and JS.
 
-- [Documentation for the latest stable release](https://docs.expo.dev/versions/latest/sdk/example.com#readme/)
-- [Documentation for the main branch](https://docs.expo.dev/versions/unversioned/sdk/example.com#readme/)
+**NOTE:** on Google SDK documentation, it is shown that the SDK doesn't need Location permissions to work on API 32 and up. However, it seems that the documention is not 100% up to date.
+When testing this without Location permissions, we are not able to start discovering.
+Therefore, the API is requesting Location permissions as well as GPS on.
+
+# Google API documentation
+
+- [Documentation for the latest stable release](https://developers.google.com/nearby/connections/overview)
 
 # Installation in managed Expo projects
 
-For [managed](https://docs.expo.dev/archive/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
+For [managed](https://docs.expo.dev/archive/managed-vs-bare/) Expo projects, just add the package to your NPM dependencies and import the functions that you need. There is no extra configuration through plugin at the moment.
 
 # Installation in bare React Native projects
 
@@ -28,6 +33,117 @@ npm install expo-googlenearby-connection
 The module doesn't support yet iOS.
 
 # Usage
+
+## Error handling
+
+Based on the General info above, we send every exception back to JS for comfortable error handling.
+These come in with the following events:
+
+```ts
+    /**
+     * @function AdvertisingFailed
+     * @description Called when advertising fails.
+     * @param {Exception} event - The event data.
+     */
+    AdvertisingFailed(event: Exception): void;
+
+    /**
+     * @function DiscoveringFailed
+     * @description Called when discovering fails.
+     * @param {Exception} event - The event data.
+     */
+    DiscoveringFailed(event: Exception): void;
+
+    /**
+     * @function ConnectionRequestFailed
+     * @description Called when a connection request fails.
+     * @param {Exception} event - The event data.
+     */
+    ConnectionRequestFailed(event: Exception): void;
+
+    /**
+     * @function ConnectionAcceptFailed
+     * @description Called when a connection acceptance fails.
+     * @param {EndpointEvent} event - The event data.
+     */
+    ConnectionAcceptFailed(event: Exception): void;
+
+    /**
+     * @function ConnectionRejectFailed
+     * @description Called when a connection rejection fails.
+     * @param {Exception} event - The event data.
+     */
+    ConnectionRejectFailed(event: Exception): void;
+
+    /**
+     * @function PayloadSendFailed
+     * @description Called when a payload send fails.
+     * @param {Exception} event - The event data.
+     */
+    PayloadSendFailed(event: Exception): void;
+
+    /**
+     * @function PayloadRemoveFailed
+     * @description Called when a payload remove fails.
+     * @param {Exception} event - The event data.
+     */
+    PayloadRemoveFailed(event: Exception): void;
+
+    /**
+     * @function PayloadCancelFailed
+     * @description Called when a payload cancelation fails.
+     * @param {Exception} event - The event data.
+     */
+    PayloadCancelFailed(event: Exception): void;
+
+    /**
+     * @function PayloadNotFound
+     * @description Called when a payload is not found.
+     * @param {Exception} event - The event data.
+     */
+    PayloadNotFound(event: Exception): void;
+
+    /**
+     * @function PayloadInvalidArguments
+     * @description Called when a invalid arguments have been passed.
+     * @param {Exception} event - The event data.
+     */
+    PayloadInvalidArguments(event: Exception): void;
+
+    /**
+     * @function PayloadIOException
+     * @description Called when an IOException occurs.
+     * @param {Exception} event - The event data.
+     */
+    PayloadIOException(event: Exception): void;
+
+    /**
+     * @function PayloadException
+     * @description Called when a generic Exception occurs.
+     * @param {Exception} event - The event data.
+     */
+    PayloadException(event: Exception): void;
+```
+
+With the following Exception type:
+
+```ts
+/**
+ * @typedef Exception
+ * @description Represents an exception event.
+ * @property {string} error - The error message.
+ * @property {string} stackTrace - The stack trace of the error.
+ * @property {string | number} data - Additional data related to the exception.
+ */
+export type Exception = {
+    error: string;
+    stackTrace: string;
+    data: string;
+};
+```
+
+The data property usually includes the Payload Id (in case of exceptions on Payloads) or the Endpoint Id (in case of exceptions on Endpoint communication).
+We'll include more details in future.
 
 ## Permissions
 
