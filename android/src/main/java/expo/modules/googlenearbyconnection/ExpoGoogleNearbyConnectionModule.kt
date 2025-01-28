@@ -115,7 +115,9 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
             "LocationSettingsChangedToEnabled",
             "LocationSettingsChangedToDisabled",
             "LocationPromptAccepted",
-            "LocationPromptRejected"
+            "LocationPromptRejected",
+
+            "InvalidStrategy"
         )
         // endregion Events
 
@@ -886,7 +888,10 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
             "P2P_CLUSTER" -> Strategy.P2P_CLUSTER
             "P2P_POINT_TO_POINT" -> Strategy.P2P_POINT_TO_POINT
             "P2P_STAR" -> Strategy.P2P_STAR
-            else -> throw IllegalArgumentException("Invalid strategy: $this")
+            else -> {
+                sendError("InvalidStrategy", IllegalArgumentException("Invalid strategy: '$this', defaulting to P2P_CLUSTER"), this)
+                Strategy.P2P_CLUSTER
+            }
         }
     }
 

@@ -285,6 +285,12 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
      */
     LocationPromptRejected(): void;
     // #endregion Location events
+
+    /**
+     * @function InvalidStrategy
+     * @description Called when an invalid strategy has been passed.
+     */
+    InvalidStrategy(event: Exception): void;
 };
 
 /**
