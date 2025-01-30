@@ -7,6 +7,8 @@ Expo module for Google Nearby Connection SDK.
 **PAYLOADS:** since we cannot represent a Payload object in JS, the API functions and events handle the Payloads ID which is a Long number represented as string (to avoid rounding and losing the reference).
 We then keep an internal queue of inbound and outbound Payloads that can be queried with the related functions.
 
+**STREAMS:** the SDK doesn't send a Stream Payload if the stream doesn't have yet any data inside it. So, please, remember to Write something in the stream with either `writeStreamByte` or `writeStreamByteArray` in the stream after creation but before sending.
+
 **NOTE:** on Google SDK documentation, it is shown that the SDK doesn't need Location permissions to work on API 32 and up. However, it seems that the documention is not 100% up to date.
 When testing this without Location permissions, we are not able to start discovering.
 Therefore, the API is requesting Location permissions as well as GPS on.
@@ -193,15 +195,17 @@ Starts advertising the device to nearby devices.
 **Example:**
 
 ```ts
-import { startAdvertisingName, AdvertisingOptions } from "expo-googlenearby-connection";
+import { startAdvertisingName, AdvertisingOptions, ConnectionType } from "expo-googlenearby-connection";
+
+const SERVICE_ID = "com.example.service";
 
 const advertisingOptions: AdvertisingOptions = {
     strategy: "P2P_POINT_TO_POINT",
-    connectionType: "DISRUPTIVE",
+    connectionType: ConnectionType.DISRUPTIVE,
     lowPowerMode: false,
 };
 
-startAdvertisingName("MyEndpoint", "com.example.service", advertisingOptions);
+startAdvertisingName("MyEndpoint", SERVICE_ID, advertisingOptions);
 ```
 
 ### `stopAdvertising`
@@ -241,11 +245,13 @@ Starts discovering nearby devices.
 ```ts
 import { startDiscovering, DiscoveringOptions } from "expo-googlenearby-connection";
 
+const SERVICE_ID = "com.example.service";
+
 const discoveringOptions: DiscoveringOptions = {
     strategy: "P2P_POINT_TO_POINT",
 };
 
-startDiscovering("com.example.service", discoveringOptions);
+startDiscovering(SERVICE_ID, discoveringOptions);
 ```
 
 ### `stopDiscovering`
@@ -285,10 +291,10 @@ Requests a connection to a nearby device.
 **Example:**
 
 ```ts
-import { requestConnectionName, ConnectionOptions } from "expo-googlenearby-connection";
+import { requestConnectionName, ConnectionOptions, ConnectionType } from "expo-googlenearby-connection";
 
 const connectionOptions: ConnectionOptions = {
-    connectionType: "DISRUPTIVE",
+    connectionType: ConnectionType.DISRUPTIVE,
     lowPowerMode: false,
 };
 
@@ -397,7 +403,7 @@ Creates a new file payload.
 ```ts
 import { newPayloadFile } from "expo-googlenearby-connection";
 
-const filePayload = newPayloadFile("path/to/file");
+const filePayload = newPayloadFile("file:///storage/emulated/0/DCIM/Camera/photo.jpg");
 ```
 
 ### `newPayloadStream`
