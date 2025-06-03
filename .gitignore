@@ -260,3 +260,5 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/java,maven,gradle,android,intellij,androidstudio
 node_modules
+nearby-example/ios/
+nearby-example/android/
