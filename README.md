@@ -35,117 +35,17 @@ npm install expo-googlenearby-connection
 
 ### Configure for iOS
 
-The module doesn't support yet iOS.
+The module doesn't support iOS.
 
 # Usage
 
 ## Error handling
 
-Based on the General info above, we send every exception back to JS for comfortable error handling.
-These come in with the following events:
+Based on the General info above:
 
-```ts
-    /**
-     * @function AdvertisingFailed
-     * @description Called when advertising fails.
-     * @param {Exception} event - The event data.
-     */
-    AdvertisingFailed(event: Exception): void;
-
-    /**
-     * @function DiscoveringFailed
-     * @description Called when discovering fails.
-     * @param {Exception} event - The event data.
-     */
-    DiscoveringFailed(event: Exception): void;
-
-    /**
-     * @function ConnectionRequestFailed
-     * @description Called when a connection request fails.
-     * @param {Exception} event - The event data.
-     */
-    ConnectionRequestFailed(event: Exception): void;
-
-    /**
-     * @function ConnectionAcceptFailed
-     * @description Called when a connection acceptance fails.
-     * @param {EndpointEvent} event - The event data.
-     */
-    ConnectionAcceptFailed(event: Exception): void;
-
-    /**
-     * @function ConnectionRejectFailed
-     * @description Called when a connection rejection fails.
-     * @param {Exception} event - The event data.
-     */
-    ConnectionRejectFailed(event: Exception): void;
-
-    /**
-     * @function PayloadSendFailed
-     * @description Called when a payload send fails.
-     * @param {Exception} event - The event data.
-     */
-    PayloadSendFailed(event: Exception): void;
-
-    /**
-     * @function PayloadRemoveFailed
-     * @description Called when a payload remove fails.
-     * @param {Exception} event - The event data.
-     */
-    PayloadRemoveFailed(event: Exception): void;
-
-    /**
-     * @function PayloadCancelFailed
-     * @description Called when a payload cancelation fails.
-     * @param {Exception} event - The event data.
-     */
-    PayloadCancelFailed(event: Exception): void;
-
-    /**
-     * @function PayloadNotFound
-     * @description Called when a payload is not found.
-     * @param {Exception} event - The event data.
-     */
-    PayloadNotFound(event: Exception): void;
-
-    /**
-     * @function PayloadInvalidArguments
-     * @description Called when a invalid arguments have been passed.
-     * @param {Exception} event - The event data.
-     */
-    PayloadInvalidArguments(event: Exception): void;
-
-    /**
-     * @function PayloadIOException
-     * @description Called when an IOException occurs.
-     * @param {Exception} event - The event data.
-     */
-    PayloadIOException(event: Exception): void;
-
-    /**
-     * @function PayloadException
-     * @description Called when a generic Exception occurs.
-     * @param {Exception} event - The event data.
-     */
-    PayloadException(event: Exception): void;
-```
-
-With the following Exception type:
-
-```ts
-/**
- * @typedef Exception
- * @description Represents an exception event.
- * @property {string} error - The error message.
- * @property {string} stackTrace - The stack trace of the error.
- * @property {string | number} data - Additional data related to the exception.
- */
-export type Exception = {
-    error: string;
-    stackTrace: string;
-    data: string;
-};
-```
+- we send every exception back to JS for comfortable error handling.
+- you can find the related events in [GoogleNearbyConnection.events.ts](src/GoogleNearbyConnection.events.ts).
+- using the Exception type foudn in [GoogleNearbyConnection.types.ts](src/GoogleNearbyConnection.types.ts).
 
 The data property usually includes the Payload Id (in case of exceptions on Payloads) or the Endpoint Id (in case of exceptions on Endpoint communication).
 We'll include more details in future.
@@ -179,23 +79,14 @@ const reqPermissions = () => {
 
 Starts advertising the device to nearby devices.
 
-**Parameters:**
-
-- `name: string`: The name of the endpoint.
-- `serviceId: string`: The service ID.
-- `options: object`: Advertising options.
-    - `strategy: string`: The strategy to use (e.g., 'P2P_POINT_TO_POINT').
-    - `connectionType: string`: The connection type (e.g., 'DISRUPTIVE').
-    - `lowPowerMode: boolean`: Whether to use low power mode.
-
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
-import { startAdvertisingName, AdvertisingOptions, ConnectionType } from "expo-googlenearby-connection";
+import {
+    startAdvertisingName,
+    AdvertisingOptions,
+    ConnectionType,
+} from "expo-googlenearby-connection";
 
 const SERVICE_ID = "com.example.service";
 
@@ -212,10 +103,6 @@ startAdvertisingName("MyEndpoint", SERVICE_ID, advertisingOptions);
 
 Stops advertising the device.
 
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
@@ -230,20 +117,13 @@ stopAdvertising();
 
 Starts discovering nearby devices.
 
-**Parameters:**
-
-- `serviceId: string`: The service ID.
-- `options: object`: Discovering options.
-    - `strategy: string`: The strategy to use (e.g., 'P2P_POINT_TO_POINT').
-
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
-import { startDiscovering, DiscoveringOptions } from "expo-googlenearby-connection";
+import {
+    startDiscovering,
+    DiscoveringOptions,
+} from "expo-googlenearby-connection";
 
 const SERVICE_ID = "com.example.service";
 
@@ -257,10 +137,6 @@ startDiscovering(SERVICE_ID, discoveringOptions);
 ### `stopDiscovering`
 
 Stops discovering nearby devices.
-
-**Returns:**
-
-- `void`
 
 **Example:**
 
@@ -276,22 +152,14 @@ stopDiscovering();
 
 Requests a connection to a nearby device.
 
-**Parameters:**
-
-- `name: string`: The name of the endpoint.
-- `endpointId: string`: The ID of the endpoint.
-- `options: object`: Connection options.
-    - `connectionType: string`: The connection type (e.g., 'DISRUPTIVE').
-    - `lowPowerMode: boolean`: Whether to use low power mode.
-
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
-import { requestConnectionName, ConnectionOptions, ConnectionType } from "expo-googlenearby-connection";
+import {
+    requestConnectionName,
+    ConnectionOptions,
+    ConnectionType,
+} from "expo-googlenearby-connection";
 
 const connectionOptions: ConnectionOptions = {
     connectionType: ConnectionType.DISRUPTIVE,
@@ -305,14 +173,6 @@ requestConnectionName("MyEndpoint", "endpointId", connectionOptions);
 
 Accepts a connection request from a nearby device.
 
-**Parameters:**
-
-- `endpointId: string`: The ID of the endpoint.
-
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
@@ -325,14 +185,6 @@ acceptConnection("endpointId");
 
 Rejects a connection request from a nearby device.
 
-**Parameters:**
-
-- `endpointId: string`: The ID of the endpoint.
-
-**Returns:**
-
-- `void`
-
 **Example:**
 
 ```ts
@@ -344,14 +196,6 @@ rejectConnection("endpointId");
 ### `disconnectFromEndpoint`
 
 Disconnects from a connected endpoint.
-
-**Parameters:**
-
-- `endpointId: string`: The ID of the endpoint.
-
-**Returns:**
-
-- `void`
 
 **Example:**
 
@@ -367,14 +211,6 @@ disconnectFromEndpoint("endpointId");
 
 Creates a new byte payload.
 
-**Parameters:**
-
-- `bytes: Uint8Array`: The byte array.
-
-**Returns:**
-
-- `string`: The byte payload ID.
-
 **Example:**
 
 ```ts
@@ -387,36 +223,19 @@ const bytePayload = newPayloadBytes(new Uint8Array([1, 2, 3]));
 
 Creates a new file payload.
 
-**Parameters:**
-
-- `data`: string: the URI of the file.
-- `isSensitive?`: whether the file is sensitive (optional),
-- `fileName?`: file name for the destination (optional).
-- `parentFolder?`: string: the destination parent folder (optional).
-
-**Returns:**
-
-- `string`: The file payload ID.
-
 **Example:**
 
 ```ts
 import { newPayloadFile } from "expo-googlenearby-connection";
 
-const filePayload = newPayloadFile("file:///storage/emulated/0/DCIM/Camera/photo.jpg");
+const filePayload = newPayloadFile(
+    "file:///storage/emulated/0/DCIM/Camera/photo.jpg",
+);
 ```
 
 ### `newPayloadStream`
 
 Creates a new stream payload.
-
-**Parameters:**
-
-- `size?`: number: optional stream buffer size (defaults to 1024).
-
-**Returns:**
-
-- `string`: The stream payload ID.
 
 **Example:**
 
@@ -429,15 +248,6 @@ const streamPayload = newPayloadStream();
 ### `sendPayloadToEndpoint`
 
 Sends a payload to a connected endpoint.
-
-**Parameters:**
-
-- `endpointId: string`: The ID of the endpoint.
-- `payload: string`: The payload ID to send.
-
-**Returns:**
-
-- `void`
 
 **Example:**
 
@@ -453,15 +263,6 @@ sendPayloadToEndpoint("endpointId", bytePayload);
 
 Writes a byte to a stream payload.
 
-**Parameters:**
-
-- `streamPayload: object`: The stream payload.
-- `byte: number`: The byte to write.
-
-**Returns:**
-
-- `Promise<void>`
-
 **Example:**
 
 ```ts
@@ -473,15 +274,6 @@ await writeStreamByte(streamPayload, 1);
 ### `writeStreamByteArray`
 
 Writes a byte array to a stream payload.
-
-**Parameters:**
-
-- `streamPayload: string`: The stream payload ID.
-- `byteArray: Uint8Array`: The byte array to write.
-
-**Returns:**
-
-- `Promise<void>`
 
 **Example:**
 
@@ -495,14 +287,6 @@ await writeStreamByteArray(streamPayload, new Uint8Array([1, 2, 3]));
 
 Reads a byte from a stream payload.
 
-**Parameters:**
-
-- `streamPayload: string`: The stream payload ID.
-
-**Returns:**
-
-- `Promise<number>`: The byte read.
-
 **Example:**
 
 ```ts
@@ -515,16 +299,6 @@ const byte = await readStreamByte(streamPayload);
 
 Reads a byte array from a stream payload.
 
-**Parameters:**
-
-- `streamPayload: string`: The stream payload ID.
-- `offset: number`: The offset to start reading from.
-- `length: number`: The number of bytes to read.
-
-**Returns:**
-
-- `Promise<Uint8Array>`: The byte array read.
-
 **Example:**
 
 ```ts
@@ -533,13 +307,12 @@ import { readStreamByteArray } from "expo-googlenearby-connection";
 const byteArray = await readStreamByteArray(streamPayload, 0, 3);
 ```
 
-## Android Native Implementation
+## This repository
 
-The Android native implementation can be found in the [`android`](android) folder. It includes the necessary code to integrate with the Google Nearby Connection SDK.
-
-## Expo API
-
-The Expo API can be found in the [`src`](src) folder. It provides the JavaScript interface for interacting with the Google Nearby Connection SDK.
+- How to report a bug, propose a change or contribute: [CONTRIBUTING.md](CONTRIBUTING.md); discussion happens in the issues and pull requests.
+- The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
+- What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
+- This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.2.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
 
 ## License
 
