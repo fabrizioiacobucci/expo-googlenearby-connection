@@ -16,7 +16,9 @@ export default function TabLayout() {
         <GluestackUIProvider mode={theme ?? "system"}>
             <StatusBar
                 style={theme == "light" ? "dark" : "light"}
-                backgroundColor={theme == "light" ? defaultBgLight : defaultBgDark}
+                backgroundColor={
+                    theme == "light" ? defaultBgLight : defaultBgDark
+                }
             />
             <SafeAreaProvider className="h-full">
                 <SafeAreaView
@@ -34,7 +36,10 @@ export default function TabLayout() {
                                 },
                                 default: {
                                     // Use a solid background on Android to show the ripple effect
-                                    backgroundColor: theme == "light" ? defaultBgLight : defaultBgDark,
+                                    backgroundColor:
+                                        theme == "light"
+                                            ? defaultBgLight
+                                            : defaultBgDark,
                                 },
                             }),
                         }}
@@ -43,21 +48,52 @@ export default function TabLayout() {
                             name="index"
                             options={{
                                 title: "Home",
-                                tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+                                tabBarIcon: ({ color }) => (
+                                    <FontAwesome
+                                        size={28}
+                                        name="home"
+                                        color={color}
+                                    />
+                                ),
                             }}
                         />
                         <Tabs.Screen
                             name="connections"
                             options={{
                                 title: "Connections",
-                                tabBarIcon: ({ color }) => <FontAwesome size={28} name="wifi" color={color} />,
+                                tabBarIcon: ({ color }) => (
+                                    <FontAwesome
+                                        size={28}
+                                        name="wifi"
+                                        color={color}
+                                    />
+                                ),
                             }}
                         />
                         <Tabs.Screen
                             name="payloads"
                             options={{
                                 title: "Payloads",
-                                tabBarIcon: ({ color }) => <FontAwesome size={28} name="paper-plane" color={color} />,
+                                tabBarIcon: ({ color }) => (
+                                    <FontAwesome
+                                        size={28}
+                                        name="paper-plane"
+                                        color={color}
+                                    />
+                                ),
+                            }}
+                        />
+                        <Tabs.Screen
+                            name="settings"
+                            options={{
+                                title: "Settings",
+                                tabBarIcon: ({ color }) => (
+                                    <FontAwesome
+                                        size={28}
+                                        name="gear"
+                                        color={color}
+                                    />
+                                ),
                             }}
                         />
                     </Tabs>
