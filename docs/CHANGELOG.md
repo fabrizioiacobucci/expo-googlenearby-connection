@@ -9,6 +9,7 @@ Versions up to 0.1.4 were released before this repository adopted foss-docs-made
 ### Changed
 
 - **Breaking:** the module supports Expo SDK 58 and later only, with React 19 and React Native 0.88. Apps on an older Expo SDK can keep version 0.1.4 ([ADR 0001](adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
+- **Breaking:** for TypeScript, the functions of the module that declared no return type now take it from the native functions, instead of `any`. `newPayloadFile` and `newPayloadStream` return `string | null`, where `null` means that the payload was not created and an error event was sent, so code that uses their result as a `string` no longer type-checks.
 - The Android library takes its `compileSdk` and `minSdk` from the app; when the app defines neither, it now falls back to 36 and 24 instead of 34 and 30.
 
 ### Removed
