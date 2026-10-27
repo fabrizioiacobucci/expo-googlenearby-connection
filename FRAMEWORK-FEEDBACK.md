@@ -64,3 +64,12 @@ Each entry states:
 - **Impact**: an adopter with a history of decisions cannot tell, from the framework documents, whether arc42 section 9 can be `active` without ADRs for them.
 - **Proposal**: state in DOCUMENTS-INDEX that ADRs of decisions made before adoption MAY be written, and that section 9 says which decisions have none.
 - **Status**: `open`
+
+## 7. No rule for ADRs proposed before the change that makes the decision
+
+- **Date**: 2026-10-27
+- **Rule**: [DEFINITION-OF-DONE, Changes](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DEFINITION-OF-DONE.md#changes) and [DOCUMENTS-INDEX, Passing](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md#passing), arc42 section 9 row
+- **Finding**: ADR 0001 of this repository was committed with status `proposed`, before the changes that carry out the upgrade, so that the maintainer could review the decision on its own. The framework asks that "a change that makes a significant architectural decision MUST include its ADR" and that the ADR be "written when the decision is made", but does not say whether an ADR may come first as `proposed`, which change then counts as the one that makes the decision, or when its status becomes `accepted`.
+- **Impact**: an adopter that reviews decisions before carrying them out cannot tell whether it follows the rule, and two adopters can date the same kind of decision differently.
+- **Proposal**: state that an ADR MAY be committed as `proposed` before the change that carries out its decision, and that this change sets it to `accepted`, with the date of acceptance.
+- **Status**: `open`

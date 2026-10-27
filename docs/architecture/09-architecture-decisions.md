@@ -6,3 +6,4 @@ The decisions made before this repository adopted the framework, on 2026-10-26, 
 
 | ADR | Decision |
 |---|---|
+| [0001](../adr/0001-upgrade-in-place-to-expo-sdk-58.md) | Upgrade in place to Expo SDK 58, and support SDK 58 and later only |
