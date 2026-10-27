@@ -17,5 +17,4 @@ Its additions to the framework rules, stated in [CONTRIBUTING](../CONTRIBUTING.m
 
 - the Developer Certificate of Origin sign-off on every commit, except the merge commits that GitHub creates for pull requests;
 - Conventional Commits for every commit message, with the same exception;
-- Semantic Versioning for every framework tag;
-- what the release notes of each framework tag mark and name.
+- Semantic Versioning for every version of the npm package.
