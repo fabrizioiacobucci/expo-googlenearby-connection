@@ -46,3 +46,12 @@ Each entry states:
 - **Impact**: two adopters can record the same event differently, and a reader cannot tell when a status was last changed, or why.
 - **Proposal**: state that a status change outside a review keeps the **Reviewed** date, and whether it needs a log entry with its reason.
 - **Status**: `open`
+
+## 5. The link checker works for adopters, but they are not told
+
+- **Date**: 2026-10-27
+- **Rule**: [README, Adopting the framework](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/README.md#adopting-the-framework)
+- **Finding**: `scripts/check-links.sh` of the framework ran unchanged on this repository and found the broken link to `docs/CHANGELOG.md` in the README. The framework does not tell adopters that they can use it. It also does not check file names written as code, such as the `SECURITY.md` that the README listed among the project documents although it did not exist.
+- **Impact**: adopters miss a check that costs nothing, and file names written as code can still point to nothing.
+- **Proposal**: tell adopters how to run the link checker on their repository, and consider checking file names written as code in the "This repository" section.
+- **Status**: `open`

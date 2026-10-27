@@ -310,8 +310,7 @@ const byteArray = await readStreamByteArray(streamPayload, 0, 3);
 ## This repository
 
 - How to report a bug, propose a change or contribute: [CONTRIBUTING.md](CONTRIBUTING.md); discussion happens in the issues and pull requests.
-- The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
-- What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
+- The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
 - This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.2.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
 
 ## License
