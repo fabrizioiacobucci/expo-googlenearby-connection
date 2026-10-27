@@ -11,6 +11,6 @@ Instructions for coding agents working in this repository.
 - Follow the project [GOVERNANCE](docs/GOVERNANCE.md) and the framework documents at tag `v0.2.0` that it links, among them GOVERNANCE, CONVENTIONS, LICENSE-POLICY and DOCUMENTS-INDEX: record in the [CHECKLIST](docs/CHECKLIST.md) each change of a document's status, and add each change that users notice, breaking changes first, to the "Unreleased" section of the `CHANGELOG`.
 - Run the checks of what the change touches, and report any that fails:
   - the module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`;
-  - the example app, from `example/`: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`;
+  - the example app, from `example/`: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`; the app uses the module from this repository, as built in `build/`, so build the module first;
   - the links of the Markdown files: `scripts/check-links.sh` of the framework, at tag `v0.2.0`, run on a copy of the files that git tracks, since it also reads `node_modules/` ([FRAMEWORK-FEEDBACK](FRAMEWORK-FEEDBACK.md), entry 8).
 - Native Android builds and Nearby Connections tests need the Android SDK and two devices; when the environment has neither, say so instead of reporting them as passed.

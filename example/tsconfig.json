@@ -8,6 +8,9 @@
       ],
       "tailwind.config": [
         "./tailwind.config.js"
+      ],
+      "expo-googlenearby-connection": [
+        ".."
       ]
     }
   },
