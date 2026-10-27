@@ -7,3 +7,4 @@ The decisions made before this repository adopted the framework, on 2026-10-26, 
 | ADR | Decision |
 |---|---|
 | [0001](../adr/0001-upgrade-in-place-to-expo-sdk-58.md) | Upgrade in place to Expo SDK 58, and support SDK 58 and later only |
+| [0002](../adr/0002-build-test-and-lint-as-the-sdk-58-template.md) | Build, test and lint the module as the SDK 58 module template does |
