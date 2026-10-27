@@ -38,6 +38,7 @@ How the module is built, tested and linted under SDK 58 is a decision of its own
 * Good, because version 0.1.4 stays on npm for apps on older SDKs.
 * Bad, because a defect introduced between SDK 52 and SDK 58 is found only at the end, among six SDKs' worth of changes, and cannot be traced to one SDK.
 * Bad, because an app on SDK 57 or older gets no fix released after 0.1.4.
+* Bad, because SDK 58 removed the index signature that let `NativeModule` accept any property, so `ExpoGoogleNearbyConnectionModuleClass` now declares each function of the native module and exists only as a type, no longer as a value at runtime, a second breaking change of 0.2.0.
 
 ### Confirmation
 
@@ -59,3 +60,5 @@ This ADR becomes `accepted` in the change that updates the dependencies of the m
 ## More Information
 
 The SDK 58 versions come from the npm registry: [`expo` 58.0.19](https://www.npmjs.com/package/expo/v/58.0.19), whose `bundledNativeModules.json` lists the bundled versions, and [`expo-module-template` 58.0.8](https://www.npmjs.com/package/expo-module-template/v/58.0.8), the template that `create-expo-module` 58 generates modules from.
+
+The consequence on `ExpoGoogleNearbyConnectionModuleClass` was added on 2026-10-27, after this ADR was accepted, when the upgrade showed it; it changes no part of the decision.

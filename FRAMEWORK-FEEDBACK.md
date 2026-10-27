@@ -82,3 +82,12 @@ Each entry states:
 - **Impact**: an adopter with installed dependencies, which is almost every software project, gets a failing check that says nothing about its own documents.
 - **Proposal**: have the link checker read only the files that `git ls-files` lists, or skip the paths that git ignores.
 - **Status**: `open`
+
+## 9. No rule for changing an accepted ADR
+
+- **Date**: 2026-10-27
+- **Rule**: [CONVENTIONS, ADRs](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/CONVENTIONS.md#adrs) and [GLOSSARY, ADR](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/GLOSSARY.md)
+- **Finding**: after ADR 0001 of this repository was accepted, carrying it out showed a consequence it did not list: the module class became a type only, a breaking change. The framework says nothing on whether an accepted ADR may be edited. The source that GLOSSARY cites, Nygard 2011, only says that a reversed decision is kept and marked as superseded. This repository added the consequence to the accepted ADR and noted in its More Information when and why.
+- **Impact**: adopters cannot tell whether to edit an accepted ADR, write a new one, or leave the consequence unrecorded, so the same event is recorded differently from one adopter to another.
+- **Proposal**: state that an accepted ADR MAY be edited to add consequences or information that leave its decision unchanged, with a note of the date and the reason, and that a change to the decision itself needs a new ADR that supersedes it.
+- **Status**: `open`
