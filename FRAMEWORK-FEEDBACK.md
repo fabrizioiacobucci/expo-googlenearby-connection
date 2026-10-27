@@ -91,3 +91,12 @@ Each entry states:
 - **Impact**: adopters cannot tell whether to edit an accepted ADR, write a new one, or leave the consequence unrecorded, so the same event is recorded differently from one adopter to another.
 - **Proposal**: state that an accepted ADR MAY be edited to add consequences or information that leave its decision unchanged, with a note of the date and the reason, and that a change to the decision itself needs a new ADR that supersedes it.
 - **Status**: `open`
+
+## 10. Unclear whether releases made before adoption need release notes
+
+- **Date**: 2026-10-27
+- **Rule**: [DEFINITION-OF-DONE, Releases](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DEFINITION-OF-DONE.md#releases) and [DOCUMENTS-INDEX, Passing](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md#passing), `CHANGELOG` row
+- **Finding**: this module had five releases on npm, 0.1.0 to 0.1.4, before it adopted the framework, and none had release notes. DEFINITION-OF-DONE says that "every release MUST have release notes in `CHANGELOG`", and DOCUMENTS-INDEX asks `CHANGELOG` for release notes, without saying whether this covers the releases made before adoption. This repository started its `CHANGELOG` with the unreleased changes and a sentence saying that the earlier versions have none.
+- **Impact**: an adopter with past releases cannot tell whether it must reconstruct their notes from the history before its next release, and the same question as entry 6 arises for each rule that applies "at each release".
+- **Proposal**: state, as for ADRs, that the release rules apply to the releases made after adoption, and that the `CHANGELOG` MAY say that earlier releases have no notes.
+- **Status**: `open`
