@@ -5,15 +5,13 @@
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
-        "build": "expo-module build",
-        "clean": "expo-module clean",
-        "lint": "expo-module lint",
-        "test": "expo-module test",
-        "prepare": "expo-module prepare",
-        "prepublishOnly": "expo-module prepublishOnly",
-        "expo-module": "expo-module",
-        "open:ios": "xed example/ios",
-        "open:android": "open -a \"Android Studio\" example/android"
+        "build": "node internal/module_scripts/build.js",
+        "clean": "node internal/module_scripts/clean.js",
+        "lint": "eslint src/",
+        "test": "node internal/module_scripts/test.js",
+        "prepare": "node internal/module_scripts/prepare.js",
+        "open:ios": "node internal/module_scripts/open-ios.js",
+        "open:android": "node internal/module_scripts/open-android.js"
     },
     "keywords": [
         "react-native",
@@ -29,14 +27,30 @@
     "license": "MIT",
     "homepage": "https://github.com/fabrizioiacobucci/expo-googlenearby-connection/blob/main/README.md",
     "devDependencies": {
-        "@types/react": "~18.3.12",
-        "expo": "~52.0.26",
-        "expo-module-scripts": "^4.0.2",
-        "react-native": "0.76.6"
+        "@babel/core": "^7.26.0",
+        "@react-native/jest-preset": "0.88.0",
+        "@types/jest": "^30.0.0",
+        "@types/react": "~19.3.0",
+        "babel-preset-expo": "~58.0.15",
+        "eslint": "~9.39.4",
+        "eslint-config-universe": "^16.1.2",
+        "expo": "^58.0.11",
+        "jest": "^30.0.0",
+        "jest-expo": "~58.0.12",
+        "prettier": "^3.0.0",
+        "react": "19.3.0",
+        "react-native": "0.88.0",
+        "typescript": "~6.0.3"
     },
     "peerDependencies": {
-        "expo": "*",
-        "react": "^18.3.1",
+        "expo": ">=58.0.0",
+        "react": "*",
         "react-native": "*"
+    },
+    "jest": {
+        "preset": "jest-expo",
+        "roots": [
+            "<rootDir>/src"
+        ]
     }
 }

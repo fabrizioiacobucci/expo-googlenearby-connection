@@ -73,3 +73,12 @@ Each entry states:
 - **Impact**: an adopter that reviews decisions before carrying them out cannot tell whether it follows the rule, and two adopters can date the same kind of decision differently.
 - **Proposal**: state that an ADR MAY be committed as `proposed` before the change that carries out its decision, and that this change sets it to `accepted`, with the date of acceptance.
 - **Status**: `open`
+
+## 8. The link checker also reads ignored files, such as `node_modules/`
+
+- **Date**: 2026-10-27
+- **Rule**: [README, Adopting the framework](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/README.md#adopting-the-framework), with entry 5
+- **Finding**: once the dependencies of this repository were installed, `scripts/check-links.sh` of the framework checked every Markdown file under `node_modules/`, reported hundreds of broken links in third-party READMEs, and ran for minutes. It skips only `.git/`, not the files that git ignores. This repository now runs it on a copy of the files that git tracks or would add.
+- **Impact**: an adopter with installed dependencies, which is almost every software project, gets a failing check that says nothing about its own documents.
+- **Proposal**: have the link checker read only the files that `git ls-files` lists, or skip the paths that git ignores.
+- **Status**: `open`

@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 date: 2026-10-27
 decision-makers: "@fabrizioiacobucci"
 ---
@@ -31,17 +31,17 @@ As in the template of `expo-module-template` 58.0.8:
 * the `build`, `clean`, `test`, `prepare` and `open:*` npm scripts run the local scripts in `internal/module_scripts/`, copied from the template;
 * the development dependencies are declared directly: `typescript` ~6.0, `jest` ^30 with `jest-expo` ~58 and `@react-native/jest-preset` 0.88.0, `eslint` ~9.39 with `eslint-config-universe` ^16 in a flat configuration, `eslint.config.cjs`, and `prettier` ^3;
 * the Jest configuration is in `package.json`;
-* the TypeScript configuration is the standalone `tsconfig.json` that `create-expo-module` 58 writes, which extends no other configuration.
+* the TypeScript configuration is the template's standalone `tsconfig.json`, which extends no other configuration; it is taken from the template's source on the `sdk-58` branch of the Expo repository, since the template's own `.npmignore` leaves it out of the npm package.
 
-The one difference from the template is `.prettierrc`: it keeps the style of the existing code, four spaces and double quotes, instead of the template's two spaces and single quotes, so that no change reformats the whole module.
+The one difference from the template is `.prettierrc`: it keeps the style of the existing code, four spaces, double quotes and lines of up to 120 characters, instead of the template's two spaces, single quotes and 100 characters, so that no change reformats the whole module. The scripts in `internal/module_scripts/` keep the template's style and are excluded from Prettier, so that they stay identical to the template.
 
 ### Consequences
 
 * Good, because each later SDK upgrade starts from a diff between the module and the template of that SDK.
 * Good, because the tools the module uses are its own development dependencies, at versions it chooses.
 * Bad, because the scripts in `internal/module_scripts/` live in this repository, and an upgrade has to bring in the template's changes to them.
-* Bad, because the code style differs from the template, so a file copied from the template has to be reformatted.
-* Bad, because the template's TypeScript options are stricter than those of `expo-module-scripts`, among them `noUncheckedIndexedAccess`, `noUnusedLocals` and `verbatimModuleSyntax`, so the existing code may need changes to build.
+* Bad, because the code style differs from the template, so a file copied from the template, other than the scripts, has to be reformatted.
+* Bad, because the template's TypeScript configuration is strict, with `noUnusedLocals` and `noImplicitReturns` among its options, so code that built before may need changes; the existing code built once the functions of the native module were declared, which SDK 58 requires anyway.
 * Bad, because the most used third-party modules on SDK 58 have not taken this path yet (More Information), so fewer examples exist to learn from.
 
 ### Confirmation
@@ -72,7 +72,7 @@ Before this decision, on 2026-10-27, four third-party modules whose latest relea
 |---|---|---|---|---|
 | [`expo-speech-recognition`](https://github.com/jamsch/expo-speech-recognition) 58.0.0 | 579,100 | `expo-module-scripts` ^56.0.3 | its own flat configuration, with typescript-eslint | extends `expo-module-scripts` |
 | [`expo-in-app-updates`](https://github.com/SohelIslamImran/expo-in-app-updates) 0.13.0 | 20,010 | `expo-module-scripts` ^56.0.3, no tests | oxlint and oxfmt | extends `expo-module-scripts` |
-| [`expo-zebra-scanner`](https://github.com/aclec/expo-zebra-scanner) 58.0.0 | 502 | the template's local scripts, no tests | the template's flat configuration | the template's standalone configuration |
+| [`expo-zebra-scanner`](https://github.com/aclec/expo-zebra-scanner) 58.0.0 | 502 | the template's local scripts, no tests | the template's flat configuration | a standalone configuration, stricter than the template's |
 | [`expo-core-spotlight`](https://github.com/huextrat/expo-core-spotlight) 3.0.0 | 350 | the template's local scripts, with the Jest preset of `expo-module-scripts` ^56.0.8 | the template's flat configuration | extends `expo-module-scripts` |
 
 The two most used modules, which existed before SDK 58, keep `expo-module-scripts`, with the range ^56.0.3, in which 56.0.3 is the only version that npm does not mark as deprecated; the two that follow the template are newer and less used, and one of them still depends on a deprecated version. The comparison shows that keeping `expo-module-scripts` works today, but not that Expo maintains it for third-party modules, so it does not change the decision.
