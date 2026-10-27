@@ -42,6 +42,8 @@ function StreamPayload({
                 isDisabled={disabled}
                 onPress={async () => {
                     const payload = newPayloadStream();
+                    if (!payload) return;
+
                     setStreamPayload(payload);
                     await writeStreamByteArray(payload, stringToUint8Array(streamStart));
                     sent.current = false;
