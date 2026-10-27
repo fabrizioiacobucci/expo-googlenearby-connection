@@ -13,7 +13,7 @@ Level: passing
 | `GOVERNANCE` | `active` | 2026-10-26 |
 | `README` | `draft` | 2026-10-26 |
 | `CONTRIBUTING` | `draft` | 2026-10-26 |
-| `SECURITY` | `draft` | |
+| `SECURITY` | `active` | |
 | `REFERENCE` | `draft` | |
 | arc42 section 8 | `draft` | |
 | arc42 section 9 | `active` | |
