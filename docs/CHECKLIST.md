@@ -11,8 +11,12 @@ Level: passing
 | Document | Status | Reviewed |
 |---|---|---|
 | `GOVERNANCE` | `active` | 2026-10-26 |
-| `README` | `active` | 2026-10-26 |
+| `README` | `draft` | 2026-10-26 |
 | `CONTRIBUTING` | `draft` | 2026-10-26 |
+| `SECURITY` | `draft` | |
+| `REFERENCE` | `draft` | |
+| arc42 section 8 | `draft` | |
+| arc42 section 9 | `draft` | |
 
 - The register MUST have one row per required document ([DOCUMENTS-INDEX][index]), except `CHECKLIST` and `DEFINITION-OF-DONE`, which are copies of framework documents; `LICENSE`, which holds licence texts; `CHANGELOG`, which grows with each release; and the dependency manifest, which the ecosystem's tools keep.
 - **Document** is the name that DOCUMENTS-INDEX gives it, such as `README` or arc42 section 8.

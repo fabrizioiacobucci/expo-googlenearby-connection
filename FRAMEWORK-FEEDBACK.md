@@ -37,3 +37,12 @@ Each entry states:
 - **Impact**: an adopter inherits project-specific statements and broken links that look correct at first reading.
 - **Proposal**: provide a minimal, adopter-neutral example of the README "This repository" section and of the `GOVERNANCE` "Documentation" section, or warn that the framework's own documents are not templates.
 - **Status**: `open`
+
+## 4. A status change outside a review leaves the Reviewed date unclear
+
+- **Date**: 2026-10-27
+- **Rule**: [CHECKLIST, Register](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/CHECKLIST.md#register) and [GOVERNANCE, Periodic checks](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/GOVERNANCE.md#periodic-checks)
+- **Finding**: `README` was set back from `active` to `draft` because it lacks content that passing requires, without a review of the whole document. The framework defines **Reviewed** as the date of the last review of the whole document, but does not say whether a status change made outside such a review keeps that date, replaces it, or needs a log entry.
+- **Impact**: two adopters can record the same event differently, and a reader cannot tell when a status was last changed, or why.
+- **Proposal**: state that a status change outside a review keeps the **Reviewed** date, and whether it needs a log entry with its reason.
+- **Status**: `open`
