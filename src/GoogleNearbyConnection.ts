@@ -1,4 +1,4 @@
-import { PermissionResponse, createPermissionHook } from "expo-modules-core";
+import { PermissionResponse, createPermissionHook } from "expo";
 import {
     AdvertisingOptions,
     ConnectionOptions,

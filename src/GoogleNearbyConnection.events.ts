@@ -1,5 +1,4 @@
-import { NativeModule } from "expo";
-import { PermissionResponse } from "expo-modules-core";
+import { NativeModule, PermissionResponse } from "expo";
 import {
     AdvertisingOptions,
     ConnectionOptions,
