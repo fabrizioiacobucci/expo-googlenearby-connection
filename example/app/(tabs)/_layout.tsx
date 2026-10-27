@@ -14,12 +14,7 @@ export default function TabLayout() {
 
     return (
         <GluestackUIProvider mode={theme ?? "system"}>
-            <StatusBar
-                style={theme == "light" ? "dark" : "light"}
-                backgroundColor={
-                    theme == "light" ? defaultBgLight : defaultBgDark
-                }
-            />
+            <StatusBar style={theme == "light" ? "dark" : "light"} />
             <SafeAreaProvider className="h-full">
                 <SafeAreaView
                     className="dark:bg-background-dark h-full"
