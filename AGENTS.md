@@ -4,3 +4,13 @@ Instructions for coding agents working in this repository.
 
 - Every commit is signed off with the Developer Certificate of Origin (`git commit -s`) and its message follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), as [GOVERNANCE](docs/GOVERNANCE.md) states.
 - This repository is a pilot adopter of [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple) at framework tag `v0.2.0`. When you notice a gap, a blind spot, an ambiguity or any other problem of the framework while adopting it, add an entry to [FRAMEWORK-FEEDBACK.md](FRAMEWORK-FEEDBACK.md) in the same commit in which it shows up, so that the maintainers can review it later and report it to the framework.
+
+## Before each commit
+
+- Follow the "Changes" criteria of the [DEFINITION-OF-DONE](docs/DEFINITION-OF-DONE.md): update, in the same commit, every project document that the change makes inaccurate, and include an ADR for each significant architectural decision that the change makes ([arc42 section 9](docs/architecture/09-architecture-decisions.md)).
+- Follow the project [GOVERNANCE](docs/GOVERNANCE.md) and the framework documents at tag `v0.2.0` that it links, among them GOVERNANCE, CONVENTIONS, LICENSE-POLICY and DOCUMENTS-INDEX: record in the [CHECKLIST](docs/CHECKLIST.md) each change of a document's status, and add each change that users notice, breaking changes first, to the "Unreleased" section of the `CHANGELOG`.
+- Run the checks of what the change touches, and report any that fails:
+  - the module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`;
+  - the example app, from `example/`: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`;
+  - the links of the Markdown files: `scripts/check-links.sh` of the framework, at tag `v0.2.0`, run on a copy of the files that git tracks, since it also reads `node_modules/` ([FRAMEWORK-FEEDBACK](FRAMEWORK-FEEDBACK.md), entry 8).
+- Native Android builds and Nearby Connections tests need the Android SDK and two devices; when the environment has neither, say so instead of reporting them as passed.
