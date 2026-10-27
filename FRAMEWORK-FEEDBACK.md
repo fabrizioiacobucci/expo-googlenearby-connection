@@ -55,3 +55,12 @@ Each entry states:
 - **Impact**: adopters miss a check that costs nothing, and file names written as code can still point to nothing.
 - **Proposal**: tell adopters how to run the link checker on their repository, and consider checking file names written as code in the "This repository" section.
 - **Status**: `open`
+
+## 6. Unclear whether decisions made before adoption need an ADR
+
+- **Date**: 2026-10-27
+- **Rule**: [DOCUMENTS-INDEX, Passing](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md#passing), arc42 section 9 row, and [DEFINITION-OF-DONE, Changes](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DEFINITION-OF-DONE.md#changes)
+- **Finding**: DOCUMENTS-INDEX asks for "one ADR per significant architectural decision, written when the decision is made", which read literally includes the decisions made before adoption, while DEFINITION-OF-DONE asks for an ADR only in the change that makes a decision. Only the framework's own ADR 0006 says that the rule asks for no ADR of past decisions. This repository chose to write none, and says so in its arc42 section 9.
+- **Impact**: an adopter with a history of decisions cannot tell, from the framework documents, whether arc42 section 9 can be `active` without ADRs for them.
+- **Proposal**: state in DOCUMENTS-INDEX that ADRs of decisions made before adoption MAY be written, and that section 9 says which decisions have none.
+- **Status**: `open`
