@@ -42,7 +42,7 @@ export function arrayReducer<T>(
     }
 }
 
-export const getColorSchemeName = (colorScheme: ColorSchemeName, mode?: ModeType): ModeType => {
+export const getColorSchemeName = (colorScheme: ColorSchemeName | null, mode?: ModeType): ModeType => {
     if (!mode || mode === "system") {
         return colorScheme ?? "light";
     }
