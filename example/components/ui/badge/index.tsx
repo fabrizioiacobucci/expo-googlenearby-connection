@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { PrimitiveIcon, UIIcon } from '@gluestack-ui/icon';
+import { PrimitiveIcon, UIIcon as UntypedUIIcon } from '@gluestack-ui/icon';
 import { tva } from '@gluestack-ui/nativewind-utils/tva';
 import {
   withStyleContext,
@@ -158,6 +158,13 @@ const BadgeText = React.forwardRef<
     </Text>
   );
 });
+
+// @gluestack-ui/icon types the ref of createIcon() as the icon's props; the cast gives it the Svg ref,
+// as icon/index.tsx does.
+const UIIcon = UntypedUIIcon as React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof PrimitiveIcon> &
+    React.RefAttributes<React.ElementRef<typeof PrimitiveIcon>>
+>;
 
 type IBadgeIconProps = React.ComponentPropsWithoutRef<typeof PrimitiveIcon> &
   VariantProps<typeof badgeIconStyle>;

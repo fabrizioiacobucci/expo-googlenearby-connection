@@ -5,9 +5,14 @@ import { tva } from '@gluestack-ui/nativewind-utils/tva';
 import { VariantProps } from '@gluestack-ui/nativewind-utils';
 import { PrimitiveIcon, Svg } from '@gluestack-ui/icon';
 
+// @gluestack-ui/icon types the ref of createIcon() as the icon's props; the cast gives it the Svg ref,
+// as icon/index.tsx does.
 export const UIIcon = createIcon({
   Root: PrimitiveIcon,
-});
+}) as React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof PrimitiveIcon> &
+    React.RefAttributes<React.ElementRef<typeof Svg>>
+>;
 
 const iconStyle = tva({
   base: 'text-typography-950 fill-none pointer-events-none',
@@ -70,7 +75,7 @@ const accessClassName = (style: any) => {
 };
 
 const createIconUI = ({ ...props }: ParameterTypes) => {
-  const NewUIIcon = createIcon({ Root: Svg, ...props });
+  const NewUIIcon = createIcon({ Root: Svg, ...props }) as typeof UIIcon;
   return React.forwardRef<
     React.ElementRef<typeof UIIcon>,
     React.ComponentPropsWithoutRef<typeof UIIcon> &
