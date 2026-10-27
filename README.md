@@ -17,6 +17,11 @@ Therefore, the API is requesting Location permissions as well as GPS on.
 
 - [Documentation for the latest stable release](https://developers.google.com/nearby/connections/overview)
 
+# Requirements
+
+- Expo SDK 58 or later, from version 0.2.0 of the module; apps on an older Expo SDK can keep version 0.1.4, which was built for Expo SDK 52 ([ADR 0001](docs/adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
+- Android only.
+
 # Installation in managed Expo projects
 
 For [managed](https://docs.expo.dev/archive/managed-vs-bare/) Expo projects, just add the package to your NPM dependencies and import the functions that you need. There is no extra configuration through plugin at the moment.
