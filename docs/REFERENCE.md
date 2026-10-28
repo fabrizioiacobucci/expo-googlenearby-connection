@@ -38,8 +38,8 @@ The rest of the external interface is outside the public API: the methods of the
 
 - **Errors.** A function does not throw when Google Nearby Connections fails: it emits an error event, whose data is an `Exception`, and a function that returns a value returns `null`. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none.
 - **Payload IDs.** A payload is identified by its ID, a 64-bit integer passed as a string, so that JavaScript does not round it. The module keeps the inbound and outbound payloads in a queue, which the payload functions query and change.
-- **Streams.** Google Nearby Connections does not send a stream payload that has no data yet: write to the stream, with `writeStreamByte` or `writeStreamByteArray`, before sending it.
-- **Location.** Discovery needs the location services of the device on, as well as the permissions, also on the Android versions on which Google's documentation says that it does not.
+- **Streams.** An app MUST write to a stream payload, with `writeStreamByte` or `writeStreamByteArray`, before sending it, since Google Nearby Connections does not send a stream payload that has no data yet.
+- **Location.** To discover, an app MUST hold the permissions and have the location services of the device on, also on the Android versions on which Google's documentation says that location is not needed; when they are off, `startDiscovering` asks the user to turn them on.
 
 ## Functions
 
@@ -167,7 +167,7 @@ if (payloadId) {
 
 | Type | Fields |
 |---|---|
-| `Strategy` | `"P2P_CLUSTER"`, `"P2P_STAR"` or `"P2P_POINT_TO_POINT"`, the strategies of Google Nearby Connections; both devices must use the same one. |
+| `Strategy` | `"P2P_CLUSTER"`, `"P2P_STAR"` or `"P2P_POINT_TO_POINT"`, the strategies of Google Nearby Connections; the advertising and the discovering endpoints MUST use the same one. |
 | `ConnectionOptions` | `connectionType: ConnectionType`; `lowPowerMode: boolean`. |
 | `DiscoveringOptions` | `strategy: Strategy`. |
 | `AdvertisingOptions` | the fields of `ConnectionOptions` and of `DiscoveringOptions`. |

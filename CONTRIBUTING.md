@@ -30,7 +30,7 @@ A change SHOULD, before it is merged:
 
 ### Checks
 
-Run the checks of what the change touches, and say in the pull request which ones failed, if any. No continuous integration runs them yet.
+Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. No continuous integration runs them yet.
 
 - The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`.
 - The example app, from `example/`, once the module is built: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`.

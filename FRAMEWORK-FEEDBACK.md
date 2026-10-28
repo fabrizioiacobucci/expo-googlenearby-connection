@@ -109,3 +109,12 @@ Each entry states:
 - **Impact**: an adopter finds out late that its documents use several words for one thing, or one word for several, and has to rebuild the glossary from documents already written.
 - **Proposal**: state that an adopter MAY keep a `GLOSSARY` in `docs/`, in the format of the framework's GLOSSARY, and SUGGESTED that each change that adds a term updates it; or require it from a level, as arc42 section 12 does.
 - **Status**: `open`
+
+## 12. Unclear where an adopter states the meaning of the BCP 14 keywords
+
+- **Date**: 2026-10-28
+- **Rule**: [CONVENTIONS, Requirements](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/CONVENTIONS.md#requirements) and [GLOSSARY, BCP 14 keywords](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/GLOSSARY.md#requirements-and-quality)
+- **Finding**: CONVENTIONS says that "an adopter SHOULD write requirements with BCP 14 keywords", but not where the adopter states what the keywords mean, as [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174) asks each document that uses them to do. The framework states it in its own GLOSSARY, which adopters are not asked to have (entry 11). This repository had used the keywords in two documents only, and written other requirements in plain words; it now uses them in every project document, and states their meaning once, in its `docs/GLOSSARY.md`, which its README links for every project document.
+- **Impact**: an adopter writes requirements whose strength a reader cannot tell, or repeats the statement of RFC 8174 in each document.
+- **Proposal**: state where an adopter declares the meaning of the keywords, for example once in a glossary or in the README "This repository" section, linked from the documents that use them.
+- **Status**: `open`

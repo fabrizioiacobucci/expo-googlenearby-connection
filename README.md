@@ -19,7 +19,7 @@ For [managed](https://docs.expo.dev/archive/managed-vs-bare/) Expo projects, jus
 
 # Installation in bare React Native projects
 
-For bare React Native projects, you must ensure that you have [installed and configured the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
+For bare React Native projects, you MUST [install and configure the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
 
 ### Add the package to your npm dependencies
 
@@ -92,6 +92,7 @@ The example app in [example/](example/) uses every function of the module.
 - How to report a bug, propose a change or contribute: [CONTRIBUTING.md](CONTRIBUTING.md); discussion happens in the issues and pull requests.
 - The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
 - The functions, types and events of the module: [docs/REFERENCE.md](docs/REFERENCE.md).
+- The terms of the module, and the meanings of the BCP 14 keywords, such as MUST and SHOULD, in every project document: [docs/GLOSSARY.md](docs/GLOSSARY.md).
 - What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
 - This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.2.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
 
