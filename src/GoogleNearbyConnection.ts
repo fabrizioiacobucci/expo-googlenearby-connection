@@ -189,9 +189,9 @@ export function sendPayloadToEndpoints(endpointIds: string[], payloadId: string)
 /**
  * Gets information about a payload with a given ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {PayloadInfo} The payload information.
+ * @returns {PayloadInfo | null} The payload information, or null if the operation failed, after an error event was sent.
  */
-export function getPayloadInfo(payloadId: string): PayloadInfo {
+export function getPayloadInfo(payloadId: string): PayloadInfo | null {
     return ExpoGoogleNearbyConnection.getPayloadInfo(payloadId);
 }
 
@@ -291,9 +291,9 @@ export async function writeStreamByteArray(
 /**
  * Reads a byte from the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {Promise<number>} The byte read from the stream.
+ * @returns {Promise<number | null>} The byte read from the stream, or null if the operation failed, after an error event was sent.
  */
-export async function readStreamByte(payloadId: string): Promise<number> {
+export async function readStreamByte(payloadId: string): Promise<number | null> {
     return ExpoGoogleNearbyConnection.readStreamByte(payloadId);
 }
 
@@ -302,18 +302,22 @@ export async function readStreamByte(payloadId: string): Promise<number> {
  * @param {string} payloadId - The ID of the payload.
  * @param {number} offset - The offset to start reading from.
  * @param {number} length - The number of bytes to read.
- * @returns {Promise<Uint8Array>} The byte array read from the stream.
+ * @returns {Promise<Uint8Array | null>} The byte array read from the stream, or null if the operation failed, after an error event was sent.
  */
-export async function readStreamByteArray(payloadId: string, offset: number, length: number): Promise<Uint8Array> {
+export async function readStreamByteArray(
+    payloadId: string,
+    offset: number,
+    length: number
+): Promise<Uint8Array | null> {
     return ExpoGoogleNearbyConnection.readStreamByteArray(payloadId, offset, length);
 }
 
 /**
  * Gets the number of bytes available in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {Promise<number>} The number of bytes available.
+ * @returns {Promise<number | null>} The number of bytes available, or null if the operation failed, after an error event was sent.
  */
-export async function availableStream(payloadId: string): Promise<number> {
+export async function availableStream(payloadId: string): Promise<number | null> {
     return ExpoGoogleNearbyConnection.availableStream(payloadId);
 }
 
@@ -330,9 +334,9 @@ export async function markStream(payloadId: string, readLimit: number): Promise<
 /**
  * Checks if mark and reset are supported in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {boolean} True if mark and reset are supported, false otherwise.
+ * @returns {boolean | null} True if mark and reset are supported, false otherwise, or null if the operation failed, after an error event was sent.
  */
-export function isMarkSupportedStream(payloadId: string): boolean {
+export function isMarkSupportedStream(payloadId: string): boolean | null {
     return ExpoGoogleNearbyConnection.isMarkSupportedStream(payloadId);
 }
 
@@ -349,8 +353,8 @@ export async function resetStream(payloadId: string): Promise<void> {
  * Skips over and discards a specified number of bytes in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} amount - The number of bytes to skip.
- * @returns {Promise<number>} The actual number of bytes skipped.
+ * @returns {Promise<number | null>} The actual number of bytes skipped, or null if the operation failed, after an error event was sent.
  */
-export async function skipStream(payloadId: string, amount: number): Promise<number> {
+export async function skipStream(payloadId: string, amount: number): Promise<number | null> {
     return ExpoGoogleNearbyConnection.skipStream(payloadId, amount);
 }

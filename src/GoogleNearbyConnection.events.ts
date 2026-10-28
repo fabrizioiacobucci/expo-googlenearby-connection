@@ -325,7 +325,7 @@ export declare class ExpoGoogleNearbyConnectionModuleClass extends NativeModule<
     newPayloadStream(size?: number): string | null;
     sendPayloadToEndpoint(endpointId: string, payloadId: string): void;
     sendPayloadToEndpoints(endpointIds: string[], payloadId: string): void;
-    getPayloadInfo(payloadId: string): PayloadInfo;
+    getPayloadInfo(payloadId: string): PayloadInfo | null;
     getPayloadInfoList(): PayloadInfo[];
     getPayloadList(): string[];
     payloadExists(payloadId: string): boolean;
@@ -337,11 +337,11 @@ export declare class ExpoGoogleNearbyConnectionModuleClass extends NativeModule<
     flushStream(payloadId: string): Promise<void>;
     writeStreamByte(payloadId: string, byte: number): Promise<void>;
     writeStreamByteArray(payloadId: string, byteArray: Uint8Array, offset: number, length: number): Promise<void>;
-    readStreamByte(payloadId: string): Promise<number>;
-    readStreamByteArray(payloadId: string, offset: number, length: number): Promise<Uint8Array>;
-    availableStream(payloadId: string): Promise<number>;
+    readStreamByte(payloadId: string): Promise<number | null>;
+    readStreamByteArray(payloadId: string, offset: number, length: number): Promise<Uint8Array | null>;
+    availableStream(payloadId: string): Promise<number | null>;
     markStream(payloadId: string, readLimit: number): Promise<void>;
-    isMarkSupportedStream(payloadId: string): boolean;
+    isMarkSupportedStream(payloadId: string): boolean | null;
     resetStream(payloadId: string): Promise<void>;
-    skipStream(payloadId: string, amount: number): Promise<number>;
+    skipStream(payloadId: string, amount: number): Promise<number | null>;
 }
