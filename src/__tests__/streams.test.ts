@@ -1,10 +1,11 @@
 import ExpoGoogleNearbyConnection from "../ExpoGoogleNearbyConnection";
-import { flushStream } from "../index";
+import { flushStream, writeStreamByte } from "../index";
 
 jest.mock("../ExpoGoogleNearbyConnection", () => ({
     __esModule: true,
     default: {
         flushStream: jest.fn(),
+        writeStreamByte: jest.fn(),
     },
 }));
 
@@ -46,5 +47,11 @@ describe("stream payloads", () => {
         nativeModule.flushStream.mockReturnValue(nativeOperationInProgress());
 
         expect(await settlesWithoutWaiting(flushStream("1"))).toBe(false);
+    });
+
+    it("writeStreamByte waits for the native write to complete", async () => {
+        nativeModule.writeStreamByte.mockReturnValue(nativeOperationInProgress());
+
+        expect(await settlesWithoutWaiting(writeStreamByte("1", 7))).toBe(false);
     });
 });

@@ -265,9 +265,10 @@ export async function flushStream(payloadId: string): Promise<void> {
  * Writes a byte to the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} byte - The byte to write.
+ * @returns {Promise<void>} A promise that resolves when the byte is written.
  */
-export async function writeStreamByte(payloadId: string, byte: number) {
-    ExpoGoogleNearbyConnection.writeStreamByte(payloadId, byte);
+export async function writeStreamByte(payloadId: string, byte: number): Promise<void> {
+    return ExpoGoogleNearbyConnection.writeStreamByte(payloadId, byte);
 }
 
 /**
