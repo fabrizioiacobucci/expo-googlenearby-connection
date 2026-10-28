@@ -10,7 +10,6 @@ import Nearby, {
 } from "expo-googlenearby-connection";
 import { useEffect } from "react";
 import { uint8ArrayToString } from "../../src/functions";
-import usePermissions from "../../src/hooks/usePermissions";
 import { EndpointsFound } from "../../src/components/endpointsFound";
 import useEndpointsFound from "../../src/hooks/useEndpointsFound";
 import { serviceId, discoveringOptions, advertisingOptions, endpointName } from "../../src/options";
@@ -24,11 +23,12 @@ import { CheckIcon, CloseIcon } from "@/components/ui/icon";
 import ThemedScrollView from "@/src/components/themedScrollView";
 import { Group } from "@/src/components/group";
 import useLocation from "@/src/hooks/useLocation";
+import { usePermissionsContext } from "@/src/context";
 import { useEventListener } from "expo";
 const haversine = require("haversine");
 
 export default function index() {
-    const permissionsGranted = usePermissions();
+    const [permissionsGranted] = usePermissionsContext();
     const [lastEndpoint, endpointsFound] = useEndpointsFound();
     const location = useLocation();
     const advertisingText =

@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import {
     ConnectionsContextProvider,
     ConnectionsReducerProvider,
@@ -8,10 +8,12 @@ import {
     PayloadsInReducerProvider,
     PayloadsOutContextProvider,
     PayloadsOutReducerProvider,
+    PermissionsContextProvider,
+    RequestPermissionsProvider,
     SetThemeProvider,
     ThemeContextProvider,
 } from "../context";
-import { arrayReducer } from "../functions";
+import { arrayReducer, requestPermissions } from "../functions";
 import { EndpointFound, PayloadReceivedInfo } from "expo-googlenearby-connection";
 import { ModeType } from "../types";
 
@@ -21,6 +23,15 @@ export function Provider(props: { children: React.ReactNode }) {
     const [payloadsOut, payloadsOutReducer] = useReducer(arrayReducer<string>, []);
     const [connections, connectionsReducer] = useReducer(arrayReducer<string>, []);
     const [theme, setTheme] = useState<ModeType>("light");
+    const [permissionsGranted, setPermissionsGranted] = useState(false);
+
+    const updatePermissions = useCallback(async () => {
+        setPermissionsGranted(await requestPermissions());
+    }, []);
+
+    useEffect(() => {
+        updatePermissions();
+    }, [updatePermissions]);
 
     return (
         <ThemeContextProvider value={theme}>
@@ -33,7 +44,11 @@ export function Provider(props: { children: React.ReactNode }) {
                                     <PayloadsOutReducerProvider value={payloadsOutReducer}>
                                         <ConnectionsContextProvider value={connections}>
                                             <ConnectionsReducerProvider value={connectionsReducer}>
-                                                {props.children}
+                                                <PermissionsContextProvider value={permissionsGranted}>
+                                                    <RequestPermissionsProvider value={updatePermissions}>
+                                                        {props.children}
+                                                    </RequestPermissionsProvider>
+                                                </PermissionsContextProvider>
                                             </ConnectionsReducerProvider>
                                         </ConnectionsContextProvider>
                                     </PayloadsOutReducerProvider>

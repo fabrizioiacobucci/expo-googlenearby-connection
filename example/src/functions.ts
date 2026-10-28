@@ -1,6 +1,7 @@
 import { ColorSchemeName } from "react-native";
 import { ArrayReducerActions, Characters, ModeType } from "./types";
-import { EndpointEvent, PayloadEvent } from "expo-googlenearby-connection";
+import { EndpointEvent, PayloadEvent, requestPermissionsAsync } from "expo-googlenearby-connection";
+import * as Location from "expo-location";
 
 export function stringToUint8Array(str: string) {
     const encoder = new TextEncoder();
@@ -63,4 +64,20 @@ export function endpointComparator<T extends EndpointEvent>(a: T, b: T) {
 
 export function payloadComparator<T extends PayloadEvent>(a: T, b: T) {
     return a.payloadId === b.payloadId;
+}
+
+/**
+ * Requests the foreground location permission and the permissions of Nearby Connections.
+ *
+ * @returns whether both are granted.
+ * @example
+ * const permissionsGranted = await requestPermissions();
+ */
+export async function requestPermissions() {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    const statusNearby = await requestPermissionsAsync();
+    console.log("Location permissions status: " + status);
+    console.log("Nearby permissions status: " + statusNearby.granted);
+
+    return status === "granted" && statusNearby.granted;
 }

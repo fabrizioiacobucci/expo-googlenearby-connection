@@ -71,3 +71,24 @@ export const useThemeContext = () => {
 
     return [theme, setTheme] as const;
 };
+
+// Permissions
+export const PermissionsContext = createContext<boolean>(false);
+export const RequestPermissions = createContext<() => Promise<void>>(async () => {});
+
+export const PermissionsContextProvider = PermissionsContext.Provider;
+export const RequestPermissionsProvider = RequestPermissions.Provider;
+
+/**
+ * Reads whether the app holds the permissions it needs, and the function that requests them again.
+ *
+ * @returns whether the permissions are granted, and the function that requests them and updates the state.
+ * @example
+ * const [permissionsGranted, requestPermissions] = usePermissionsContext();
+ */
+export const usePermissionsContext = () => {
+    const permissionsGranted = useContext(PermissionsContext);
+    const requestPermissions = useContext(RequestPermissions);
+
+    return [permissionsGranted, requestPermissions] as const;
+};

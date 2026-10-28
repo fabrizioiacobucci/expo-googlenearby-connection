@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import usePermissions from "../../src/hooks/usePermissions";
+import { usePermissionsContext } from "../context";
 
 export default function useLocation() {
-    const permissionsGranted = usePermissions();
+    const [permissionsGranted] = usePermissionsContext();
     const [location, setLocation] = useState<Location.LocationObject | null>(null);
 
     async function getCurrentLocation() {
