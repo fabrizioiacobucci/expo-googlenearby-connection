@@ -339,9 +339,10 @@ export function isMarkSupportedStream(payloadId: string): boolean {
 /**
  * Resets the stream to the most recent mark for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
+ * @returns {Promise<void>} A promise that resolves when the stream is reset.
  */
-export async function resetStream(payloadId: string) {
-    ExpoGoogleNearbyConnection.resetStream(payloadId);
+export async function resetStream(payloadId: string): Promise<void> {
+    return ExpoGoogleNearbyConnection.resetStream(payloadId);
 }
 
 /**

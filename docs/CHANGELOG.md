@@ -18,6 +18,6 @@ Versions up to 0.1.4 were released before this repository adopted foss-docs-made
 
 ### Fixed
 
-- `flushStream`, `writeStreamByte`, `writeStreamByteArray` and `markStream` resolve once the native operation has completed, instead of at once, so that code which awaits it, and then sends the stream, sends it after the operation.
+- `flushStream`, `writeStreamByte`, `writeStreamByteArray`, `markStream` and `resetStream` resolve once the native operation has completed, instead of at once, so that code which awaits it, and then sends the stream, sends it after the operation.
 
 [Unreleased]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.1.4...HEAD
