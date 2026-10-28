@@ -13,7 +13,7 @@ export default function PermissionsBadge() {
     const [permissionsGranted] = usePermissionsContext();
 
     return (
-        <Badge size="md" variant="solid" action="muted" className="flex-1 bg-transparent px-0">
+        <Badge size="md" variant="solid" action="muted" className="bg-transparent px-0">
             <BadgeText>{permissionsGranted ? "Permissions granted" : "Permissions denied"}</BadgeText>
             <BadgeIcon as={permissionsGranted ? CheckIcon : CloseIcon} className="ml-2" />
         </Badge>

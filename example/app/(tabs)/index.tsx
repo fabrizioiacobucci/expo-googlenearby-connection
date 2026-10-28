@@ -14,9 +14,7 @@ import { EndpointsFound } from "../../src/components/endpointsFound";
 import useEndpointsFound from "../../src/hooks/useEndpointsFound";
 import { serviceId, discoveringOptions, advertisingOptions, endpointName } from "../../src/options";
 import "@/global.css";
-import { HStack } from "@/components/ui/hstack";
 import { ThemedText } from "@/src/components/themedText";
-import ThemeSwitcher from "@/src/components/themeSwitcher";
 import { VStack } from "@/components/ui/vstack";
 import ThemedScrollView from "@/src/components/themedScrollView";
 import { Group } from "@/src/components/group";
@@ -69,10 +67,7 @@ export default function index() {
         <ThemedScrollView>
             <VStack>
                 <Group>
-                    <HStack>
-                        <PermissionsBadge />
-                        <ThemeSwitcher />
-                    </HStack>
+                    <PermissionsBadge />
                 </Group>
                 <Group name="Controls">
                     <Button
