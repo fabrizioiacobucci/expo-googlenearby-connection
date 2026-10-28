@@ -277,14 +277,15 @@ export async function writeStreamByte(payloadId: string, byte: number): Promise<
  * @param {Uint8Array} byteArray - The byte array to write.
  * @param {number} [offset=0] - The offset to start writing from.
  * @param {number} [length=byteArray.length] - The number of bytes to write.
+ * @returns {Promise<void>} A promise that resolves when the bytes are written.
  */
 export async function writeStreamByteArray(
     payloadId: string,
     byteArray: Uint8Array,
     offset: number = 0,
     length: number = byteArray.length
-) {
-    ExpoGoogleNearbyConnection.writeStreamByteArray(payloadId, byteArray, offset, length);
+): Promise<void> {
+    return ExpoGoogleNearbyConnection.writeStreamByteArray(payloadId, byteArray, offset, length);
 }
 
 /**
