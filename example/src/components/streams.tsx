@@ -17,6 +17,8 @@ const Streams = () => {
                     if (payload!.type === PayloadType.STREAM) {
                         try {
                             let byteArray = await readStreamByteArray(payload!.payloadId, 0, 1024);
+                            if (!byteArray) continue;
+
                             if (byteArray[0] == -1) {
                                 setStreamData((prev) => {
                                     const newData = { ...prev };
