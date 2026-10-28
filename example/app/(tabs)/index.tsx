@@ -18,17 +18,14 @@ import { HStack } from "@/components/ui/hstack";
 import { ThemedText } from "@/src/components/themedText";
 import ThemeSwitcher from "@/src/components/themeSwitcher";
 import { VStack } from "@/components/ui/vstack";
-import { Badge, BadgeIcon, BadgeText } from "@/components/ui/badge";
-import { CheckIcon, CloseIcon } from "@/components/ui/icon";
 import ThemedScrollView from "@/src/components/themedScrollView";
 import { Group } from "@/src/components/group";
 import useLocation from "@/src/hooks/useLocation";
-import { usePermissionsContext } from "@/src/context";
+import PermissionsBadge from "@/src/components/permissionsBadge";
 import { useEventListener } from "expo";
 const haversine = require("haversine");
 
 export default function index() {
-    const [permissionsGranted] = usePermissionsContext();
     const [lastEndpoint, endpointsFound] = useEndpointsFound();
     const location = useLocation();
     const advertisingText =
@@ -73,10 +70,7 @@ export default function index() {
             <VStack>
                 <Group>
                     <HStack>
-                        <Badge size="md" variant="solid" action="muted" className="flex-1 bg-transparent px-0">
-                            <BadgeText>{permissionsGranted ? "Permissions granted" : "Permissions denied"}</BadgeText>
-                            <BadgeIcon as={permissionsGranted ? CheckIcon : CloseIcon} className="ml-2" />
-                        </Badge>
+                        <PermissionsBadge />
                         <ThemeSwitcher />
                     </HStack>
                 </Group>

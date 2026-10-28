@@ -26,7 +26,10 @@ export function Provider(props: { children: React.ReactNode }) {
     const [permissionsGranted, setPermissionsGranted] = useState(false);
 
     const updatePermissions = useCallback(async () => {
-        setPermissionsGranted(await requestPermissions());
+        const result = await requestPermissions();
+        setPermissionsGranted(result.granted);
+
+        return result;
     }, []);
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { ColorSchemeName } from "react-native";
-import { ArrayReducerActions, Characters, ModeType } from "./types";
+import { ArrayReducerActions, Characters, ModeType, PermissionsResult } from "./types";
 import { EndpointEvent, PayloadEvent, requestPermissionsAsync } from "expo-googlenearby-connection";
 import * as Location from "expo-location";
 
@@ -69,15 +69,18 @@ export function payloadComparator<T extends PayloadEvent>(a: T, b: T) {
 /**
  * Requests the foreground location permission and the permissions of Nearby Connections.
  *
- * @returns whether both are granted.
+ * @returns whether both are granted, and whether Android can still show the dialog of each permission denied.
  * @example
- * const permissionsGranted = await requestPermissions();
+ * const { granted, canAskAgain } = await requestPermissions();
  */
-export async function requestPermissions() {
-    const { status } = await Location.requestForegroundPermissionsAsync();
+export async function requestPermissions(): Promise<PermissionsResult> {
+    const { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
     const statusNearby = await requestPermissionsAsync();
     console.log("Location permissions status: " + status);
     console.log("Nearby permissions status: " + statusNearby.granted);
 
-    return status === "granted" && statusNearby.granted;
+    return {
+        granted: status === "granted" && statusNearby.granted,
+        canAskAgain: canAskAgain && statusNearby.canAskAgain,
+    };
 }

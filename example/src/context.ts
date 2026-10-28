@@ -1,6 +1,6 @@
 import { EndpointFound, PayloadReceivedInfo } from "expo-googlenearby-connection";
 import { createContext, useContext } from "react";
-import { ModeType } from "./types";
+import { ModeType, PermissionsResult } from "./types";
 
 // Payloads Endpoints
 export const EndpointsContext = createContext<EndpointFound[] | null>(null);
@@ -74,7 +74,10 @@ export const useThemeContext = () => {
 
 // Permissions
 export const PermissionsContext = createContext<boolean>(false);
-export const RequestPermissions = createContext<() => Promise<void>>(async () => {});
+export const RequestPermissions = createContext<() => Promise<PermissionsResult>>(async () => ({
+    granted: false,
+    canAskAgain: true,
+}));
 
 export const PermissionsContextProvider = PermissionsContext.Provider;
 export const RequestPermissionsProvider = RequestPermissions.Provider;
@@ -82,7 +85,8 @@ export const RequestPermissionsProvider = RequestPermissions.Provider;
 /**
  * Reads whether the app holds the permissions it needs, and the function that requests them again.
  *
- * @returns whether the permissions are granted, and the function that requests them and updates the state.
+ * @returns whether the permissions are granted, and the function that requests them, updates the state and
+ * returns the result of the request.
  * @example
  * const [permissionsGranted, requestPermissions] = usePermissionsContext();
  */
