@@ -255,9 +255,10 @@ export function cancelPayload(payloadId: string) {
 /**
  * Flushes the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
+ * @returns {Promise<void>} A promise that resolves when the stream is flushed.
  */
-export async function flushStream(payloadId: string) {
-    ExpoGoogleNearbyConnection.flushStream(payloadId);
+export async function flushStream(payloadId: string): Promise<void> {
+    return ExpoGoogleNearbyConnection.flushStream(payloadId);
 }
 
 /**

@@ -16,4 +16,8 @@ Versions up to 0.1.4 were released before this repository adopted foss-docs-made
 
 - **Breaking:** `ExpoGoogleNearbyConnectionModuleClass` exists only as a TypeScript type; code that used it as a value at runtime no longer works.
 
+### Fixed
+
+- `flushStream` resolves once the native operation has completed, instead of at once, so that code which awaits it, and then sends the stream, sends it after the operation.
+
 [Unreleased]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.1.4...HEAD
