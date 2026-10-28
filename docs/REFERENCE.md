@@ -36,7 +36,7 @@ The rest of the external interface is outside the public API: the methods of the
   });
   ```
 
-- **Errors.** A function does not throw when Google Nearby Connections fails: it emits an error event, whose data is an `Exception`, and a function that returns a value returns `null`. The `data` of the `Exception` holds the payload ID or the endpoint ID concerned, when there is one.
+- **Errors.** A function does not throw when Google Nearby Connections fails: it emits an error event, whose data is an `Exception`, and a function that returns a value returns `null`. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none.
 - **Payload IDs.** A payload is identified by its ID, a 64-bit integer passed as a string, so that JavaScript does not round it. The module keeps the inbound and outbound payloads in a queue, which the payload functions query and change.
 - **Streams.** Google Nearby Connections does not send a stream payload that has no data yet: write to the stream, with `writeStreamByte` or `writeStreamByteArray`, before sending it.
 - **Location.** Discovery needs the location services of the device on, as well as the permissions, also on the Android versions on which Google's documentation says that it does not.
@@ -160,3 +160,73 @@ if (payloadId) {
     sendPayloadToEndpoint(endpointId, payloadId);
 }
 ```
+
+## Types
+
+### Options
+
+| Type | Fields |
+|---|---|
+| `Strategy` | `"P2P_CLUSTER"`, `"P2P_STAR"` or `"P2P_POINT_TO_POINT"`, the strategies of Google Nearby Connections; both devices must use the same one. |
+| `ConnectionOptions` | `connectionType: ConnectionType`; `lowPowerMode: boolean`. |
+| `DiscoveringOptions` | `strategy: Strategy`. |
+| `AdvertisingOptions` | the fields of `ConnectionOptions` and of `DiscoveringOptions`. |
+
+### Payloads
+
+| Type | Fields |
+|---|---|
+| `PayloadInfo` | `id: string`; `type: PayloadType`; `offset: number`; for a file, `uri?: string` and `size?: number`; for bytes, `bytes?: Uint8Array`. |
+
+### Event data
+
+| Type | Fields |
+|---|---|
+| `EndpointEvent` | `endpointId: string`. |
+| `EndpointFound` | `endpointId: string`; `endpointInfo: Uint8Array`, the name or the bytes the endpoint advertises; `serviceId: string`. |
+| `ConnectionInitiated` | `endpointId: string`; `endpointName: string`; `endpointInfo: Uint8Array`; `authenticationDigits: string`, a short code that both users can compare; `authenticationStatus: number`; `rawAuthenticationToken: Uint8Array`; `isIncomingConnection: boolean`. |
+| `ConnectionResult` | `endpointId: string`; `status: string`, the status code of Google Nearby Connections and its message, as `"[code]message"`; code `0` means that the connection is open. |
+| `BandwidthChanged` | `endpointId: string`; `quality: BandwidthQuality`. |
+| `PayloadEvent` | `payloadId: string`. |
+| `PayloadReceivedInfo` | `endpointId: string`; `payloadId: string`; `type: PayloadType`; `data`: the bytes, for bytes, the URI of the received file, for a file, and the string `"Stream received"`, for a stream. The type also allows `null`. |
+| `PayloadTransferUpdate` | `payloadId: string`; `status: PayloadTransferUpdateStatus`; `bytesTransferred: number`; `totalBytes: number`. |
+| `PayloadSend` | `endpointIds: string[] \| string`, the endpoint or endpoints; `payloadId: string`. |
+| `Exception` | `error: string`, the message; `stackTrace: string`; `data: string`, as in [Conventions](#conventions). |
+
+## Enums
+
+| Enum | Values |
+|---|---|
+| `ConnectionType` | `BALANCED = 0`, `DISRUPTIVE = 1`, `NON_DISRUPTIVE = 2`. |
+| `BandwidthQuality` | `UNKNOWN = 0`, `LOW = 1`, `MEDIUM = 2`, `HIGH = 3`. |
+| `PayloadType` | `BYTES = 1`, `FILE = 2`, `STREAM = 3`. |
+| `PayloadTransferUpdateStatus` | `SUCCESS = 1`, `FAILURE = 2`, `IN_PROGRESS = 3`, `CANCELED = 4`. |
+| `PayloadProperty` | `OFFSET`, `FILENAME`, `PARENTFOLDER`, `SENSITIVE`, each equal to its name. |
+
+## Events
+
+The type of the data of each event is in [Event data](#event-data); an event without data passes none.
+
+| Group | Event | Data |
+|---|---|---|
+| Advertising | `AdvertisingStarted`, `AdvertisingStopped` | none |
+| | `AdvertisingFailed` | `Exception` |
+| Discovery | `DiscoveringStarted`, `DiscoveringStopped` | none |
+| | `DiscoveringFailed` | `Exception` |
+| | `EndpointFound` | `EndpointFound` |
+| | `EndpointLost` | `EndpointEvent` |
+| | `InvalidStrategy` | `Exception` |
+| Location | `LocationPromptAccepted`, `LocationRequestApproved`, `LocationRequestDenied`, `LocationRequestUnknown` | none |
+| | `LocationPromptRejected` | `Exception` |
+| Connections | `ConnectionRequested`, `ConnectionAccepted`, `ConnectionRejected`, `DisconnectFromEndpoint`, `EndpointDisconnection` | `EndpointEvent` |
+| | `ConnectionRequestFailed`, `ConnectionAcceptFailed`, `ConnectionRejectFailed` | `Exception` |
+| | `ConnectionInitiated` | `ConnectionInitiated` |
+| | `ConnectionResult` | `ConnectionResult` |
+| | `BandwidthChanged` | `BandwidthChanged` |
+| | `StopAllEndpoints` | none |
+| Payloads | `PayloadReceived` | `PayloadReceivedInfo` |
+| | `PayloadTransferUpdate` | `PayloadTransferUpdate` |
+| | `PayloadSend` | `PayloadSend` |
+| | `PayloadRemoved`, `PayloadCanceled` | `PayloadEvent` |
+| | `PayloadRemovedAll` | none |
+| | `PayloadSendFailed`, `PayloadRemoveFailed`, `PayloadCancelFailed`, `PayloadNotFound`, `PayloadInvalidArguments`, `PayloadIOException`, `PayloadException` | `Exception` |

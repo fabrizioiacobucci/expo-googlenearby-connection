@@ -148,7 +148,7 @@ export function newPayloadBytes(data: Uint8Array): string {
  * @param {boolean} [isSensitive] - Indicates if the file is sensitive.
  * @param {string} [fileName] - The name of the file.
  * @param {string} [parentFolder] - The parent folder.
- * @returns {string} The payload ID.
+ * @returns {string | null} The payload ID, or null if the payload was not created, after an error event was sent.
  */
 export function newPayloadFile(
     data: string,
@@ -161,8 +161,8 @@ export function newPayloadFile(
 
 /**
  * Creates a new payload with a stream of a given size.
- * @param {number} size - The size of the stream.
- * @returns {string} The payload ID.
+ * @param {number} [size=1024] - The size of the stream buffer, in bytes.
+ * @returns {string | null} The payload ID, or null if the payload was not created, after an error event was sent.
  */
 export function newPayloadStream(size?: number) {
     return ExpoGoogleNearbyConnection.newPayloadStream(size);
