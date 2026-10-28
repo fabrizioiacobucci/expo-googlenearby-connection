@@ -100,3 +100,12 @@ Each entry states:
 - **Impact**: an adopter with past releases cannot tell whether it must reconstruct their notes from the history before its next release, and the same question as entry 6 arises for each rule that applies "at each release".
 - **Proposal**: state, as for ADRs, that the release rules apply to the releases made after adoption, and that the `CHANGELOG` MAY say that earlier releases have no notes.
 - **Status**: `open`
+
+## 11. No guidance on a glossary of the adopter's terms
+
+- **Date**: 2026-10-28
+- **Rule**: [DOCUMENTS-INDEX](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md) and [GLOSSARY](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/GLOSSARY.md)
+- **Finding**: the framework keeps a glossary of its own terms and requires, for its own documents, that each term be used in its canonical form, but DOCUMENTS-INDEX asks no adopter, at any level, for a glossary of its own terms, nor says where one would go. This repository wrote its REFERENCE with terms such as endpoint name, endpoint info and payload ID before it had a glossary, and then added `docs/GLOSSARY.md`, in the framework's format, with a rule in its CONTRIBUTING to keep it current.
+- **Impact**: an adopter finds out late that its documents use several words for one thing, or one word for several, and has to rebuild the glossary from documents already written.
+- **Proposal**: state that an adopter MAY keep a `GLOSSARY` in `docs/`, in the format of the framework's GLOSSARY, and SUGGESTED that each change that adds a term updates it; or require it from a level, as arc42 section 12 does.
+- **Status**: `open`

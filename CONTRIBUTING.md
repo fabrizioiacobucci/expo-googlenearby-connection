@@ -16,6 +16,7 @@ A change SHOULD, before it is merged:
 
 - pass the checks of what it touches, listed in [Tests](#tests), and the tests on devices when it touches the native code;
 - meet the "Changes" criteria of the [DEFINITION-OF-DONE](docs/DEFINITION-OF-DONE.md): update in the same change every document it makes inaccurate, [docs/REFERENCE.md](docs/REFERENCE.md) included, add the changes that users notice, breaking changes first, to the "Unreleased" section of [docs/CHANGELOG.md](docs/CHANGELOG.md), and include an ADR for each significant architectural decision ([arc42 section 9](docs/architecture/09-architecture-decisions.md));
+- use the terms of [docs/GLOSSARY.md](docs/GLOSSARY.md), and update it when the change adds a term or changes its meaning;
 - follow the code style of the repository: TypeScript formatted by Prettier with `.prettierrc`, linted by ESLint with `eslint.config.cjs`, and every exported function with a synopsis that states its parameters and what it returns.
 
 ## Setting up the environment

@@ -1,6 +1,6 @@
 # Reference
 
-The external interface of expo-googlenearby-connection, and the part of it that is the public API under [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
+The external interface of expo-googlenearby-connection, and the part of it that is the public API under [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html). Its terms, such as endpoint, payload ID and service ID, are defined in [GLOSSARY](GLOSSARY.md).
 
 ## External interface
 
