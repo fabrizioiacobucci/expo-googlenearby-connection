@@ -14,7 +14,7 @@ Level: passing
 | `README` | `draft` | 2026-10-26 |
 | `CONTRIBUTING` | `draft` | 2026-10-26 |
 | `SECURITY` | `active` | |
-| `REFERENCE` | `draft` | |
+| `REFERENCE` | `active` | 2026-10-28 |
 | arc42 section 8 | `draft` | |
 | arc42 section 9 | `active` | |
 

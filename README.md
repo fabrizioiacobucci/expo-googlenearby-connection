@@ -2,16 +2,7 @@
 
 Expo module for Google Nearby Connection SDK.
 
-**GENERAL INFO:** since the SDK provides some callback objects for the main functionality, in which we were able to use only Expo events in order to know what's going on in JS, we've choosen to use events for the whole module as uniform medium of communication between native and JS.
-
-**PAYLOADS:** since we cannot represent a Payload object in JS, the API functions and events handle the Payloads ID which is a Long number represented as string (to avoid rounding and losing the reference).
-We then keep an internal queue of inbound and outbound Payloads that can be queried with the related functions.
-
-**STREAMS:** the SDK doesn't send a Stream Payload if the stream doesn't have yet any data inside it. So, please, remember to Write something in the stream with either `writeStreamByte` or `writeStreamByteArray` in the stream after creation but before sending.
-
-**NOTE:** on Google SDK documentation, it is shown that the SDK doesn't need Location permissions to work on API 32 and up. However, it seems that the documention is not 100% up to date.
-When testing this without Location permissions, we are not able to start discovering.
-Therefore, the API is requesting Location permissions as well as GPS on.
+The module reports what happens, success or failure, through events, and handles payloads by their ID. Its functions, types and events, and the conventions they follow, are described in [docs/REFERENCE.md](docs/REFERENCE.md).
 
 # Google API documentation
 
@@ -38,284 +29,69 @@ npm install expo-googlenearby-connection
 
 ### Configure for Android
 
+No configuration is needed: the module declares the Android permissions it uses, listed in [docs/REFERENCE.md](docs/REFERENCE.md#external-interface), and `requestPermissionsAsync` requests them.
+
 ### Configure for iOS
 
 The module doesn't support iOS.
 
 # Usage
 
-## Error handling
-
-Based on the General info above:
-
-- we send every exception back to JS for comfortable error handling.
-- you can find the related events in [GoogleNearbyConnection.events.ts](src/GoogleNearbyConnection.events.ts).
-- using the Exception type foudn in [GoogleNearbyConnection.types.ts](src/GoogleNearbyConnection.types.ts).
-
-The data property usually includes the Payload Id (in case of exceptions on Payloads) or the Endpoint Id (in case of exceptions on Endpoint communication).
-We'll include more details in future.
-
-## Permissions
-
-### `usePermissions`
-
-Requests the necessary permissions for using Google Nearby Connections.
-
-**Example:**
+A minimal flow between two devices, in a React component: request the permissions, advertise on one device and discover on the other, connect, then send bytes. Every function, type and event is described in [docs/REFERENCE.md](docs/REFERENCE.md).
 
 ```ts
-import { usePermissions } from "expo-googlenearby-connection";
-
-const [permissions, requestPermissions, getPermissions] = usePermissions();
-
-const reqPermissions = () => {
-    requestPermissions().then((res) => {
-        console.log("Permissions: ", res);
-    });
-    getPermissions().then((res) => {
-        console.log("Permissions: ", res);
-    });
-};
-```
-
-## Advertising
-
-### `startAdvertisingName`
-
-Starts advertising the device to nearby devices.
-
-**Example:**
-
-```ts
-import {
-    startAdvertisingName,
-    AdvertisingOptions,
+import { useEventListener } from "expo";
+import Nearby, {
+    acceptConnection,
+    ConnectionInitiated,
+    ConnectionResult,
     ConnectionType,
-} from "expo-googlenearby-connection";
-
-const SERVICE_ID = "com.example.service";
-
-const advertisingOptions: AdvertisingOptions = {
-    strategy: "P2P_POINT_TO_POINT",
-    connectionType: ConnectionType.DISRUPTIVE,
-    lowPowerMode: false,
-};
-
-startAdvertisingName("MyEndpoint", SERVICE_ID, advertisingOptions);
-```
-
-### `stopAdvertising`
-
-Stops advertising the device.
-
-**Example:**
-
-```ts
-import { stopAdvertising } from "expo-googlenearby-connection";
-
-stopAdvertising();
-```
-
-## Discovering
-
-### `startDiscovering`
-
-Starts discovering nearby devices.
-
-**Example:**
-
-```ts
-import {
-    startDiscovering,
-    DiscoveringOptions,
-} from "expo-googlenearby-connection";
-
-const SERVICE_ID = "com.example.service";
-
-const discoveringOptions: DiscoveringOptions = {
-    strategy: "P2P_POINT_TO_POINT",
-};
-
-startDiscovering(SERVICE_ID, discoveringOptions);
-```
-
-### `stopDiscovering`
-
-Stops discovering nearby devices.
-
-**Example:**
-
-```ts
-import { stopDiscovering } from "expo-googlenearby-connection";
-
-stopDiscovering();
-```
-
-## Connections
-
-### `requestConnectionName`
-
-Requests a connection to a nearby device.
-
-**Example:**
-
-```ts
-import {
+    EndpointFound,
+    newPayloadBytes,
     requestConnectionName,
-    ConnectionOptions,
-    ConnectionType,
+    requestPermissionsAsync,
+    sendPayloadToEndpoint,
+    startAdvertisingName,
+    startDiscovering,
 } from "expo-googlenearby-connection";
 
-const connectionOptions: ConnectionOptions = {
-    connectionType: ConnectionType.DISRUPTIVE,
+const SERVICE_ID = "com.example.service";
+const STRATEGY = "P2P_CLUSTER";
+
+// On both devices
+await requestPermissionsAsync();
+
+// On the advertising device
+startAdvertisingName("Device A", SERVICE_ID, {
+    strategy: STRATEGY,
+    connectionType: ConnectionType.BALANCED,
     lowPowerMode: false,
-};
+});
 
-requestConnectionName("MyEndpoint", "endpointId", connectionOptions);
+// On the discovering device: request a connection to each endpoint found
+startDiscovering(SERVICE_ID, { strategy: STRATEGY });
+useEventListener(Nearby, "EndpointFound", (event: EndpointFound) => {
+    requestConnectionName("Device B", event.endpointId);
+});
+
+// On both devices: accept the connection, then send once it is open
+useEventListener(Nearby, "ConnectionInitiated", (event: ConnectionInitiated) => {
+    acceptConnection(event.endpointId);
+});
+useEventListener(Nearby, "ConnectionResult", (event: ConnectionResult) => {
+    if (event.status.startsWith("[0]")) {
+        sendPayloadToEndpoint(event.endpointId, newPayloadBytes(new Uint8Array([1, 2, 3])));
+    }
+});
 ```
 
-### `acceptConnection`
-
-Accepts a connection request from a nearby device.
-
-**Example:**
-
-```ts
-import { acceptConnection } from "expo-googlenearby-connection";
-
-acceptConnection("endpointId");
-```
-
-### `rejectConnection`
-
-Rejects a connection request from a nearby device.
-
-**Example:**
-
-```ts
-import { rejectConnection } from "expo-googlenearby-connection";
-
-rejectConnection("endpointId");
-```
-
-### `disconnectFromEndpoint`
-
-Disconnects from a connected endpoint.
-
-**Example:**
-
-```ts
-import { disconnectFromEndpoint } from "expo-googlenearby-connection";
-
-disconnectFromEndpoint("endpointId");
-```
-
-## Payloads
-
-### `newPayloadBytes`
-
-Creates a new byte payload.
-
-**Example:**
-
-```ts
-import { newPayloadBytes } from "expo-googlenearby-connection";
-
-const bytePayload = newPayloadBytes(new Uint8Array([1, 2, 3]));
-```
-
-### `newPayloadFile`
-
-Creates a new file payload.
-
-**Example:**
-
-```ts
-import { newPayloadFile } from "expo-googlenearby-connection";
-
-const filePayload = newPayloadFile(
-    "file:///storage/emulated/0/DCIM/Camera/photo.jpg",
-);
-```
-
-### `newPayloadStream`
-
-Creates a new stream payload.
-
-**Example:**
-
-```ts
-import { newPayloadStream } from "expo-googlenearby-connection";
-
-const streamPayload = newPayloadStream();
-```
-
-### `sendPayloadToEndpoint`
-
-Sends a payload to a connected endpoint.
-
-**Example:**
-
-```ts
-import { sendPayloadToEndpoint } from "expo-googlenearby-connection";
-
-sendPayloadToEndpoint("endpointId", bytePayload);
-```
-
-## Streams
-
-### `writeStreamByte`
-
-Writes a byte to a stream payload.
-
-**Example:**
-
-```ts
-import { writeStreamByte } from "expo-googlenearby-connection";
-
-await writeStreamByte(streamPayload, 1);
-```
-
-### `writeStreamByteArray`
-
-Writes a byte array to a stream payload.
-
-**Example:**
-
-```ts
-import { writeStreamByteArray } from "expo-googlenearby-connection";
-
-await writeStreamByteArray(streamPayload, new Uint8Array([1, 2, 3]));
-```
-
-### `readStreamByte`
-
-Reads a byte from a stream payload.
-
-**Example:**
-
-```ts
-import { readStreamByte } from "expo-googlenearby-connection";
-
-const byte = await readStreamByte(streamPayload);
-```
-
-### `readStreamByteArray`
-
-Reads a byte array from a stream payload.
-
-**Example:**
-
-```ts
-import { readStreamByteArray } from "expo-googlenearby-connection";
-
-const byteArray = await readStreamByteArray(streamPayload, 0, 3);
-```
+The example app in [example/](example/) uses every function of the module.
 
 ## This repository
 
 - How to report a bug, propose a change or contribute: [CONTRIBUTING.md](CONTRIBUTING.md); discussion happens in the issues and pull requests.
 - The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
+- The functions, types and events of the module: [docs/REFERENCE.md](docs/REFERENCE.md).
 - What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
 - This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.2.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
 
