@@ -321,9 +321,10 @@ export async function availableStream(payloadId: string): Promise<number> {
  * Marks the current position in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} readLimit - The maximum limit of bytes that can be read before the mark position becomes invalid.
+ * @returns {Promise<void>} A promise that resolves when the position is marked.
  */
-export async function markStream(payloadId: string, readLimit: number) {
-    ExpoGoogleNearbyConnection.markStream(payloadId, readLimit);
+export async function markStream(payloadId: string, readLimit: number): Promise<void> {
+    return ExpoGoogleNearbyConnection.markStream(payloadId, readLimit);
 }
 
 /**
