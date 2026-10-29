@@ -118,3 +118,12 @@ Each entry states:
 - **Impact**: an adopter writes requirements whose strength a reader cannot tell, or repeats the statement of RFC 8174 in each document.
 - **Proposal**: state where an adopter declares the meaning of the keywords, for example once in a glossary or in the README "This repository" section, linked from the documents that use them.
 - **Status**: `open`
+
+## 13. "Deployed" in arc42 section 8 does not fit a library
+
+- **Date**: 2026-10-29
+- **Rule**: [DOCUMENTS-INDEX, Passing](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md#passing), arc42 section 8
+- **Finding**: at passing, arc42 section 8 MUST state "how it is built and deployed". This repository is a library: it is not deployed anywhere, but published to npm and built again by each app that installs it. It reads "deployed" as "released", and its section 8 states how a release is made, a process that no other required document describes at passing.
+- **Impact**: an adopter that publishes a library or a package does not know whether its release process meets the requirement, or leaves it unwritten.
+- **Proposal**: say "built and released, or deployed", and state that for software distributed as a package the section describes how a release is made and published.
+- **Status**: `open`
