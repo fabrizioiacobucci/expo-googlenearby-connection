@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { DarkTheme, DefaultTheme, Tabs, ThemeProvider } from "expo-router";
 import React from "react";
 import { ColorValue, Platform, SafeAreaView } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -34,54 +34,56 @@ export default function TabLayout() {
                     className="dark:bg-background-dark h-full"
                     style={{ paddingTop: Constants.statusBarHeight }}
                 >
-                    <Tabs
-                        screenOptions={{
-                            headerShown: false,
-                            lazy: false,
-                            tabBarStyle: Platform.select({
-                                ios: {
-                                    // Use a transparent background on iOS to show the blur effect
-                                    position: "absolute",
-                                },
-                                default: {
-                                    // Use a solid background on Android to show the ripple effect
-                                    backgroundColor:
-                                        theme == "light"
-                                            ? defaultBgLight
-                                            : defaultBgDark,
-                                },
-                            }),
-                        }}
-                    >
-                        <Tabs.Screen
-                            name="index"
-                            options={{
-                                title: "Home",
-                                tabBarIcon: renderTabBarIcon("home"),
+                    <ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
+                        <Tabs
+                            screenOptions={{
+                                headerShown: false,
+                                lazy: false,
+                                tabBarStyle: Platform.select({
+                                    ios: {
+                                        // Use a transparent background on iOS to show the blur effect
+                                        position: "absolute",
+                                    },
+                                    default: {
+                                        // Use a solid background on Android to show the ripple effect
+                                        backgroundColor:
+                                            theme == "light"
+                                                ? defaultBgLight
+                                                : defaultBgDark,
+                                    },
+                                }),
                             }}
-                        />
-                        <Tabs.Screen
-                            name="connections"
-                            options={{
-                                title: "Connections",
-                                tabBarIcon: renderTabBarIcon("wifi"),
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="payloads"
-                            options={{
-                                title: "Payloads",
-                                tabBarIcon: renderTabBarIcon("paper-plane"),
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="settings"
-                            options={{
-                                title: "Settings",
-                                tabBarIcon: renderTabBarIcon("gear"),
-                            }}
-                        />
-                    </Tabs>
+                        >
+                            <Tabs.Screen
+                                name="index"
+                                options={{
+                                    title: "Home",
+                                    tabBarIcon: renderTabBarIcon("home"),
+                                }}
+                            />
+                            <Tabs.Screen
+                                name="connections"
+                                options={{
+                                    title: "Connections",
+                                    tabBarIcon: renderTabBarIcon("wifi"),
+                                }}
+                            />
+                            <Tabs.Screen
+                                name="payloads"
+                                options={{
+                                    title: "Payloads",
+                                    tabBarIcon: renderTabBarIcon("paper-plane"),
+                                }}
+                            />
+                            <Tabs.Screen
+                                name="settings"
+                                options={{
+                                    title: "Settings",
+                                    tabBarIcon: renderTabBarIcon("gear"),
+                                }}
+                            />
+                        </Tabs>
+                    </ThemeProvider>
                 </SafeAreaView>
             </SafeAreaProvider>
         </GluestackUIProvider>
