@@ -11,7 +11,7 @@ Level: passing
 | Document | Status | Reviewed |
 |---|---|---|
 | `GOVERNANCE` | `active` | 2026-10-26 |
-| `README` | `draft` | 2026-10-26 |
+| `README` | `active` | 2026-10-29 |
 | `CONTRIBUTING` | `active` | 2026-10-28 |
 | `SECURITY` | `active` | |
 | `REFERENCE` | `active` | 2026-10-28 |
