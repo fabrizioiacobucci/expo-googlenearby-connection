@@ -43,7 +43,17 @@ export function arrayReducer<T>(
     }
 }
 
-export const getColorSchemeName = (colorScheme: ColorSchemeName | null, mode?: ModeType): ModeType => {
+/**
+ * Resolves the theme mode of the app to the color scheme to show.
+ *
+ * @param colorScheme the color scheme of the system, or `null` when the system does not report one.
+ * @param [mode] the theme mode of the app; `"system"`, or none, follows the color scheme of the system.
+ * @returns `mode` when it is `"light"` or `"dark"`; otherwise the color scheme of the system, or `"light"` when the
+ * system does not report one.
+ * @example
+ * getColorSchemeName(useColorScheme(), "system"); // "dark" on a device in dark mode
+ */
+export const getColorSchemeName = (colorScheme: ColorSchemeName | null, mode?: ModeType): ColorSchemeName => {
     if (!mode || mode === "system") {
         return colorScheme ?? "light";
     }
