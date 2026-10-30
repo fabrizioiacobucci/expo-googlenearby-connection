@@ -48,5 +48,5 @@ With the example app on two devices, A and B:
 1. **Build:** from `example/`, `npx expo prebuild --clean` and `npx expo run:android` build with no Kotlin or Gradle errors.
 2. **Permissions:** on Settings, "Request permissions" shows the permission dialogs, and the badge reads "Permissions granted" once they are granted, with the location services on.
 3. **Advertising and discovery:** "Start advertising" on A and "Start discovering" on B show A's endpoint under "Endpoints" on B; "Stop advertising" and "Stop discovering" stop them.
-4. **Connection:** on B, the button with A's endpoint ID requests a connection; on Connections, "Accept" under "Connections out" on B and under "Connections in" on A opens it, and it shows under "Active connections" on both; "Disconnect" closes it.
+4. **Connection:** on B, the button with A's endpoint ID requests a connection; on Connections, A and B show the same code next to the endpoint ID, and "Accept" under "Connections out" on B and under "Connections in" on A opens it, and it shows under "Active connections" on both; "Disconnect" closes it.
 5. **Payloads:** on Payloads, bytes ("Send text"), a file ("Pick file", then "Send file") and a stream ("Init stream", then "Send stream") reach B, and their transfer reaches `SUCCESS`.

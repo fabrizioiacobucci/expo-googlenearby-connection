@@ -1,5 +1,5 @@
 import Nearby, { ConnectionInitiated, ConnectionResult, EndpointEvent } from "expo-googlenearby-connection";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { arrayReducer } from "../functions";
 import { useConnectionsContext } from "../context";
@@ -9,11 +9,14 @@ export default function useConnections() {
     const [connections, setConnections] = useConnectionsContext();
     const [connectionOut, setConnectionOut] = useReducer(arrayReducer<string>, []);
     const [connectionIn, setConnectionIn] = useReducer(arrayReducer<string>, []);
+    // Keyed by endpoint ID, since ConnectionRequested and ConnectionInitiated can arrive in either order
+    const [authenticationDigits, setAuthenticationDigits] = useState<Record<string, string>>({});
 
     useEventListener(Nearby, "StopAllEndpoints", () => {
         setConnections({ type: "EMPTY" });
         setConnectionOut({ type: "EMPTY" });
         setConnectionIn({ type: "EMPTY" });
+        setAuthenticationDigits({});
     });
 
     useEventListener(Nearby, "ConnectionRequested", (event: EndpointEvent) => {
@@ -23,6 +26,7 @@ export default function useConnections() {
     });
 
     useEventListener(Nearby, "ConnectionInitiated", (event: ConnectionInitiated) => {
+        setAuthenticationDigits((digits) => ({ ...digits, [event.endpointId]: event.authenticationDigits }));
         if (event.isIncomingConnection) {
             setConnectionIn({ type: "ADD", element: event.endpointId });
             console.log("Connection Initiated: " + event.endpointId);
@@ -33,6 +37,7 @@ export default function useConnections() {
     useEventListener(Nearby, "ConnectionResult", (event: ConnectionResult) => {
         setConnectionOut({ type: "REMOVE", element: event.endpointId });
         setConnectionIn({ type: "REMOVE", element: event.endpointId });
+        setAuthenticationDigits(({ [event.endpointId]: _removed, ...digits }) => digits);
 
         if (event.status.includes("SUCCESS")) {
             setConnections({ type: "ADD", element: event.endpointId });
@@ -47,5 +52,5 @@ export default function useConnections() {
         ToastAndroid.show("Endpoint Disconnection: " + event.endpointId, ToastAndroid.SHORT);
     });
 
-    return [connections, connectionOut, connectionIn] as const;
+    return [connections, connectionOut, connectionIn, authenticationDigits] as const;
 }

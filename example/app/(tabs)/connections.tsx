@@ -12,7 +12,7 @@ import { ThemedText } from "@/src/components/themedText";
 import { useEventListener } from "expo";
 
 export default function Connections() {
-    const [connections, connectionsOut, connectionsIn] = useConnections();
+    const [connections, connectionsOut, connectionsIn, authenticationDigits] = useConnections();
 
     useEventListener(Nearby, "BandwidthChanged", (event: BandwidthChanged) => {
         console.log("Bandwidth Changed: " + event.endpointId + " to " + event.quality);
@@ -40,8 +40,8 @@ export default function Connections() {
                         <ThemedText>No connections</ThemedText>
                     )}
                 </Group>
-                <ConnectionsInOut type="OUT" connections={connectionsOut} />
-                <ConnectionsInOut type="IN" connections={connectionsIn} />
+                <ConnectionsInOut type="OUT" connections={connectionsOut} authenticationDigits={authenticationDigits} />
+                <ConnectionsInOut type="IN" connections={connectionsIn} authenticationDigits={authenticationDigits} />
             </VStack>
         </ThemedScrollView>
     );
