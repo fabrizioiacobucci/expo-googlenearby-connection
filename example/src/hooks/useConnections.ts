@@ -57,8 +57,10 @@ export default function useConnections() {
         setConnectionOut({ type: "REMOVE", element: event.endpointId });
         setConnectionIn({ type: "REMOVE", element: event.endpointId });
         setAuthenticationDigits(({ [event.endpointId]: _removed, ...digits }) => digits);
+        console.log("Connection result: " + event.endpointId + " " + event.status);
 
-        if (event.status.includes("SUCCESS")) {
+        // The status is "[code]message", and code 0 means that the connection is open
+        if (event.status.startsWith("[0]")) {
             setConnections({ type: "ADD", element: event.endpointId });
             console.log("Connection Established: " + event.endpointId);
             ToastAndroid.show("Connection Established: " + event.endpointId, ToastAndroid.SHORT);
