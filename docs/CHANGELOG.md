@@ -12,6 +12,7 @@ Versions up to 0.1.4 were released before this repository adopted foss-docs-made
 - **Breaking:** for TypeScript, the functions of the module that declared no return type now take it from the native functions, instead of `any`. `newPayloadFile` and `newPayloadStream` return `string | null`, where `null` means that the payload was not created and an error event was sent, so code that uses their result as a `string` no longer type-checks.
 - **Breaking:** for TypeScript, `getPayloadInfo`, `isMarkSupportedStream`, `readStreamByte`, `readStreamByteArray`, `availableStream` and `skipStream` now declare that they can return `null`, as they already did when the operation failed, after an error event was sent; code that uses their result without checking for `null` no longer type-checks.
 - The Android library takes its `compileSdk` and `minSdk` from the app; when the app defines neither, it now falls back to 36 and 24 instead of 34 and 30.
+- The Android library uses Google Play services Nearby 19.5.1 instead of 19.3.0, and Location 21.4.0 instead of 21.3.0.
 
 ### Removed
 
