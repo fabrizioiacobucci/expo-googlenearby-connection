@@ -582,10 +582,10 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
                     sendEvent("ConnectionRequested", bundleOf("endpointId" to endpointId))
                 }
                 .addOnFailureListener { e ->
-                    sendError("ConnectionRequestFailed", e, endpoint)
+                    sendError("ConnectionRequestFailed", e, endpointId)
                 }
         } catch (e: IllegalArgumentException) {
-            sendError("ConnectionRequestFailed", e, endpoint)
+            sendError("ConnectionRequestFailed", e, endpointId)
         }
     }
 

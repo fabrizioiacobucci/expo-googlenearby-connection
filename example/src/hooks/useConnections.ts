@@ -15,7 +15,7 @@ import { useEventListener } from "expo";
  */
 function showFailure(operation: string) {
     return (event: Exception) => {
-        console.log(`${operation} failed: ${event.error}`);
+        console.log(`${operation} failed for ${event.data}: ${event.error}`);
         ToastAndroid.show(`${operation} failed: ${event.error}`, ToastAndroid.SHORT);
     };
 }

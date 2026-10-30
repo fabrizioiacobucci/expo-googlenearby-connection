@@ -21,5 +21,6 @@ Versions up to 0.1.4 were released before this repository adopted foss-docs-made
 ### Fixed
 
 - `flushStream`, `writeStreamByte`, `writeStreamByteArray`, `markStream` and `resetStream` resolve once the native operation has completed, instead of at once, so that code which awaits one of them, and then sends the stream, sends it after the operation.
+- `ConnectionRequestFailed` carries in the `data` of its `Exception` the ID of the endpoint that the connection was requested to, as REFERENCE states, instead of the name or the bytes that `requestConnectionName` or `requestConnectionInfo` sent.
 
 [Unreleased]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.1.4...HEAD
