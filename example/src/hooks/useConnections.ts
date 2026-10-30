@@ -1,9 +1,24 @@
-import Nearby, { ConnectionInitiated, ConnectionResult, EndpointEvent } from "expo-googlenearby-connection";
+import Nearby, { ConnectionInitiated, ConnectionResult, EndpointEvent, Exception } from "expo-googlenearby-connection";
 import { useReducer, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { arrayReducer } from "../functions";
 import { useConnectionsContext } from "../context";
 import { useEventListener } from "expo";
+
+/**
+ * Builds the listener of an event that reports a failed connection operation, which logs the error and shows it.
+ *
+ * @param operation - the operation that failed, as the user reads it.
+ * @returns the listener of the event.
+ * @example
+ * useEventListener(Nearby, "ConnectionAcceptFailed", showFailure("Accepting the connection"));
+ */
+function showFailure(operation: string) {
+    return (event: Exception) => {
+        console.log(`${operation} failed: ${event.error}`);
+        ToastAndroid.show(`${operation} failed: ${event.error}`, ToastAndroid.SHORT);
+    };
+}
 
 export default function useConnections() {
     const [connections, setConnections] = useConnectionsContext();
@@ -24,6 +39,10 @@ export default function useConnections() {
         console.log("Connection requested: " + event.endpointId);
         ToastAndroid.show("Connection requested: " + event.endpointId, ToastAndroid.SHORT);
     });
+
+    useEventListener(Nearby, "ConnectionRequestFailed", showFailure("Requesting the connection"));
+    useEventListener(Nearby, "ConnectionAcceptFailed", showFailure("Accepting the connection"));
+    useEventListener(Nearby, "ConnectionRejectFailed", showFailure("Rejecting the connection"));
 
     useEventListener(Nearby, "ConnectionInitiated", (event: ConnectionInitiated) => {
         setAuthenticationDigits((digits) => ({ ...digits, [event.endpointId]: event.authenticationDigits }));

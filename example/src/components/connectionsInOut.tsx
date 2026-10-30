@@ -6,7 +6,7 @@ import { Group } from "./group";
 
 /**
  * Lists the connections in one direction, each with the code that both devices show, and the buttons to accept or
- * reject it; a connection can be accepted only once its code has arrived.
+ * reject it; a connection can be accepted or rejected only once its code has arrived.
  *
  * @param type - "IN" for the connections that other endpoints requested, "OUT" for the ones this device requested.
  * @param connections - the endpoint IDs of the connections.
@@ -45,6 +45,7 @@ export default function ConnectionsInOut({
                         </Button>
                         <Button
                             action="negative"
+                            isDisabled={!authenticationDigits[value]}
                             onPress={() => {
                                 rejectConnection(value);
                             }}
