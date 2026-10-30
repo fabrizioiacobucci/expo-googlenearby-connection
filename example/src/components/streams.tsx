@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { PayloadType, readStreamByteArray, removePayload } from "expo-googlenearby-connection";
-import usePayload from "../hooks/usePayload";
+import { usePayloadsInContext } from "../context";
 import { uint8ArrayToString } from "../functions";
 import { Group } from "./group";
 import { ThemedText } from "./themedText";
 
 const Streams = () => {
-    const [receivedPayloads] = usePayload();
+    const [receivedPayloads] = usePayloadsInContext();
     const [streamData, setStreamData] = useState<Record<string, string>>({});
 
     useEffect(() => {

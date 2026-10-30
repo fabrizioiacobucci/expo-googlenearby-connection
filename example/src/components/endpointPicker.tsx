@@ -1,4 +1,4 @@
-import useConnections from "../hooks/useConnections";
+import { useConnectionsContext } from "../context";
 import { Group } from "./group";
 import {
     Select,
@@ -21,7 +21,7 @@ export default function EndpointPicker({
     endpointId: string;
     onChange: (endpointId: string) => void;
 }) {
-    const [connections] = useConnections();
+    const [connections] = useConnectionsContext();
 
     const isConnected = connections && connections.length > 0;
 

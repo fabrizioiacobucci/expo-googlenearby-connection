@@ -4,10 +4,10 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { connectionOptions } from "../options";
 import "@/global.css";
 import { ThemedText } from "./themedText";
-import useEndpointsFound from "../hooks/useEndpointsFound";
+import { useEndpointsContext } from "../context";
 
 export function EndpointsFound(props: { endpointName: string }) {
-    const [lastEndpoint, endpoints] = useEndpointsFound();
+    const [endpoints] = useEndpointsContext();
 
     const endpointsItems =
         endpoints && endpoints.length > 0 ? (
