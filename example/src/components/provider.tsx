@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useState } from "react";
+import { AppState } from "react-native";
 import {
     ConnectionsContextProvider,
     ConnectionsReducerProvider,
@@ -13,7 +14,7 @@ import {
     SetThemeProvider,
     ThemeContextProvider,
 } from "../context";
-import { arrayReducer, requestPermissions } from "../functions";
+import { arrayReducer, checkPermissions, requestPermissions } from "../functions";
 import { EndpointFound, PayloadReceivedInfo } from "expo-googlenearby-connection";
 import { ModeType } from "../types";
 
@@ -35,6 +36,17 @@ export function Provider(props: { children: React.ReactNode }) {
     useEffect(() => {
         updatePermissions();
     }, [updatePermissions]);
+
+    // Granting a permission in the Android settings does not restart the app, unlike revoking one
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", async (state) => {
+            if (state === "active") {
+                setPermissionsGranted((await checkPermissions()).granted);
+            }
+        });
+
+        return () => subscription.remove();
+    }, []);
 
     return (
         <ThemeContextProvider value={theme}>

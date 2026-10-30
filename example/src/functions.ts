@@ -1,7 +1,13 @@
 import { ColorSchemeName } from "react-native";
 import { ArrayReducerActions, Characters, ModeType, PermissionsResult } from "./types";
-import { EndpointEvent, PayloadEvent, requestPermissionsAsync } from "expo-googlenearby-connection";
+import {
+    EndpointEvent,
+    getPermissionsAsync,
+    PayloadEvent,
+    requestPermissionsAsync,
+} from "expo-googlenearby-connection";
 import * as Location from "expo-location";
+import { PermissionResponse } from "expo";
 
 export function stringToUint8Array(str: string) {
     const encoder = new TextEncoder();
@@ -84,13 +90,38 @@ export function payloadComparator<T extends PayloadEvent>(a: T, b: T) {
  * const { granted, canAskAgain } = await requestPermissions();
  */
 export async function requestPermissions(): Promise<PermissionsResult> {
-    const { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
-    const statusNearby = await requestPermissionsAsync();
-    console.log("Location permissions status: " + status);
-    console.log("Nearby permissions status: " + statusNearby.granted);
+    const location = await Location.requestForegroundPermissionsAsync();
+    const nearby = await requestPermissionsAsync();
+    console.log("Location permissions status: " + location.status);
+    console.log("Nearby permissions status: " + nearby.granted);
 
+    return combinePermissions(location, nearby);
+}
+
+/**
+ * Reads the status of the foreground location permission and of the permissions of Nearby Connections, without
+ * showing any dialog.
+ *
+ * @returns whether both are granted, and whether Android can still show the dialog of each permission denied.
+ * @example
+ * const { granted } = await checkPermissions();
+ */
+export async function checkPermissions(): Promise<PermissionsResult> {
+    return combinePermissions(await Location.getForegroundPermissionsAsync(), await getPermissionsAsync());
+}
+
+/**
+ * Combines the status of the location permission and of the permissions of Nearby Connections.
+ *
+ * @param location - the status of the foreground location permission.
+ * @param nearby - the status of the permissions of Nearby Connections.
+ * @returns whether both are granted, and whether Android can still show the dialog of each permission denied.
+ * @example
+ * combinePermissions(await Location.getForegroundPermissionsAsync(), await getPermissionsAsync());
+ */
+function combinePermissions(location: PermissionResponse, nearby: PermissionResponse): PermissionsResult {
     return {
-        granted: status === "granted" && statusNearby.granted,
-        canAskAgain: canAskAgain && statusNearby.canAskAgain,
+        granted: location.granted && nearby.granted,
+        canAskAgain: location.canAskAgain && nearby.canAskAgain,
     };
 }
