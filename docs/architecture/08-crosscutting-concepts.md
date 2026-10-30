@@ -32,7 +32,7 @@ The Kotlin of `android/` is not built here: the Gradle build of each app that in
 
 ## Release
 
-The module is released as the npm package `expo-googlenearby-connection`, whose content `.npmignore` selects: the build, the TypeScript sources, the Android library, an iOS stub, the module configuration and the documents, without the example app, the tests and the build scripts. Its versions follow Semantic Versioning over the public API that [REFERENCE](../REFERENCE.md#public-api) declares, as [CONTRIBUTING](../../CONTRIBUTING.md#how-to-contribute) states.
+The module is released as the npm package `expo-googlenearby-connection`, whose content `.npmignore` selects: the build, the TypeScript sources, the Android library, the module configuration, the README, the licence and the security policy, without the other documents, the example app, the tests and the build scripts. Its versions follow Semantic Versioning over the public API that [REFERENCE](../REFERENCE.md#public-api) declares, as [CONTRIBUTING](../../CONTRIBUTING.md#how-to-contribute) states.
 
 A release is made by the Maintainers, when the release criteria of the [DEFINITION-OF-DONE](../DEFINITION-OF-DONE.md#releases) are met and the tests on devices have passed:
 

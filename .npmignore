@@ -34,3 +34,14 @@ __tests__
 /android/build/**
 /example/
 /android/.idea/
+
+# Keep the documents of the repository out of the package, except the README, the licence and the
+# security policy: npm shows the README, whose links lead to the repository
+/AGENTS.md
+/CLAUDE.md
+/CONTRIBUTING.md
+/FRAMEWORK-FEEDBACK.md
+/docs/
+
+# expo-module.config.json declares Android only
+/ios/
