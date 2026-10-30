@@ -22,7 +22,7 @@ A change SHOULD, before it is merged:
 ## Setting up the environment
 
 - **Module:** Node.js 22.13 or later, as React Native 0.88 and Expo SDK 58 require. From the repository root, `npm install` installs the dependencies and builds the module into `build/`.
-- **Example app and native code:** the Android SDK, with compile SDK 36, a JDK 17, and two Android devices, since Nearby Connections needs two endpoints. The app in `example/` uses the module from this repository, as built in `build/`:
+- **Example app and native code:** the Android SDK, with compile SDK 37, which React Native 0.88 sets for the app, a JDK 17, and two Android devices, since Nearby Connections needs two endpoints. The app in `example/` uses the module from this repository, as built in `build/`:
   1. from the repository root, `npm install`, then `npm run build` after each change to `src/`; run in a terminal without `CI=1`, `npm run build` keeps rebuilding on each change;
   2. from `example/`, `npm install`, then `npx expo run:android` on each device.
 
