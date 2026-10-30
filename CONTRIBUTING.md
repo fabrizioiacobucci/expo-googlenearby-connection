@@ -50,3 +50,5 @@ With the example app on two devices, A and B:
 3. **Advertising and discovery:** "Start advertising" on A and "Start discovering" on B show A's endpoint under "Endpoints" on B; "Stop advertising" and "Stop discovering" stop them.
 4. **Connection:** on B, the button with A's endpoint ID requests a connection; on Connections, A and B show the same code next to the endpoint ID, and "Accept" under "Connections out" on B and under "Connections in" on A opens it, and it shows under "Active connections" on both; "Disconnect" closes it.
 5. **Payloads:** on Payloads, bytes ("Send text"), a file ("Pick file", then "Send file") and a stream ("Init stream", then "Send stream") reach B, and their transfer reaches `SUCCESS`.
+
+On Android 17, the "Nearby devices" permission group also holds the access to the local network, so a debug build whose "Nearby devices" permission has been denied or revoked no longer reaches Metro at `10.0.2.2`, from the emulator, or at the computer's address, and shows "Unable to load script". To reach Metro again, in the developer menu choose "Change Bundle Location", enter `localhost:8081`, and run `adb reverse tcp:8081 tcp:8081`.
