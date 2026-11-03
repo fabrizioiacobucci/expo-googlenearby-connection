@@ -5,7 +5,7 @@ The terms that the documents and the code of expo-googlenearby-connection use, o
 ## Requirements
 
 **BCP 14 keywords**:
-`MUST`, `SHOULD`, `MAY`, their synonyms (`REQUIRED`, `SHALL`, `RECOMMENDED`, `OPTIONAL`) and their negations, with the meanings of [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119), which they carry only in capitals ([RFC 8174](https://www.rfc-editor.org/rfc/rfc8174)). The documents of this repository use them with these meanings.
+`MUST`, `SHOULD`, `MAY`, their synonyms (`REQUIRED`, `SHALL`, `RECOMMENDED`, `OPTIONAL`) and their negations, written in capitals. In the documents of this repository, they and `SUGGESTED` carry the meanings of the entries "BCP 14 keywords" and "SUGGESTED" of the [GLOSSARY](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/GLOSSARY.md#requirements-and-quality) of foss-docs-made-simple, at the framework tag that the [README](../README.md#this-repository) states.
 _Avoid_: RFC 2119 keywords
 
 ## Nearby Connections
