@@ -6,6 +6,8 @@ The adopter's record of its level, of the state of its required documents, and o
 
 Level: passing
 
+The level is written after `Level:` as one word: `passing`, `silver` or `gold`.
+
 ## Register
 
 | Document | Status | Reviewed |
@@ -24,7 +26,8 @@ Level: passing
   - `draft`: the document is missing, or does not yet hold what the level requires;
   - `active`: the document holds what the level requires;
   - `retired`: the document is no longer required; its row MUST stay.
-- **Reviewed** is the date of the last review of the whole document, not of its last change; it is empty until the first review.
+- A document marked `active` that is found not to hold what the level requires is `draft`, as the definition above says. Its Reviewed date stays unchanged, unless the finding comes from a review of the whole document, such as the periodic checks of the framework's GOVERNANCE.
+- **Reviewed** is the date of the last review of the whole document, not of its last change; it is empty until the first review. Only such a review sets it: a change of status, to `active` included, leaves it unchanged.
 
 ## Log
 
@@ -35,5 +38,5 @@ Level: passing
 
 Replace `TAG` with the adopted framework tag.
 
-[governance]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/GOVERNANCE.md
-[index]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md
+[governance]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/GOVERNANCE.md
+[index]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/DOCUMENTS-INDEX.md

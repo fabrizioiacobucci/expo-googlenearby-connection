@@ -113,7 +113,7 @@ The example app in [example/](example/) uses every function of the module.
 - The functions, types and events of the module: [docs/REFERENCE.md](docs/REFERENCE.md).
 - The terms of the module, and the meanings of the BCP 14 keywords, such as MUST and SHOULD, in every project document: [docs/GLOSSARY.md](docs/GLOSSARY.md).
 - What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
-- This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.2.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
+- This repository follows [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple), at framework tag `v0.3.0`; its level is recorded in its [CHECKLIST](docs/CHECKLIST.md).
 
 ## License
 
