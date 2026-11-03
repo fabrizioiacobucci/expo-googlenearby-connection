@@ -6,8 +6,8 @@ How to contribute to this repository, the rules that every change follows, how t
 
 - Bugs, questions, feedback and proposals SHOULD be reported in the [issues](https://github.com/fabrizioiacobucci/expo-googlenearby-connection/issues), except security problems, which [SECURITY.md](SECURITY.md) routes.
 - Changes MUST be sent as pull requests to the `develop` branch; `main` receives `develop` at each release.
-- Every commit MUST carry a `Signed-off-by` line, by which its author certifies the [Developer Certificate of Origin](https://developercertificate.org/) (`git commit -s`), except the merge commits that GitHub creates for pull requests. This is an addition to the framework's [contribution rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/LICENSE-POLICY.md#contributions).
-- Commit messages MUST follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/), with the same exception; a breaking change of the public API is marked with `!` and a `BREAKING CHANGE` footer. This is an addition to the framework's [commit rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/CONVENTIONS.md#commits).
+- Every commit MUST carry a `Signed-off-by` line, by which its author certifies the [Developer Certificate of Origin](https://developercertificate.org/) (`git commit -s`), except the merge commits that GitHub creates for pull requests. This is an addition to the framework's [contribution rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/LICENSE-POLICY.md#contributions).
+- Commit messages MUST follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/), with the same exception; a breaking change of the public API is marked with `!` and a `BREAKING CHANGE` footer. This is an addition to the framework's [commit rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/CONVENTIONS.md#commits).
 - The versions of the npm package follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html), over the public API that [docs/REFERENCE.md](docs/REFERENCE.md#public-api) declares.
 
 ## What a change needs
@@ -30,11 +30,11 @@ A change SHOULD, before it is merged:
 
 ### Checks
 
-Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. No continuous integration runs them yet.
+Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. Continuous integration runs the checks of the project documents, with [.github/workflows/docs.yml](.github/workflows/docs.yml), on each pull request and on each push to `develop` and `main`; contributors run the other checks.
 
 - The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`.
 - The example app, from `example/`, once the module is built: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`.
-- The links of the Markdown files: `scripts/check-links.sh` of [foss-docs-made-simple](https://github.com/fabrizioiacobucci/foss-docs-made-simple/tree/v0.2.0/scripts), at tag `v0.2.0`, run on a copy of the files that git tracks, since it also reads `node_modules/`.
+- The project documents: `scripts/check-copies.sh .`, which compares the copies of `CHECKLIST` and `DEFINITION-OF-DONE` with the framework documents, and `scripts/check-links.sh .`, which checks the relative links of the Markdown files. Both are scripts of foss-docs-made-simple, run from the root of this repository with the path of a full clone of foss-docs-made-simple at tag `v0.3.0`, such as `../foss-docs-made-simple/scripts/check-copies.sh .`, as its [README](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/README.md#checking-the-project-documents) explains. A move to a newer framework tag also updates the tag that the workflow clones.
 
 ### Test policy
 

@@ -28,6 +28,6 @@ What an adopter checks at each change and at each release, so that its project d
 
 Replace `TAG` with the adopted framework tag.
 
-[index]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/DOCUMENTS-INDEX.md
-[conventions]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/CONVENTIONS.md
-[license-policy]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.2.0/framework/LICENSE-POLICY.md
+[index]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/DOCUMENTS-INDEX.md
+[conventions]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/CONVENTIONS.md
+[license-policy]: https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/LICENSE-POLICY.md
