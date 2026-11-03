@@ -30,11 +30,11 @@ A change SHOULD, before it is merged:
 
 ### Checks
 
-Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. No continuous integration runs them yet.
+Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. Continuous integration runs the checks of the project documents, with [.github/workflows/docs.yml](.github/workflows/docs.yml), on each pull request and on each push to `develop` and `main`; contributors run the other checks.
 
 - The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`.
 - The example app, from `example/`, once the module is built: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`.
-- The project documents: `scripts/check-copies.sh .`, which compares the copies of `CHECKLIST` and `DEFINITION-OF-DONE` with the framework documents, and `scripts/check-links.sh .`, which checks the relative links of the Markdown files. Both are scripts of foss-docs-made-simple, run from the root of this repository with the path of a full clone of foss-docs-made-simple at tag `v0.3.0`, such as `../foss-docs-made-simple/scripts/check-copies.sh .`, as its [README](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/README.md#checking-the-project-documents) explains.
+- The project documents: `scripts/check-copies.sh .`, which compares the copies of `CHECKLIST` and `DEFINITION-OF-DONE` with the framework documents, and `scripts/check-links.sh .`, which checks the relative links of the Markdown files. Both are scripts of foss-docs-made-simple, run from the root of this repository with the path of a full clone of foss-docs-made-simple at tag `v0.3.0`, such as `../foss-docs-made-simple/scripts/check-copies.sh .`, as its [README](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/README.md#checking-the-project-documents) explains. A move to a newer framework tag also updates the tag that the workflow clones.
 
 ### Test policy
 

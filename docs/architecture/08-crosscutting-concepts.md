@@ -12,8 +12,8 @@ The module has two parts: the TypeScript in `src/`, which apps call, and the Kot
 | The TypeScript does not compile, or breaks a rule of the code style | `npm run build` and `npm run lint`, run by contributors | Before each change to `src/` is merged |
 | The Kotlin does not build, or Nearby Connections does not work through the module | The [tests on devices](../../CONTRIBUTING.md#tests-on-devices), with the example app on two devices, run by contributors and by the Maintainers ([GOVERNANCE](../GOVERNANCE.md#roles)) | Before each change to `android/`, or to how a function calls the native module, is merged, and before each release |
 | The example app no longer builds against the module or the Expo SDK | `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android` in `example/`, run by contributors | Before each change to the module or to `example/` is merged |
-| A relative link of a Markdown file points to a missing file or heading | The link checker of foss-docs-made-simple, run by contributors | Before each change to a Markdown file is merged |
-| A copy of `CHECKLIST` or `DEFINITION-OF-DONE` differs from the framework document at the framework tag, or a value of the `CHECKLIST` has the wrong form | `check-copies.sh` of foss-docs-made-simple, run by contributors | Before each change to a Markdown file is merged |
+| A relative link of a Markdown file points to a missing file or heading | The link checker of foss-docs-made-simple, run by contributors and by continuous integration | Before each change to a Markdown file is merged |
+| A copy of `CHECKLIST` or `DEFINITION-OF-DONE` differs from the framework document at the framework tag, or a value of the `CHECKLIST` has the wrong form | `check-copies.sh` of foss-docs-made-simple, run by contributors and by continuous integration | Before each change to a Markdown file is merged |
 | A change leaves a project document inaccurate | The change criteria of the [DEFINITION-OF-DONE](../DEFINITION-OF-DONE.md#changes), checked by the Maintainers | Before each change is merged |
 | A required document is missing, or the release notes are not written | The release criteria of the [DEFINITION-OF-DONE](../DEFINITION-OF-DONE.md#releases), checked by the Documentation Owner | Before each release |
 
@@ -21,7 +21,7 @@ How to run each check, and which tests a change needs, is in [CONTRIBUTING](../.
 
 Known gaps, which no check covers yet:
 
-- no continuous integration runs the checks;
+- continuous integration runs only the checks of the project documents;
 - no automated test runs the Kotlin code;
 - the tests on devices are run by hand, so the versions of Android they cover are the ones that the tester has.
 
