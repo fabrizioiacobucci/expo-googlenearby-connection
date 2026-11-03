@@ -109,7 +109,7 @@ The example app in [example/](example/) uses every function of the module.
 
 - How to report a bug, propose a change or contribute: [CONTRIBUTING.md](CONTRIBUTING.md); discussion happens in the issues and pull requests.
 - How to report a vulnerability privately: [SECURITY.md](SECURITY.md).
-- The project documents of this repository are `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md` and `LICENSE` in its root, and the others in `docs/`.
+- The project documents of this repository are in its root and in `docs/`.
 - The functions, types and events of the module: [docs/REFERENCE.md](docs/REFERENCE.md).
 - The terms of the module, and the meanings of the BCP 14 keywords, such as MUST and SHOULD, in every project document: [docs/GLOSSARY.md](docs/GLOSSARY.md).
 - What changed between versions: [docs/CHANGELOG.md](docs/CHANGELOG.md).
