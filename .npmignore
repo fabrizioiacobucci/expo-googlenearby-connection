@@ -45,3 +45,6 @@ __tests__
 
 # expo-module.config.json declares Android only
 /ios/
+
+# Exclude the lint configuration, which apps do not use
+/eslint.config.cjs
