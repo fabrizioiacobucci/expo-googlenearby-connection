@@ -25,6 +25,11 @@ export default function usePayload() {
         setPayloadsOut({ type: "ADD", element: event.payloadId });
     });
 
+    useEventListener(Nearby, "PayloadRemovedAll", () => {
+        setPayloadsIn({ type: "EMPTY" });
+        setPayloadsOut({ type: "EMPTY" });
+    });
+
     useEventListener(Nearby, "PayloadRemoved", (event: PayloadEvent) => {
         setPayloadsIn({ type: "REMOVE", element: event, comparator: payloadComparator });
         setPayloadsOut({ type: "REMOVE", element: event.payloadId });
