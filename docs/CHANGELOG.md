@@ -24,6 +24,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 - `ConnectionRequestFailed` carries in the `data` of its `Exception` the ID of the endpoint that the connection was requested to, as REFERENCE states, instead of the name or the bytes that `requestConnectionName` or `requestConnectionInfo` sent.
 - `removePayloadAll` removes every payload and emits `PayloadRemovedAll` also when the queue holds more than one payload, instead of throwing an error to JavaScript.
 - `setPayloadProperty` sets `OFFSET` on a payload of bytes and on a stream payload too, as on a file payload, instead of emitting `PayloadInvalidArguments`.
+- `readStreamByteArray` returns an array of `offset + length` bytes, with the bytes read from index `offset`, instead of emitting `PayloadException` whenever `offset` is greater than 0.
 
 ## [0.1.4] - 2025-01-28
 

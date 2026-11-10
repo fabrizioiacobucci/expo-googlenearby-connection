@@ -300,9 +300,9 @@ export async function readStreamByte(payloadId: string): Promise<number | null> 
 /**
  * Reads a byte array from the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @param {number} offset - The offset to start reading from.
+ * @param {number} offset - The index of the returned array at which the bytes read start.
  * @param {number} length - The number of bytes to read.
- * @returns {Promise<Uint8Array | null>} The byte array read from the stream, or null if the operation failed, after an error event was sent.
+ * @returns {Promise<Uint8Array | null>} An array of `offset + length` bytes, with the bytes read from index `offset`, or null if the operation failed, after an error event was sent.
  */
 export async function readStreamByteArray(
     payloadId: string,
