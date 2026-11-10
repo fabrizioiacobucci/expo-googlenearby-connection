@@ -22,6 +22,7 @@ How to run each check, and which tests a change needs, is in [CONTRIBUTING](../.
 Known gaps, which no check covers yet:
 
 - continuous integration runs only the checks of the project documents;
+- the Jest tests cover only the stream functions that write to, flush, mark and reset a stream, and the tests on devices only the functions that the example app calls, so the other functions of the public API, such as `getPayloadInfo`, `setPayloadProperty` and `removePayloadAll`, are not tested;
 - no automated test runs the Kotlin code;
 - the tests on devices are run by hand, so the versions of Android they cover are the ones that the tester has.
 
