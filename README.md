@@ -82,8 +82,8 @@ useEventListener(Nearby, "EndpointFound", (event: EndpointFound) => {
     requestConnectionName("Device B", event.endpointId);
 });
 
-// On both devices: accept the connection once the user has checked that both devices show the same code,
-// then send once it is open
+// On both devices: accept the connection once the user has checked that both devices show the same
+// authentication digits, then send once it is open
 useEventListener(Nearby, "ConnectionInitiated", (event: ConnectionInitiated) => {
     Alert.alert(`Connect to ${event.endpointName}?`, `Code: ${event.authenticationDigits}`, [
         { text: "Reject", onPress: () => rejectConnection(event.endpointId) },

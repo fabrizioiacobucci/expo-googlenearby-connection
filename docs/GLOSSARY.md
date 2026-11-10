@@ -42,6 +42,10 @@ Looking for the endpoints that advertise a service ID. The functions say "discov
 What one endpoint sends to a discovered endpoint to open a connection; the connection opens once both endpoints accept it.
 _Avoid_: invitation, pairing
 
+**Authentication digits**:
+The short code that Google Nearby Connections gives both endpoints of a connection request, in the `authenticationDigits` of `ConnectionInitiated`; when both users see the same one, they are connecting the devices they mean to, so an app shows it before the connection is accepted.
+_Avoid_: PIN, pairing code
+
 **Connection**:
 The link between two endpoints after both have accepted a connection request, over which they send payloads.
 
