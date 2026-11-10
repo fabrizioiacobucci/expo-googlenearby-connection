@@ -63,6 +63,16 @@ export default function index() {
         ToastAndroid.show("DiscoveringStarted", ToastAndroid.SHORT);
     });
 
+    useEventListener(Nearby, "AdvertisingStopped", () => {
+        console.log("AdvertisingStopped");
+        ToastAndroid.show("AdvertisingStopped", ToastAndroid.SHORT);
+    });
+
+    useEventListener(Nearby, "DiscoveringStopped", () => {
+        console.log("DiscoveringStopped");
+        ToastAndroid.show("DiscoveringStopped", ToastAndroid.SHORT);
+    });
+
     return (
         <ThemedScrollView>
             <VStack>

@@ -15,6 +15,11 @@ export default function useEndpointsFound() {
         ToastAndroid.show("All endpoints stopped", ToastAndroid.SHORT);
     });
 
+    // Once discovery stops, Google Nearby Connections reports no more lost endpoints, so the list would go stale
+    useEventListener(Nearby, "DiscoveringStopped", () => {
+        setEndpointsFound({ type: "EMPTY" });
+    });
+
     useEventListener(Nearby, "EndpointFound", (event: EndpointFound) => {
         setEndpointsFound({ type: "ADD", element: event, comparator: endpointComparator });
         setLastEndpointFound(event);
