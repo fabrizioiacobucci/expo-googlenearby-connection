@@ -25,6 +25,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 - `removePayloadAll` removes every payload and emits `PayloadRemovedAll` also when the queue holds more than one payload, instead of throwing an error to JavaScript.
 - `setPayloadProperty` sets `OFFSET` on a payload of bytes and on a stream payload too, as on a file payload, instead of emitting `PayloadInvalidArguments`.
 - `readStreamByteArray` returns an array of `offset + length` bytes, with the bytes read from index `offset`, instead of emitting `PayloadException` whenever `offset` is greater than 0.
+- For TypeScript, the listener of `LocationPromptRejected` takes its `Exception`, which the module already sent and REFERENCE already listed.
 
 ## [0.1.4] - 2025-01-28
 
