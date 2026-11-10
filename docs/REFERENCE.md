@@ -37,7 +37,7 @@ The rest of the external interface is outside the public API: the methods of the
   });
   ```
 
-- **Errors.** A function reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, whose data is an `Exception`, instead of throwing; after it, a function whose return type includes `null` returns `null`, or resolves with it. Four functions are outside this convention, and emit no error event: `newPayloadBytes`, `getPayloadInfoList`, `getPayloadList` and `payloadExists`, which throws when its argument is not the string of an integer. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
+- **Errors.** A function reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, whose data is an `Exception`, instead of throwing; after it, a function whose return type includes `null` returns `null`, or resolves with it. Four of the functions that return a value are outside this convention, since they emit no error event and never return `null`: `newPayloadBytes`, `getPayloadInfoList`, `getPayloadList` and `payloadExists`, which throws when its argument is not the string of an integer. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
 - **Payload IDs.** A payload is identified by its ID, a 64-bit integer passed as a string, so that JavaScript does not round it. The module keeps the inbound and outbound payloads in a queue, which the payload functions query and change.
 - **Streams.** An app MUST write to a stream payload, with `writeStreamByte` or `writeStreamByteArray`, before sending it, since Google Nearby Connections does not send a stream payload that has no data yet.
 - **Location.** To discover, an app MUST hold the permissions and have the location services of the device on, also on the Android versions on which Google's documentation says that location is not needed; when they are off, `startDiscovering` asks the user to turn them on.
@@ -122,11 +122,11 @@ acceptConnection(endpointId);
 | `getPayloadList()` | `string[]` | Returns the ID of every payload in the queue. | |
 | `payloadExists(payloadId: string)` | `boolean` | Tells whether a payload is in the queue. | |
 | `setPayloadProperty(payloadId: string, name: PayloadProperty, value: string)` | `void` | Sets a property of a payload. | on failure, an error event |
-| `removePayload(payloadId: string)` | `void` | Removes a payload from the queue. | `PayloadRemoved`, `PayloadRemoveFailed` |
+| `removePayload(payloadId: string)` | `void` | Removes a payload from the queue. | `PayloadRemoved`; on failure, an error event |
 | `removePayloadAll()` | `void` | Removes every payload from the queue. | `PayloadRemovedAll` |
 | `cancelPayload(payloadId: string)` | `void` | Cancels the transfer of a payload. | `PayloadCanceled`, `PayloadCancelFailed` |
 
-The error events of the payload functions are `PayloadNotFound`, `PayloadInvalidArguments`, `PayloadIOException` and `PayloadException`.
+The error events of the payload functions are `PayloadNotFound`, `PayloadInvalidArguments`, `PayloadIOException` and `PayloadException`. Every function that takes a payload ID, except `payloadExists`, emits one of them when the ID is not valid or is not in the queue, `sendPayloadToEndpoint`, `sendPayloadToEndpoints` and `cancelPayload` included: `PayloadSendFailed` and `PayloadCancelFailed` report only a failure of Google Nearby Connections. The module does not emit `PayloadRemoveFailed`, since one of the four events above reports a removal that fails.
 
 ```ts
 import { newPayloadBytes, sendPayloadToEndpoint } from "expo-googlenearby-connection";
