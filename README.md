@@ -11,7 +11,7 @@ The module reports what happens, success or failure, through events, and handles
 ## Requirements
 
 - Expo SDK 58 or later, from version 0.2.0 of the module; apps on an older Expo SDK can keep version 0.1.4, which was built for Expo SDK 52 ([ADR 0001](docs/adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
-- Android only: a device with Android 7.0 (API 24) or later, and with Google Play services, which provide Google Nearby Connections.
+- Android only: a device with Android 7.0 (API 24) or later, and with Google Play services, which provide Google Nearby Connections. The tests on devices of version 0.2.0 ran between a device with Android 11 and one with Android 15, and those of the build and of the permissions also on an emulator with Android 17; the module is not tested on Android 10 and older.
 - An app that also runs on another platform SHOULD import the package only on Android, for example from a file with a [platform-specific extension](https://reactnative.dev/docs/platform-specific-code#platform-specific-extensions), such as `.android.ts`. On iOS, importing the package throws an error, since the native module does not exist there; on the web, only `getPermissionsAsync`, `requestPermissionsAsync` and `usePermissions` work, and report the permissions as undetermined.
 
 ## Installation in managed Expo projects
