@@ -1,6 +1,6 @@
 ---
 status: accepted
-date: 2026-10-29
+date: 2026-11-10
 decision-makers: "@fabrizioiacobucci"
 ---
 
@@ -29,7 +29,7 @@ Chosen option: "Upgrade in place, straight to SDK 58", because no release is mad
 
 The next release supports SDK 58 and later only. Its peer dependency on `expo` is `>=58.0.0`; the one on React 18 is dropped, and `react` and `react-native` take any version, as in the SDK 58 template, since an Expo SDK fixes them. Apps on an older SDK keep version 0.1.4. Dropping those SDKs breaks compatibility, so the next release is 0.2.0, as Semantic Versioning allows a breaking change in a minor release before 1.0.0.
 
-How the module is built, tested and linted under SDK 58 is a decision of its own, recorded in a later ADR.
+How the module is built, tested and linted under SDK 58 is a decision of its own, recorded in [ADR 0002](0002-build-test-and-lint-as-the-sdk-58-template.md).
 
 ### Consequences
 
@@ -61,4 +61,4 @@ This ADR becomes `accepted` in the change that updates the dependencies of the m
 
 The SDK 58 versions come from the npm registry: [`expo` 58.0.19](https://www.npmjs.com/package/expo/v/58.0.19), whose `bundledNativeModules.json` lists the bundled versions, and [`expo-module-template` 58.0.8](https://www.npmjs.com/package/expo-module-template/v/58.0.8), the template that `create-expo-module` 58 generates modules from.
 
-The consequence on `ExpoGoogleNearbyConnectionModuleClass` was added on 2026-10-27, after this ADR was accepted, when the upgrade showed it; on 2026-10-29 it was corrected, since 0.2.0 has more than two breaking changes, and extended to the return types that follow from it. Neither change alters the decision.
+The consequence on `ExpoGoogleNearbyConnectionModuleClass` was added on 2026-10-27, after this ADR was accepted, when the upgrade showed it; on 2026-10-29 it was corrected, since 0.2.0 has more than two breaking changes, and extended to the return types that follow from it. Neither change alters the decision. On 2026-11-10 the link to ADR 0002 was added, in place of "a later ADR".
