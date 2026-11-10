@@ -68,8 +68,11 @@ A payload whose data the sending app writes over time, with the stream functions
 ## The module
 
 **Native module**:
-The Kotlin part of the module, which calls Google Nearby Connections; JavaScript reaches it through the default export of the package.
+The Kotlin part of the module, which calls Google Nearby Connections; JavaScript reaches it through the native module object.
 _Avoid_: bridge
+
+**Native module object**:
+The object that the package exports by default: its methods call the native module, and an app listens to the events on it. On the web it exists without a native module, with the two permission methods only.
 
 **Event**:
 A notification that the native module sends to JavaScript, which an app listens to with `useEventListener`.
