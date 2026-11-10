@@ -18,7 +18,6 @@ function BytesPayload({
     onChange: (file: string) => void;
     disabled: boolean;
 }) {
-    console.log("Bytes Payload - Target Endpoint: " + targetEndpoint);
     return (
         <View>
             <Input
@@ -37,11 +36,17 @@ function BytesPayload({
                 action="primary"
                 isDisabled={disabled}
                 onPress={() => {
-                    if (targetEndpoint)
-                        sendPayloadToEndpoint(targetEndpoint, newPayloadBytes(stringToUint8Array(string)));
+                    if (targetEndpoint) {
+                        const payloadId = newPayloadBytes(stringToUint8Array(string));
+                        console.log(`Sending bytes payload ${payloadId} to ${targetEndpoint}`);
+                        sendPayloadToEndpoint(targetEndpoint, payloadId);
+                    }
 
-                    if (targetEndpoints)
-                        sendPayloadToEndpoints(targetEndpoints, newPayloadBytes(stringToUint8Array(string)));
+                    if (targetEndpoints) {
+                        const payloadId = newPayloadBytes(stringToUint8Array(string));
+                        console.log(`Sending bytes payload ${payloadId} to ${targetEndpoints.join(", ")}`);
+                        sendPayloadToEndpoints(targetEndpoints, payloadId);
+                    }
                 }}
             >
                 <ButtonText>Send text</ButtonText>
