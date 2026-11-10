@@ -22,7 +22,7 @@ The public API is narrower than the external interface ([ADR 0003](adr/0003-name
 - the named exports of the package, except the type `ExpoGoogleNearbyConnectionModuleClass`, with their names, parameters, return types and behavior, including the events each function emits;
 - the names of the events of the module and the types of their data.
 
-The rest of the external interface is outside the public API: the methods of the native module object, the type `ExpoGoogleNearbyConnectionModuleClass`, which declares them, and the Android permissions.
+The rest of the external interface is outside the public API: the methods of the native module object, the type `ExpoGoogleNearbyConnectionModuleClass`, which declares them, and the Android permissions. The public API covers the module on Android: what the package does on iOS and on the web is outside it too.
 
 ## Conventions
 
