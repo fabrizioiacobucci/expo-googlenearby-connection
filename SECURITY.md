@@ -23,4 +23,4 @@ The maintainers MUST send a first response to a private report within 14 days.
 
 ## Supported versions
 
-Security fixes are released only in new versions of the module, which need Expo SDK 58 or later. Version 0.1.4 and the earlier ones, for apps on Expo SDK 52 or older, receive no fixes ([ADR 0001](docs/adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
+Security fixes are released only in new versions of the module, which need Expo SDK 58 or later. Version 0.1.4 and the earlier ones, built for Expo SDK 52, receive no fixes ([ADR 0001](docs/adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
