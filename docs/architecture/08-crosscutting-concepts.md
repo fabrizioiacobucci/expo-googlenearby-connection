@@ -44,4 +44,4 @@ A release is made by the Maintainers, when the release criteria of the [DEFINITI
 
 ## Errors
 
-The module reports a failure of Google Nearby Connections through an error event, not by throwing, and a function that returns a value returns `null` after such a failure. [REFERENCE](../REFERENCE.md#conventions) describes this convention.
+The module reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, not by throwing, and a function whose return type includes `null` returns `null` after such a failure. [REFERENCE](../REFERENCE.md#conventions) describes this convention, and names the functions outside it.
