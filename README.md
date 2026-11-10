@@ -118,4 +118,4 @@ The example app in [example/](example/) uses every function of the module.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
