@@ -8,7 +8,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 
 ### Changed
 
-- **Breaking:** the module supports Expo SDK 58 and later only, with React 19 and React Native 0.88. Apps on an older Expo SDK can keep version 0.1.4 ([ADR 0001](adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
+- **Breaking:** the module supports Expo SDK 58 and later only, with React 19 and React Native 0.88. Apps on Expo SDK 52 or older can keep version 0.1.4, which needs React 18; no version of the module supports Expo SDK 53 to 57 ([ADR 0001](adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
 - **Breaking:** for TypeScript, the functions of the module that declared no return type now take it from the native functions, instead of `any`. Among them, `newPayloadStream` returns `string | null`, where `null` means that the payload was not created and an error event was sent, as `newPayloadFile` already did, so code that uses its result as a `string` no longer type-checks.
 - **Breaking:** for TypeScript, `getPayloadInfo`, `isMarkSupportedStream`, `readStreamByte`, `readStreamByteArray`, `availableStream` and `skipStream` now declare that they can return `null`, as they already did when the operation failed, after an error event was sent; code that uses their result without checking for `null` no longer type-checks.
 - The Android library takes its `compileSdk` and `minSdk` from the app; when the app defines neither, it now falls back to 36 and 24 instead of 34 and 28.
