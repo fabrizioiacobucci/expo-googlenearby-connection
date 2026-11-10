@@ -1,7 +1,7 @@
 {
     "name": "expo-googlenearby-connection",
     "version": "0.2.0",
-    "description": "Expo module for Google Nearby Connection SDK",
+    "description": "Expo module that lets an Android app find nearby devices, connect to them and exchange bytes, files and streams through Google Nearby Connections",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
