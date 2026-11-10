@@ -32,7 +32,7 @@ The public API is:
 * the named exports of the package, with their names, parameters, return types and behavior, including the events each function emits, and except the type `ExpoGoogleNearbyConnectionModuleClass`;
 * the names of the events of the module and the types of their data.
 
-An app uses the default export only to listen to the events. The methods of the native module object, the type that declares them and the Android permissions are outside the public API, so a minor or a patch release can change them. Each change of the permissions is listed in the [CHANGELOG](../CHANGELOG.md), since it changes the manifest of the app and the dialogs that its users see. [REFERENCE](../REFERENCE.md#public-api) declares the public API, and describes the whole external interface.
+An app uses the default export only to listen to the events. The methods of the native module object, the type that declares them and the Android permissions are outside the public API, so a minor or a patch release can change them. So is what the package does on iOS and on the web, since the module supports Android only. Each change of the permissions is listed in the [CHANGELOG](../CHANGELOG.md), since it changes the manifest of the app and the dialogs that its users see. [REFERENCE](../REFERENCE.md#public-api) declares the public API, and describes the whole external interface.
 
 ### Consequences
 
@@ -65,3 +65,5 @@ The decision is confirmed when REFERENCE declares the public API as above, a bre
 This ADR was written after its decision. The decision was made on 2026-10-28, when REFERENCE was written and first declared the public API, and on 2026-10-30 it was confirmed for the permissions, with the rule that each change of them goes to the CHANGELOG. It had no ADR until a review of the project documents, on 2026-11-10, found that it affects the external interface, which the [DEFINITION-OF-DONE](../DEFINITION-OF-DONE.md#changes) names among the significant architectural decisions.
 
 The type `ExpoGoogleNearbyConnectionModuleEvents`, which maps the name of each event to its listener, is a named export inside the public API: it holds only the names of the events and the types of their data.
+
+On 2026-11-10, after this ADR was accepted, it was added that what the package does on iOS and on the web is outside the public API. The chosen option stays the same.
