@@ -6,7 +6,7 @@ The external interface of expo-googlenearby-connection, and the part of it that 
 
 The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or later. It runs on Android only: on devices with Android 7.0 (API 24) or later, the oldest version that Expo SDK 58 supports, that have Google Play services, which provide Google Nearby Connections. It has no command line, no configuration file and no config plugin. An app uses:
 
-- the named exports of the package: the functions, the `usePermissions` hook, the types and the enums described below;
+- the named exports of the package: the functions, the `usePermissions` hook, the types and the enums described below, and two types that describe the native module object: `ExpoGoogleNearbyConnectionModuleEvents`, which maps the name of each event to its listener, and `ExpoGoogleNearbyConnectionModuleClass`, which declares the methods of the object;
 - the default export of the package, the native module object, to listen to the events of the module with `useEventListener` from `expo`;
 - the Android permissions that the module declares in its manifest, which the build merges into the app's manifest, and that `requestPermissionsAsync` requests at run time:
   - on every Android version: `ACCESS_WIFI_STATE`, `CHANGE_WIFI_STATE` and `ACCESS_COARSE_LOCATION`;
@@ -19,10 +19,10 @@ The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or
 
 The public API is narrower than the external interface. It is:
 
-- the named exports of the package, with their names, parameters, return types and behavior, including the events each function emits;
+- the named exports of the package, except the type `ExpoGoogleNearbyConnectionModuleClass`, with their names, parameters, return types and behavior, including the events each function emits;
 - the names of the events of the module and the types of their data.
 
-The rest of the external interface is outside the public API: the methods of the native module object, its class `ExpoGoogleNearbyConnectionModuleClass`, and the Android permissions.
+The rest of the external interface is outside the public API: the methods of the native module object, the type `ExpoGoogleNearbyConnectionModuleClass`, which declares them, and the Android permissions.
 
 ## Conventions
 
@@ -37,7 +37,7 @@ The rest of the external interface is outside the public API: the methods of the
   });
   ```
 
-- **Errors.** A function does not throw when Google Nearby Connections fails: it emits an error event, whose data is an `Exception`, and a function that returns a value returns `null`. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
+- **Errors.** A function reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, whose data is an `Exception`, instead of throwing; after it, a function whose return type includes `null` returns `null`, or resolves with it. Four functions are outside this convention, and emit no error event: `newPayloadBytes`, `getPayloadInfoList`, `getPayloadList` and `payloadExists`, which throws when its argument is not the string of an integer. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
 - **Payload IDs.** A payload is identified by its ID, a 64-bit integer passed as a string, so that JavaScript does not round it. The module keeps the inbound and outbound payloads in a queue, which the payload functions query and change.
 - **Streams.** An app MUST write to a stream payload, with `writeStreamByte` or `writeStreamByteArray`, before sending it, since Google Nearby Connections does not send a stream payload that has no data yet.
 - **Location.** To discover, an app MUST hold the permissions and have the location services of the device on, also on the Android versions on which Google's documentation says that location is not needed; when they are off, `startDiscovering` asks the user to turn them on.
