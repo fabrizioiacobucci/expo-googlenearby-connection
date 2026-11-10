@@ -4,15 +4,16 @@ The external interface of expo-googlenearby-connection, and the part of it that 
 
 ## External interface
 
-The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or later, on Android only. It has no command line, no configuration file and no config plugin. An app uses:
+The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or later. It runs on Android only: on devices with Android 7.0 (API 24) or later, the oldest version that Expo SDK 58 supports, that have Google Play services, which provide Google Nearby Connections. It has no command line, no configuration file and no config plugin. An app uses:
 
 - the named exports of the package: the functions, the `usePermissions` hook, the types and the enums described below;
 - the default export of the package, the native module object, to listen to the events of the module with `useEventListener` from `expo`;
 - the Android permissions that the module declares in its manifest, which the build merges into the app's manifest, and that `requestPermissionsAsync` requests at run time:
   - on every Android version: `ACCESS_WIFI_STATE`, `CHANGE_WIFI_STATE` and `ACCESS_COARSE_LOCATION`;
+  - on Android 10 (API 29) and later: also `ACCESS_FINE_LOCATION`;
   - on Android 12 (API 31) and later: `BLUETOOTH_SCAN`, `BLUETOOTH_ADVERTISE` and `BLUETOOTH_CONNECT`, and on Android 13 (API 33) and later also `NEARBY_WIFI_DEVICES`;
   - before Android 12: `BLUETOOTH` and `BLUETOOTH_ADMIN`;
-  - the manifest also declares `INTERNET` and `ACCESS_FINE_LOCATION`, which the module does not request.
+  - the manifest declares all the permissions above on every Android version, and also `INTERNET`, the only one that the module never requests.
 
 ## Public API
 
