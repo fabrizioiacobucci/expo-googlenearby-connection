@@ -121,7 +121,7 @@ acceptConnection(endpointId);
 | `getPayloadInfoList()` | `PayloadInfo[]` | Returns the information of every payload in the queue. | |
 | `getPayloadList()` | `string[]` | Returns the ID of every payload in the queue. | |
 | `payloadExists(payloadId: string)` | `boolean` | Tells whether a payload is in the queue. | |
-| `setPayloadProperty(payloadId: string, name: PayloadProperty, value: string)` | `void` | Sets a property of a payload: `OFFSET` on any payload, the other properties on a file payload only. | on failure, an error event |
+| `setPayloadProperty(payloadId: string, name: PayloadProperty, value: string)` | `void` | Sets a property of a payload: `OFFSET` on a file or a stream payload, the other properties on a file payload only. | on failure, an error event |
 | `removePayload(payloadId: string)` | `void` | Removes a payload from the queue. | `PayloadRemoved`; on failure, an error event |
 | `removePayloadAll()` | `void` | Removes every payload from the queue. | `PayloadRemovedAll` |
 | `cancelPayload(payloadId: string)` | `void` | Cancels the transfer of a payload. | `PayloadCanceled`, `PayloadCancelFailed` |
