@@ -72,7 +72,7 @@ The Kotlin part of the module, which calls Google Nearby Connections; JavaScript
 _Avoid_: bridge
 
 **Event**:
-A message that the native module sends to JavaScript, which an app listens to with `useEventListener`.
+A notification that the native module sends to JavaScript, which an app listens to with `useEventListener`.
 
 **Error event**:
 An event that reports a failure, whose data is an `Exception`.
