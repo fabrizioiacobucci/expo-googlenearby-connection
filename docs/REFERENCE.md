@@ -17,7 +17,7 @@ The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or
 
 ## Public API
 
-The public API is narrower than the external interface. It is:
+The public API is narrower than the external interface ([ADR 0003](adr/0003-named-exports-and-events-as-the-public-api.md)). It is:
 
 - the named exports of the package, except the type `ExpoGoogleNearbyConnectionModuleClass`, with their names, parameters, return types and behavior, including the events each function emits;
 - the names of the events of the module and the types of their data.
