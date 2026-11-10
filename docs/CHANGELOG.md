@@ -4,6 +4,8 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-10
+
 ### Changed
 
 - **Breaking:** the module supports Expo SDK 58 and later only, with React 19 and React Native 0.88. Apps on an older Expo SDK can keep version 0.1.4 ([ADR 0001](adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
@@ -69,7 +71,8 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 
 - First release: an Expo module for Android that exposes Google Nearby Connections to JavaScript and TypeScript, with functions to check and request its permissions, advertise, discover, connect, and send and receive payloads of bytes, files and streams, and with events that report their results and errors. iOS is not supported.
 
-[Unreleased]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.1.4...HEAD
+[Unreleased]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/fabrizioiacobucci/expo-googlenearby-connection/compare/0.1.4...0.2.0
 [0.1.4]: https://www.npmjs.com/package/expo-googlenearby-connection/v/0.1.4
 [0.1.3]: https://www.npmjs.com/package/expo-googlenearby-connection/v/0.1.3
 [0.1.2]: https://www.npmjs.com/package/expo-googlenearby-connection/v/0.1.2
