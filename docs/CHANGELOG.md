@@ -26,6 +26,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 - `setPayloadProperty` sets `OFFSET` on a stream payload too, as on a file payload, instead of emitting `PayloadInvalidArguments`.
 - `readStreamByteArray` returns an array of `offset + length` bytes, with the bytes read from index `offset`, instead of emitting `PayloadException` whenever `offset` is greater than 0.
 - For TypeScript, the listener of `LocationPromptRejected` takes its `Exception`, which the module already sent and REFERENCE already listed.
+- `getPayloadInfo` and `getPayloadInfoList` return the payload ID as a string, as REFERENCE states, instead of a number that JavaScript rounds, since a payload ID is a 64-bit integer.
 
 ## [0.1.4] - 2025-01-28
 

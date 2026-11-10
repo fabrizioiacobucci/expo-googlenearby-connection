@@ -130,7 +130,7 @@ object PayloadHandler {
         val payload = get(payloadId)
 
         val info = bundleOf(
-            "id" to payload.id,
+            "id" to payload.id.toString(),
             "type" to payload.type,
             "offset" to payload.offset
         )
