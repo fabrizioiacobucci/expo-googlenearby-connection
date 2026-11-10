@@ -223,7 +223,7 @@ export function payloadExists(payloadId: string): boolean {
 /**
  * Sets a property of a payload with a given name, ID, and value.
  * @param {string} payloadId - The ID of the payload.
- * @param {PayloadProperty} name - The name of the property: `OFFSET` on any payload, the others on a file payload only.
+ * @param {PayloadProperty} name - The name of the property: `OFFSET` on a file or a stream payload, the others on a file payload only.
  * @param {string} value - The value of the property.
  */
 export function setPayloadProperty(payloadId: string, name: PayloadProperty, value: string) {
