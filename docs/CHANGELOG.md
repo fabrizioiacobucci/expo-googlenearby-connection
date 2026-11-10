@@ -22,6 +22,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 
 - `flushStream`, `writeStreamByte`, `writeStreamByteArray`, `markStream` and `resetStream` resolve once the native operation has completed, instead of at once, so that code which awaits one of them, and then sends the stream, sends it after the operation.
 - `ConnectionRequestFailed` carries in the `data` of its `Exception` the ID of the endpoint that the connection was requested to, as REFERENCE states, instead of the name or the bytes that `requestConnectionName` or `requestConnectionInfo` sent.
+- `removePayloadAll` removes every payload and emits `PayloadRemovedAll` also when the queue holds more than one payload, instead of throwing an error to JavaScript.
 
 ## [0.1.4] - 2025-01-28
 

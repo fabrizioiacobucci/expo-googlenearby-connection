@@ -98,7 +98,7 @@ object PayloadHandler {
      * Removes all Payloads.
      */
     fun removeAll() {
-        _payloads.forEach { (_, payload) -> remove(payload.id) }
+        _payloads.keys.toList().forEach { remove(it) }
     }
 
     /**
