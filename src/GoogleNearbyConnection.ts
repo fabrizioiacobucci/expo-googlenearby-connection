@@ -170,7 +170,7 @@ export function newPayloadStream(size?: number) {
 
 /**
  * Sends a payload to given endpoint ID.
- * @param {string[]} endpointId - The ID of the endpoint.
+ * @param {string} endpointId - The ID of the endpoint.
  * @param {string} payloadId - The ID of the payload.
  */
 export function sendPayloadToEndpoint(endpointId: string, payloadId: string) {
@@ -213,6 +213,7 @@ export function getPayloadList(): string[] {
 
 /**
  * Checks if a payload exists by its ID.
+ * @param {string} payloadId - The ID of the payload; a string that is not an integer makes the function throw.
  * @returns {boolean} True if the payload exists, False otherwise.
  */
 export function payloadExists(payloadId: string): boolean {
@@ -222,7 +223,7 @@ export function payloadExists(payloadId: string): boolean {
 /**
  * Sets a property of a payload with a given name, ID, and value.
  * @param {string} payloadId - The ID of the payload.
- * @param {string} name - The name of the property.
+ * @param {PayloadProperty} name - The name of the property: `OFFSET` on any payload, the others on a file payload only.
  * @param {string} value - The value of the property.
  */
 export function setPayloadProperty(payloadId: string, name: PayloadProperty, value: string) {
