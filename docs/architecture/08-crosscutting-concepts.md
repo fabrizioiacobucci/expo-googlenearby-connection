@@ -38,7 +38,7 @@ The module is released as the npm package `expo-googlenearby-connection`, whose 
 A release is made by the Maintainers, when the release criteria of the [DEFINITION-OF-DONE](../DEFINITION-OF-DONE.md#releases) are met and the tests on devices have passed:
 
 1. on `develop`, the version in `package.json` is set, and the "Unreleased" section of the [CHANGELOG](../CHANGELOG.md) becomes the section of that version;
-2. `develop` is merged into `main`;
+2. `develop` is merged into `main`, through a pull request;
 3. the merge commit on `main` is tagged with the version, without a prefix, as the tag `0.1.4` is;
 4. the package is published from `main` with `npm publish`.
 
