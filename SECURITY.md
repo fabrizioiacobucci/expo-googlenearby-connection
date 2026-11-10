@@ -1,6 +1,6 @@
 # Security policy
 
-How to report a security problem in expo-googlenearby-connection, and what happens next.
+How to report a security problem in expo-googlenearby-connection, what happens next, and which versions receive security fixes.
 
 ## What to report, and where
 
@@ -20,3 +20,7 @@ Reporters SHOULD use [Report a vulnerability](https://github.com/fabrizioiacobuc
 ## First response
 
 The maintainers MUST send a first response to a private report within 14 days.
+
+## Supported versions
+
+Security fixes are released only in new versions of the module, which need Expo SDK 58 or later. Version 0.1.4 and the earlier ones, for apps on an older Expo SDK, receive no fixes ([ADR 0001](docs/adr/0001-upgrade-in-place-to-expo-sdk-58.md)).
