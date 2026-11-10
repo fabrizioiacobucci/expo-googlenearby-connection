@@ -206,7 +206,7 @@ object PayloadHandler {
     fun setProperty(payloadId: Long, name: String, value: String) {
         val payload = get(payloadId)
 
-        if (payload.type != Payload.Type.FILE && name != "offset")
+        if (payload.type != Payload.Type.FILE && name != PayloadProperty.OFFSET.prop)
             throw IllegalArgumentException("Property $name is only supported on Payloads of type File")
 
         if(PayloadProperty.entries.map { it.prop }.contains(name).not())
