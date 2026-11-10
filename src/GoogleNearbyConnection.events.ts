@@ -286,7 +286,7 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
 
     /**
      * @function LocationPromptRejected
-     * @description Called when the location prompt is rejected.
+     * @description Called when the user cannot be asked to turn the location services on.
      * @param {Exception} event - The event data.
      */
     LocationPromptRejected(event: Exception): void;
