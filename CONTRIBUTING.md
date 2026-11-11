@@ -21,9 +21,9 @@ A change SHOULD, before it is merged:
 
 ## Setting up the environment
 
-- **Module:** Node.js 22.13 or later, as React Native 0.88 and Expo SDK 58 require. From the repository root, `npm install` installs the dependencies and builds the module into `build/`.
+- **Module:** Node.js 22.13 or a later 22 release, 24.3 or a later 24 release, or 26 or later, as React Native 0.88 and Expo SDK 58 require. From the repository root, `npm install` installs the dependencies and builds the module into `build/`.
 - **Example app and native code:** the Android SDK, with compile SDK 37, which React Native 0.88 sets for the app, a JDK 17, and two Android devices, since Nearby Connections needs two endpoints. The app in `example/` uses the module from this repository, as built in `build/`:
-  1. from the repository root, `npm install`, then `npm run build` after each change to `src/`; run in a terminal without `CI=1`, `npm run build` keeps rebuilding on each change;
+  1. from the repository root, `npm install`, which builds the module once; while you change `src/`, keep `npm run build` running in a terminal of its own: without `CI=1` it rebuilds the module on each change;
   2. from `example/`, `npm install`, then `npx expo run:android` on each device.
 
 ## Tests
@@ -32,7 +32,7 @@ A change SHOULD, before it is merged:
 
 Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. Continuous integration runs the checks of the project documents, with [.github/workflows/docs.yml](.github/workflows/docs.yml), on each pull request and on each push to `develop` and `main`; contributors run the other checks.
 
-- The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`.
+- The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`. `npm run lint` passes when it reports no errors; its warnings do not fail it.
 - The example app, from `example/`, once the module is built: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`.
 - The project documents: `scripts/check-copies.sh .`, which compares the copies of `CHECKLIST` and `DEFINITION-OF-DONE` with the framework documents, and `scripts/check-links.sh .`, which checks the relative links of the Markdown files. Both are scripts of foss-docs-made-simple, run from the root of this repository with the path of a full clone of foss-docs-made-simple at tag `v0.3.0`, such as `../foss-docs-made-simple/scripts/check-copies.sh .`, as its [README](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/README.md#checking-the-project-documents) explains. A move to a newer framework tag also updates the tag that the workflow clones.
 
@@ -49,6 +49,6 @@ With the example app on two devices, A and B:
 2. **Permissions:** on Settings, "Request permissions" shows the permission dialogs, and the badge reads "Permissions granted" once they are granted, with the location services on.
 3. **Advertising and discovery:** "Start advertising" on A and "Start discovering" on B show A's endpoint under "Endpoints" on B; "Stop advertising" and "Stop discovering" stop them, each with its toast, and "Stop discovering" empties "Endpoints" on B.
 4. **Connection:** on B, the button with A's endpoint ID requests a connection; on Connections, A and B show the same authentication digits next to the endpoint ID, and "Accept" under "Connections out" on B and under "Connections in" on A opens it, and it shows under "Active connections" on both; "Disconnect" closes it.
-5. **Payloads:** on Payloads, bytes ("Send text"), a file ("Pick file", then "Send file") and a stream ("Init stream", then "Send stream") reach B, and their transfer reaches `SUCCESS`.
+5. **Payloads:** on Payloads, bytes ("Send text"), a file ("Pick file", then "Send file") and a stream ("Init stream", then "Send stream") reach B: for each, A shows the toast "Payload Sent" and lists the payload under "Payloads outbound", and B shows the toast "Payload Received" and lists it under "Payloads inbound". The example app does not show the status of a transfer, so this step does not check that a file or a stream arrives whole.
 
 On Android 17, the "Nearby devices" permission group also holds the access to the local network, so a debug build whose "Nearby devices" permission has been denied or revoked no longer reaches Metro at `10.0.2.2`, from the emulator, or at the computer's address, and shows "Unable to load script". To reach Metro again, in the developer menu choose "Change Bundle Location", enter `localhost:8081`, and run `adb reverse tcp:8081 tcp:8081`.
