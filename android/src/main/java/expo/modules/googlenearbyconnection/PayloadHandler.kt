@@ -98,7 +98,7 @@ object PayloadHandler {
      * Removes all Payloads.
      */
     fun removeAll() {
-        _payloads.forEach { (_, payload) -> remove(payload.id) }
+        _payloads.keys.toList().forEach { remove(it) }
     }
 
     /**
@@ -130,7 +130,7 @@ object PayloadHandler {
         val payload = get(payloadId)
 
         val info = bundleOf(
-            "id" to payload.id,
+            "id" to payload.id.toString(),
             "type" to payload.type,
             "offset" to payload.offset
         )
@@ -206,7 +206,7 @@ object PayloadHandler {
     fun setProperty(payloadId: Long, name: String, value: String) {
         val payload = get(payloadId)
 
-        if (payload.type != Payload.Type.FILE && name != "offset")
+        if (payload.type != Payload.Type.FILE && name != PayloadProperty.OFFSET.prop)
             throw IllegalArgumentException("Property $name is only supported on Payloads of type File")
 
         if(PayloadProperty.entries.map { it.prop }.contains(name).not())
@@ -319,12 +319,12 @@ object PayloadHandler {
      * @param payloadId The ID of the stream Payload.
      * @param offset The starting offset in the array to write to.
      * @param length The number of bytes to read.
-     * @return The byte array filled with read data.
+     * @return A byte array of `offset + length` bytes, holding the bytes read from index `offset`.
      * @throws IOException If an error occurs during reading.
      */
     suspend fun readStreamByteArray(payloadId: Long, offset: Int, length: Int): ByteArray {
         val streamsRecord = getStreams(payloadId)
-        val byteArray = ByteArray(length)
+        val byteArray = ByteArray(offset + length)
 
         if (streamsRecord !is StreamsRecord.Input)
             throw IllegalArgumentException("Cannot read from an output stream")

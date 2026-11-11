@@ -121,7 +121,7 @@ acceptConnection(endpointId);
 | `getPayloadInfoList()` | `PayloadInfo[]` | Returns the information of every payload in the queue. | |
 | `getPayloadList()` | `string[]` | Returns the ID of every payload in the queue. | |
 | `payloadExists(payloadId: string)` | `boolean` | Tells whether a payload is in the queue. | |
-| `setPayloadProperty(payloadId: string, name: PayloadProperty, value: string)` | `void` | Sets a property of a payload. | on failure, an error event |
+| `setPayloadProperty(payloadId: string, name: PayloadProperty, value: string)` | `void` | Sets a property of a payload: `OFFSET` on a file or a stream payload, the other properties on a file payload only. | on failure, an error event |
 | `removePayload(payloadId: string)` | `void` | Removes a payload from the queue. | `PayloadRemoved`; on failure, an error event |
 | `removePayloadAll()` | `void` | Removes every payload from the queue. | `PayloadRemovedAll` |
 | `cancelPayload(payloadId: string)` | `void` | Cancels the transfer of a payload. | `PayloadCanceled`, `PayloadCancelFailed` |
@@ -145,7 +145,7 @@ Each function takes the ID of a stream payload. The asynchronous ones resolve on
 | `writeStreamByteArray(payloadId: string, byteArray: Uint8Array, offset = 0, length = byteArray.length)` | `Promise<void>` | Writes `length` bytes of `byteArray`, from `offset`, to the stream. |
 | `flushStream(payloadId: string)` | `Promise<void>` | Flushes the stream. |
 | `readStreamByte(payloadId: string)` | `Promise<number \| null>` | Reads a byte from the stream. |
-| `readStreamByteArray(payloadId: string, offset: number, length: number)` | `Promise<Uint8Array \| null>` | Reads up to `length` bytes from the stream into an array of `length` bytes, from index `offset`. |
+| `readStreamByteArray(payloadId: string, offset: number, length: number)` | `Promise<Uint8Array \| null>` | Reads up to `length` bytes from the stream into an array of `offset + length` bytes, from index `offset`; the bytes that are not read are 0, and the number of bytes read is not returned. |
 | `availableStream(payloadId: string)` | `Promise<number \| null>` | Returns the number of bytes that can be read without blocking. |
 | `markStream(payloadId: string, readLimit: number)` | `Promise<void>` | Marks the current position, valid for the next `readLimit` bytes read. |
 | `isMarkSupportedStream(payloadId: string)` | `boolean \| null` | Tells whether the stream supports `markStream` and `resetStream`. |
