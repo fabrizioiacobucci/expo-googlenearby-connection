@@ -1,5 +1,10 @@
-import { NativeModule } from "expo";
+import { NativeModule, PermissionResponse } from "expo";
 import {
+    AdvertisingOptions,
+    ConnectionOptions,
+    DiscoveringOptions,
+    PayloadInfo,
+    PayloadProperty,
     EndpointFound,
     EndpointEvent,
     Exception,
@@ -109,7 +114,7 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
     /**
      * @function ConnectionAcceptFailed
      * @description Called when a connection acceptance fails.
-     * @param {EndpointEvent} event - The event data.
+     * @param {Exception} event - The event data.
      */
     ConnectionAcceptFailed(event: Exception): void;
 
@@ -281,14 +286,16 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
 
     /**
      * @function LocationPromptRejected
-     * @description Called when the location prompt is rejected.
+     * @description Called when the user cannot be asked to turn the location services on.
+     * @param {Exception} event - The event data.
      */
-    LocationPromptRejected(): void;
+    LocationPromptRejected(event: Exception): void;
     // #endregion Location events
 
     /**
      * @function InvalidStrategy
      * @description Called when an invalid strategy has been passed.
+     * @param {Exception} event - The event data, whose `data` is the strategy that was not recognized.
      */
     InvalidStrategy(event: Exception): void;
 };
@@ -298,4 +305,45 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
  * @extends NativeModule<ExpoGoogleNearbyConnectionModuleEvents>
  * @description Class representing the Expo Google Nearby Connection module.
  */
-export class ExpoGoogleNearbyConnectionModuleClass extends NativeModule<ExpoGoogleNearbyConnectionModuleEvents> {}
+export declare class ExpoGoogleNearbyConnectionModuleClass extends NativeModule<ExpoGoogleNearbyConnectionModuleEvents> {
+    requestPermissionsAsync(): Promise<PermissionResponse>;
+    getPermissionsAsync(): Promise<PermissionResponse>;
+
+    startAdvertisingName(endpointName: string, serviceId: string, advertisingOptions: AdvertisingOptions): void;
+    startAdvertisingInfo(endpointInfo: Uint8Array, serviceId: string, advertisingOptions: AdvertisingOptions): void;
+    startDiscovering(serviceId: string, discoveringOptions: DiscoveringOptions): void;
+    stopAdvertising(): void;
+    stopDiscovering(): void;
+    stopAllEndpoints(): void;
+
+    requestConnectionName(endpointName: string, endpointId: string, connectionOptions?: ConnectionOptions): void;
+    requestConnectionInfo(endpointInfo: Uint8Array, endpointId: string, connectionOptions?: ConnectionOptions): void;
+    acceptConnection(endpointId: string): void;
+    rejectConnection(endpointId: string): void;
+    disconnectFromEndpoint(endpointId: string): void;
+
+    newPayloadBytes(data: Uint8Array): string;
+    newPayloadFile(data: string, isSensitive?: boolean, fileName?: string, parentFolder?: string): string | null;
+    newPayloadStream(size?: number): string | null;
+    sendPayloadToEndpoint(endpointId: string, payloadId: string): void;
+    sendPayloadToEndpoints(endpointIds: string[], payloadId: string): void;
+    getPayloadInfo(payloadId: string): PayloadInfo | null;
+    getPayloadInfoList(): PayloadInfo[];
+    getPayloadList(): string[];
+    payloadExists(payloadId: string): boolean;
+    setPayloadProperty(payloadId: string, name: PayloadProperty, value: string): void;
+    removePayload(payloadId: string): void;
+    removePayloadAll(): void;
+    cancelPayload(payloadId: string): void;
+
+    flushStream(payloadId: string): Promise<void>;
+    writeStreamByte(payloadId: string, byte: number): Promise<void>;
+    writeStreamByteArray(payloadId: string, byteArray: Uint8Array, offset: number, length: number): Promise<void>;
+    readStreamByte(payloadId: string): Promise<number | null>;
+    readStreamByteArray(payloadId: string, offset: number, length: number): Promise<Uint8Array | null>;
+    availableStream(payloadId: string): Promise<number | null>;
+    markStream(payloadId: string, readLimit: number): Promise<void>;
+    isMarkSupportedStream(payloadId: string): boolean | null;
+    resetStream(payloadId: string): Promise<void>;
+    skipStream(payloadId: string, amount: number): Promise<number | null>;
+}

@@ -1,0 +1,55 @@
+# Contributing to expo-googlenearby-connection
+
+How to contribute to this repository, the rules that every change follows, how to set up the environment, and how to test a change.
+
+## How to contribute
+
+- Bugs, questions, feedback and proposals SHOULD be reported in the [issues](https://github.com/fabrizioiacobucci/expo-googlenearby-connection/issues), except security problems, which [SECURITY.md](SECURITY.md) routes.
+- Changes MUST be sent as pull requests to the `develop` branch; `main` receives `develop` at each release.
+- Every commit MUST carry a `Signed-off-by` line, by which its author certifies the [Developer Certificate of Origin](https://developercertificate.org/) (`git commit -s`), except the merge commits that GitHub creates for pull requests. This is an addition to the framework's [contribution rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/LICENSE-POLICY.md#contributions).
+- Commit messages MUST follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/), with the same exception; a breaking change of the public API is marked with `!` and a `BREAKING CHANGE` footer. This is an addition to the framework's [commit rule](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/CONVENTIONS.md#commits).
+- The versions of the npm package follow [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html), over the public API that [docs/REFERENCE.md](docs/REFERENCE.md#public-api) declares.
+
+## What a change needs
+
+A change SHOULD, before it is merged:
+
+- pass the checks of what it touches, listed in [Tests](#tests), and the [tests on devices](#tests-on-devices) when the [test policy](#test-policy) asks for them;
+- meet the "Changes" criteria of the [DEFINITION-OF-DONE](docs/DEFINITION-OF-DONE.md): update in the same change every document it makes inaccurate, [docs/REFERENCE.md](docs/REFERENCE.md) included, add the changes that users notice, breaking changes first, to the "Unreleased" section of [docs/CHANGELOG.md](docs/CHANGELOG.md), and include an ADR for each significant architectural decision ([arc42 section 9](docs/architecture/09-architecture-decisions.md));
+- use the terms of [docs/GLOSSARY.md](docs/GLOSSARY.md), and update it when the change adds a term or changes its meaning;
+- follow the code style of the repository: TypeScript formatted by Prettier with `.prettierrc`, linted by ESLint with `eslint.config.cjs`, and every exported function with a synopsis that states its parameters and what it returns.
+
+## Setting up the environment
+
+- **Module:** Node.js 22.13 or a later 22 release, 24.3 or a later 24 release, or 26 or later, as React Native 0.88 and Expo SDK 58 require. From the repository root, `npm install` installs the dependencies and builds the module into `build/`.
+- **Example app and native code:** the Android SDK, with compile SDK 37, which React Native 0.88 sets for the app, a JDK 17, and two Android devices, since Nearby Connections needs two endpoints. The app in `example/` uses the module from this repository, as built in `build/`:
+  1. from the repository root, `npm install`, which builds the module once; while you change `src/`, keep `npm run build` running in a terminal of its own: without `CI=1` it rebuilds the module on each change;
+  2. from `example/`, `npm install`, then `npx expo run:android` on each device.
+
+## Tests
+
+### Checks
+
+Contributors SHOULD run the checks of what the change touches, and SHOULD say in the pull request which ones failed, if any. Continuous integration runs the checks of the project documents, with [.github/workflows/docs.yml](.github/workflows/docs.yml), on each pull request and on each push to `develop` and `main`; contributors run the other checks.
+
+- The module, from the repository root: `CI=1 npm run build`, `npm run lint` and `npm test`. `npm run lint` passes when it reports no errors; its warnings do not fail it.
+- The example app, from `example/`, once the module is built: `npx expo-doctor`, `npx tsc --noEmit` and `npx expo export --platform android`.
+- The project documents: `scripts/check-copies.sh .`, which compares the copies of `CHECKLIST` and `DEFINITION-OF-DONE` with the framework documents, and `scripts/check-links.sh .`, which checks the relative links of the Markdown files. Both are scripts of foss-docs-made-simple, run from the root of this repository with the path of a full clone of foss-docs-made-simple at tag `v0.3.0`, such as `../foss-docs-made-simple/scripts/check-copies.sh .`, as its [README](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/README.md#checking-the-project-documents) explains. A move to a newer framework tag also updates the tag that the workflow clones.
+
+### Test policy
+
+- A change to `src/` SHOULD add or update, in `src/__tests__/`, the tests of the behaviour it changes. The tests call the public API, from `src/index.ts`, and replace the native module, `src/ExpoGoogleNearbyConnection.ts`, with a test double, as `src/__tests__/streams.test.ts` does.
+- The tests in `src/__tests__/` do not run the Kotlin code. A change to `android/`, or to how a function calls the native module, SHOULD also pass the tests on devices below, and the pull request SHOULD say which steps passed, on which Android versions.
+
+### Tests on devices
+
+With the example app on two devices, A and B:
+
+1. **Build:** from `example/`, `npx expo prebuild --clean` and `npx expo run:android` build with no Kotlin or Gradle errors.
+2. **Permissions:** on Settings, "Request permissions" shows the permission dialogs, and the badge reads "Permissions granted" once they are granted, with the location services on.
+3. **Advertising and discovery:** "Start advertising" on A and "Start discovering" on B show A's endpoint under "Endpoints" on B; "Stop advertising" and "Stop discovering" stop them, each with its toast, and "Stop discovering" empties "Endpoints" on B.
+4. **Connection:** on B, the button with A's endpoint ID requests a connection; on Connections, A and B show the same authentication digits next to the endpoint ID, and "Accept" under "Connections out" on B and under "Connections in" on A opens it, and it shows under "Active connections" on both; "Disconnect" closes it.
+5. **Payloads:** on Payloads, bytes ("Send text"), a file ("Pick file", then "Send file") and a stream ("Init stream", then "Send stream") reach B: for each, A shows the toast "Payload Sent" and lists the payload under "Payloads outbound", and B shows the toast "Payload Received" and lists it under "Payloads inbound". The example app does not show the status of a transfer, so this step does not check that a file or a stream arrives whole.
+6. **Checks:** on Payloads, "Run checks" under "Checks" shows "pass" for each check, on either device, with no connection needed; the checks remove every payload of the queue. Then, on B, "Read with offset" under "Stream payloads", followed by a new stream sent from A as in step 5, shows "Read with offset: pass".
+
+On Android 17, the "Nearby devices" permission group also holds the access to the local network, so a debug build whose "Nearby devices" permission has been denied or revoked no longer reaches Metro at `10.0.2.2`, from the emulator, or at the computer's address, and shows "Unable to load script". To reach Metro again, in the developer menu choose "Change Bundle Location", enter `localhost:8081`, and run `adb reverse tcp:8081 tcp:8081`.

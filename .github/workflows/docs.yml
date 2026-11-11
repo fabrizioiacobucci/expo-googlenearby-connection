@@ -1,0 +1,29 @@
+name: Project documents
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check the project documents
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The framework tag must be the one that README.md states, and moves with it.
+      - name: Check the copies and the links
+        run: |
+          git clone --quiet --branch v0.3.0 https://github.com/fabrizioiacobucci/foss-docs-made-simple "$RUNNER_TEMP/fdms"
+          "$RUNNER_TEMP/fdms/scripts/check-copies.sh" .
+          "$RUNNER_TEMP/fdms/scripts/check-links.sh" .

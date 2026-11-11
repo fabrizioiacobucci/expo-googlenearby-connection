@@ -1,0 +1,98 @@
+import { EndpointFound, PayloadReceivedInfo } from "expo-googlenearby-connection";
+import { createContext, useContext } from "react";
+import { ModeType, PermissionsResult } from "./types";
+
+// Payloads Endpoints
+export const EndpointsContext = createContext<EndpointFound[] | null>(null);
+export const EndpointsReducer = createContext<any>(null);
+
+export const EndpointsContextProvider = EndpointsContext.Provider;
+export const EndpointsReducerProvider = EndpointsReducer.Provider;
+
+export const useEndpointsContext = () => {
+    const endpoints = useContext(EndpointsContext);
+    const endpointsReducer = useContext(EndpointsReducer);
+
+    return [endpoints, endpointsReducer] as const;
+};
+
+// Payloads Inbound
+export const PayloadsInContext = createContext<PayloadReceivedInfo[] | null>(null);
+export const PayloadsInReducer = createContext<any>(null);
+
+export const PayloadsInContextProvider = PayloadsInContext.Provider;
+export const PayloadsInReducerProvider = PayloadsInReducer.Provider;
+
+export const usePayloadsInContext = () => {
+    const payloadsIn = useContext(PayloadsInContext);
+    const payloadsInReducer = useContext(PayloadsInReducer);
+
+    return [payloadsIn, payloadsInReducer] as const;
+};
+
+// Payloads Outbound
+export const PayloadsOutContext = createContext<string[] | null>(null);
+export const PayloadsOutReducer = createContext<any>(null);
+
+export const PayloadsOutContextProvider = PayloadsOutContext.Provider;
+export const PayloadsOutReducerProvider = PayloadsOutReducer.Provider;
+
+export const usePayloadsOutContext = () => {
+    const payloadsOut = useContext(PayloadsOutContext);
+    const payloadsOutReducer = useContext(PayloadsOutReducer);
+
+    return [payloadsOut, payloadsOutReducer] as const;
+};
+
+// Connections
+export const ConnectionsContext = createContext<string[] | null>(null);
+export const ConnectionsReducer = createContext<any>(null);
+
+export const ConnectionsContextProvider = ConnectionsContext.Provider;
+export const ConnectionsReducerProvider = ConnectionsReducer.Provider;
+
+export const useConnectionsContext = () => {
+    const connections = useContext(ConnectionsContext);
+    const connectionsReducer = useContext(ConnectionsReducer);
+
+    return [connections, connectionsReducer] as const;
+};
+
+// Theme
+export const ThemeContext = createContext<ModeType>("light");
+export const SetTheme = createContext<any>(null);
+
+export const ThemeContextProvider = ThemeContext.Provider;
+export const SetThemeProvider = SetTheme.Provider;
+
+export const useThemeContext = () => {
+    const theme = useContext(ThemeContext);
+    const setTheme = useContext(SetTheme);
+
+    return [theme, setTheme] as const;
+};
+
+// Permissions
+export const PermissionsContext = createContext<boolean>(false);
+export const RequestPermissions = createContext<() => Promise<PermissionsResult>>(async () => ({
+    granted: false,
+    canAskAgain: true,
+}));
+
+export const PermissionsContextProvider = PermissionsContext.Provider;
+export const RequestPermissionsProvider = RequestPermissions.Provider;
+
+/**
+ * Reads whether the app holds the permissions it needs, and the function that requests them again.
+ *
+ * @returns whether the permissions are granted, and the function that requests them, updates the state and
+ * returns the result of the request.
+ * @example
+ * const [permissionsGranted, requestPermissions] = usePermissionsContext();
+ */
+export const usePermissionsContext = () => {
+    const permissionsGranted = useContext(PermissionsContext);
+    const requestPermissions = useContext(RequestPermissions);
+
+    return [permissionsGranted, requestPermissions] as const;
+};

@@ -1,4 +1,4 @@
-import { PermissionResponse, createPermissionHook } from "expo-modules-core";
+import { PermissionResponse, createPermissionHook } from "expo";
 import {
     AdvertisingOptions,
     ConnectionOptions,
@@ -148,7 +148,7 @@ export function newPayloadBytes(data: Uint8Array): string {
  * @param {boolean} [isSensitive] - Indicates if the file is sensitive.
  * @param {string} [fileName] - The name of the file.
  * @param {string} [parentFolder] - The parent folder.
- * @returns {string} The payload ID.
+ * @returns {string | null} The payload ID, or null if the payload was not created, after an error event was sent.
  */
 export function newPayloadFile(
     data: string,
@@ -161,8 +161,8 @@ export function newPayloadFile(
 
 /**
  * Creates a new payload with a stream of a given size.
- * @param {number} size - The size of the stream.
- * @returns {string} The payload ID.
+ * @param {number} [size=1024] - The size of the stream buffer, in bytes.
+ * @returns {string | null} The payload ID, or null if the payload was not created, after an error event was sent.
  */
 export function newPayloadStream(size?: number) {
     return ExpoGoogleNearbyConnection.newPayloadStream(size);
@@ -170,7 +170,7 @@ export function newPayloadStream(size?: number) {
 
 /**
  * Sends a payload to given endpoint ID.
- * @param {string[]} endpointId - The ID of the endpoint.
+ * @param {string} endpointId - The ID of the endpoint.
  * @param {string} payloadId - The ID of the payload.
  */
 export function sendPayloadToEndpoint(endpointId: string, payloadId: string) {
@@ -189,9 +189,9 @@ export function sendPayloadToEndpoints(endpointIds: string[], payloadId: string)
 /**
  * Gets information about a payload with a given ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {PayloadInfo} The payload information.
+ * @returns {PayloadInfo | null} The payload information, or null if the operation failed, after an error event was sent.
  */
-export function getPayloadInfo(payloadId: string): PayloadInfo {
+export function getPayloadInfo(payloadId: string): PayloadInfo | null {
     return ExpoGoogleNearbyConnection.getPayloadInfo(payloadId);
 }
 
@@ -213,6 +213,7 @@ export function getPayloadList(): string[] {
 
 /**
  * Checks if a payload exists by its ID.
+ * @param {string} payloadId - The ID of the payload; a string that is not an integer makes the function throw.
  * @returns {boolean} True if the payload exists, False otherwise.
  */
 export function payloadExists(payloadId: string): boolean {
@@ -222,7 +223,7 @@ export function payloadExists(payloadId: string): boolean {
 /**
  * Sets a property of a payload with a given name, ID, and value.
  * @param {string} payloadId - The ID of the payload.
- * @param {string} name - The name of the property.
+ * @param {PayloadProperty} name - The name of the property: `OFFSET` on a file or a stream payload, the others on a file payload only.
  * @param {string} value - The value of the property.
  */
 export function setPayloadProperty(payloadId: string, name: PayloadProperty, value: string) {
@@ -255,18 +256,20 @@ export function cancelPayload(payloadId: string) {
 /**
  * Flushes the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
+ * @returns {Promise<void>} A promise that resolves when the stream is flushed.
  */
-export async function flushStream(payloadId: string) {
-    ExpoGoogleNearbyConnection.flushStream(payloadId);
+export async function flushStream(payloadId: string): Promise<void> {
+    return ExpoGoogleNearbyConnection.flushStream(payloadId);
 }
 
 /**
  * Writes a byte to the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} byte - The byte to write.
+ * @returns {Promise<void>} A promise that resolves when the byte is written.
  */
-export async function writeStreamByte(payloadId: string, byte: number) {
-    ExpoGoogleNearbyConnection.writeStreamByte(payloadId, byte);
+export async function writeStreamByte(payloadId: string, byte: number): Promise<void> {
+    return ExpoGoogleNearbyConnection.writeStreamByte(payloadId, byte);
 }
 
 /**
@@ -275,42 +278,47 @@ export async function writeStreamByte(payloadId: string, byte: number) {
  * @param {Uint8Array} byteArray - The byte array to write.
  * @param {number} [offset=0] - The offset to start writing from.
  * @param {number} [length=byteArray.length] - The number of bytes to write.
+ * @returns {Promise<void>} A promise that resolves when the bytes are written.
  */
 export async function writeStreamByteArray(
     payloadId: string,
     byteArray: Uint8Array,
     offset: number = 0,
     length: number = byteArray.length
-) {
-    ExpoGoogleNearbyConnection.writeStreamByteArray(payloadId, byteArray, offset, length);
+): Promise<void> {
+    return ExpoGoogleNearbyConnection.writeStreamByteArray(payloadId, byteArray, offset, length);
 }
 
 /**
  * Reads a byte from the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {Promise<number>} The byte read from the stream.
+ * @returns {Promise<number | null>} The byte read from the stream, or null if the operation failed, after an error event was sent.
  */
-export async function readStreamByte(payloadId: string): Promise<number> {
+export async function readStreamByte(payloadId: string): Promise<number | null> {
     return ExpoGoogleNearbyConnection.readStreamByte(payloadId);
 }
 
 /**
  * Reads a byte array from the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @param {number} offset - The offset to start reading from.
+ * @param {number} offset - The index of the returned array at which the bytes read start.
  * @param {number} length - The number of bytes to read.
- * @returns {Promise<Uint8Array>} The byte array read from the stream.
+ * @returns {Promise<Uint8Array | null>} An array of `offset + length` bytes, with the bytes read from index `offset`, or null if the operation failed, after an error event was sent.
  */
-export async function readStreamByteArray(payloadId: string, offset: number, length: number): Promise<Uint8Array> {
+export async function readStreamByteArray(
+    payloadId: string,
+    offset: number,
+    length: number
+): Promise<Uint8Array | null> {
     return ExpoGoogleNearbyConnection.readStreamByteArray(payloadId, offset, length);
 }
 
 /**
  * Gets the number of bytes available in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {Promise<number>} The number of bytes available.
+ * @returns {Promise<number | null>} The number of bytes available, or null if the operation failed, after an error event was sent.
  */
-export async function availableStream(payloadId: string): Promise<number> {
+export async function availableStream(payloadId: string): Promise<number | null> {
     return ExpoGoogleNearbyConnection.availableStream(payloadId);
 }
 
@@ -318,34 +326,36 @@ export async function availableStream(payloadId: string): Promise<number> {
  * Marks the current position in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} readLimit - The maximum limit of bytes that can be read before the mark position becomes invalid.
+ * @returns {Promise<void>} A promise that resolves when the position is marked.
  */
-export async function markStream(payloadId: string, readLimit: number) {
-    ExpoGoogleNearbyConnection.markStream(payloadId, readLimit);
+export async function markStream(payloadId: string, readLimit: number): Promise<void> {
+    return ExpoGoogleNearbyConnection.markStream(payloadId, readLimit);
 }
 
 /**
  * Checks if mark and reset are supported in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
- * @returns {boolean} True if mark and reset are supported, false otherwise.
+ * @returns {boolean | null} True if mark and reset are supported, false otherwise, or null if the operation failed, after an error event was sent.
  */
-export function isMarkSupportedStream(payloadId: string): boolean {
+export function isMarkSupportedStream(payloadId: string): boolean | null {
     return ExpoGoogleNearbyConnection.isMarkSupportedStream(payloadId);
 }
 
 /**
  * Resets the stream to the most recent mark for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
+ * @returns {Promise<void>} A promise that resolves when the stream is reset.
  */
-export async function resetStream(payloadId: string) {
-    ExpoGoogleNearbyConnection.resetStream(payloadId);
+export async function resetStream(payloadId: string): Promise<void> {
+    return ExpoGoogleNearbyConnection.resetStream(payloadId);
 }
 
 /**
  * Skips over and discards a specified number of bytes in the stream for a given payload ID.
  * @param {string} payloadId - The ID of the payload.
  * @param {number} amount - The number of bytes to skip.
- * @returns {Promise<number>} The actual number of bytes skipped.
+ * @returns {Promise<number | null>} The actual number of bytes skipped, or null if the operation failed, after an error event was sent.
  */
-export async function skipStream(payloadId: string, amount: number): Promise<number> {
+export async function skipStream(payloadId: string, amount: number): Promise<number | null> {
     return ExpoGoogleNearbyConnection.skipStream(payloadId, amount);
 }

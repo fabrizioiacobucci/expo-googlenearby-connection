@@ -582,10 +582,10 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
                     sendEvent("ConnectionRequested", bundleOf("endpointId" to endpointId))
                 }
                 .addOnFailureListener { e ->
-                    sendError("ConnectionRequestFailed", e, endpoint)
+                    sendError("ConnectionRequestFailed", e, endpointId)
                 }
         } catch (e: IllegalArgumentException) {
-            sendError("ConnectionRequestFailed", e, endpoint)
+            sendError("ConnectionRequestFailed", e, endpointId)
         }
     }
 
@@ -805,8 +805,9 @@ class ExpoGoogleNearbyConnectionModule : Module(), ActivityEventListener {
 
     /**
      * Prompts the user to enable location services if they are disabled.
-     * If the user accepts the prompt, an event "LocationPromptAccepted" is sent.
-     * If the user rejects the prompt or an error occurs, an event "LocationPromptRejected" is sent.
+     * If the location settings already satisfy the request, an event "LocationPromptAccepted" is sent.
+     * If the user cannot be asked, an event "LocationPromptRejected" is sent; otherwise the answer of the
+     * user comes with "LocationRequestApproved", "LocationRequestDenied" or "LocationRequestUnknown".
      */
     private fun promptEnableLocation() {
 
