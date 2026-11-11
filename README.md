@@ -44,7 +44,7 @@ The module doesn't support iOS.
 
 ## Usage
 
-A minimal flow between two devices, in a React component: request the permissions, advertise on one device and discover on the other, connect, then send bytes. Every function, type and event is described in [docs/REFERENCE.md](docs/REFERENCE.md).
+A minimal flow between two devices: request the permissions, advertise on one device and discover on the other, connect, then send bytes. The fragments go in a React component: the calls in an effect or an event handler, the listeners in its body. Every function, type and event is described in [docs/REFERENCE.md](docs/REFERENCE.md).
 
 ```ts
 import { useEventListener } from "expo";
@@ -98,12 +98,13 @@ useEventListener(Nearby, "ConnectionResult", (event: ConnectionResult) => {
 });
 ```
 
-The example app in [example/](example/) uses every function of the module.
+The example app in [example/](example/) shows the main flow: the permissions, advertising and discovery, connections, and payloads of bytes, files and streams.
 
 ## Using the module securely
 
 - Google Nearby Connections encrypts each connection, but does not check which device is at the other end. Before accepting a connection, an app SHOULD show the `authenticationDigits` of `ConnectionInitiated` on both devices and accept only once the users have confirmed that they match, as Google [recommends](https://developers.google.com/nearby/connections/android/manage-connections); an app that accepts every connection lets any nearby device that knows its service ID connect to it.
 - Payloads come from another device: an app SHOULD check a payload, its size and its content, before using it, and treat a received file as untrusted.
+- The endpoint name or the endpoint info that an app advertises reaches every nearby device that discovers the same service ID, before any connection and with no authentication: an app SHOULD NOT advertise in it data that it would not show to strangers nearby. The example app advertises the location of the device, to show the flow.
 - Vulnerabilities of the module are reported privately, as [SECURITY.md](SECURITY.md) explains.
 
 ## This repository
