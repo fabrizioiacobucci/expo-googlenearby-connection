@@ -4,7 +4,7 @@ All notable changes to expo-googlenearby-connection, by version. The format foll
 
 ## [Unreleased]
 
-## [0.2.0] - 2026-11-10
+## [0.2.0] - 2026-11-11
 
 ### Changed
 
