@@ -8,6 +8,7 @@ The module is the npm package `expo-googlenearby-connection`, for Expo SDK 58 or
 
 - the named exports of the package: the functions, the `usePermissions` hook, the types and the enums described below, and two types that describe the native module object: `ExpoGoogleNearbyConnectionModuleEvents`, which maps the name of each event to its listener, and `ExpoGoogleNearbyConnectionModuleClass`, which declares the methods of the object;
 - the default export of the package, the native module object, to listen to the events of the module with `useEventListener` from `expo`;
+- the constant `MAX_BYTES_DATA_SIZE` of the native module object: the largest number of bytes of a payload of bytes that Google Nearby Connections sends, 1,047,552 with the Nearby 19.3.0 that the module uses; `ExpoGoogleNearbyConnectionModuleClass` does not declare it;
 - the Android permissions that the module declares in its manifest, which the build merges into the app's manifest, and that `requestPermissionsAsync` requests at run time:
   - on every Android version: `ACCESS_WIFI_STATE`, `CHANGE_WIFI_STATE` and `ACCESS_COARSE_LOCATION`;
   - on Android 10 (API 29) and later: also `ACCESS_FINE_LOCATION`;
@@ -22,7 +23,7 @@ The public API is narrower than the external interface ([ADR 0003](adr/0003-name
 - the named exports of the package, except the type `ExpoGoogleNearbyConnectionModuleClass`, with their names, parameters, return types and behavior, including the events each function emits;
 - the names of the events of the module and the types of their data.
 
-The rest of the external interface is outside the public API: the methods of the native module object, the type `ExpoGoogleNearbyConnectionModuleClass`, which declares them, and the Android permissions. The public API covers the module on Android: what the package does on iOS and on the web is outside it too.
+The rest of the external interface is outside the public API: the methods and the constant of the native module object, the type `ExpoGoogleNearbyConnectionModuleClass`, which declares the methods, and the Android permissions. The public API covers the module on Android: what the package does on iOS and on the web is outside it too.
 
 ## Conventions
 
@@ -37,7 +38,7 @@ The rest of the external interface is outside the public API: the methods of the
   });
   ```
 
-- **Errors.** A function reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, whose data is an `Exception`, instead of throwing; after it, a function whose return type includes `null` returns `null`, or resolves with it. Four of the functions that return a value are outside this convention, since they emit no error event and never return `null`: `newPayloadBytes`, `getPayloadInfoList`, `getPayloadList` and `payloadExists`, which throws when its argument is not the string of an integer. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
+- **Errors.** A function reports a failure of Google Nearby Connections, or of an operation on a payload, through an error event, whose data is an `Exception`, instead of throwing; after it, a function whose return type includes `null` returns `null`, or resolves with it. Four of the functions that return a value are outside this convention, since they emit no error event and never return `null`: `newPayloadBytes`, `getPayloadInfoList`, `getPayloadList` and `payloadExists`, which throws when its argument is not the string of an integer. The permission functions, made with `expo`, are outside it too. The `data` of the `Exception` holds, as a string, the payload ID or the endpoint ID concerned, or `"null"` when there is none, except for two events: in `AdvertisingFailed` it holds the endpoint name advertised, or, after `startAdvertisingInfo`, a Java object string that does not show the bytes; in `InvalidStrategy` it holds the strategy that was not recognized.
 - **Payload IDs.** A payload is identified by its ID, a 64-bit integer passed as a string, so that JavaScript does not round it. The module keeps the inbound and outbound payloads in a queue, which the payload functions query and change.
 - **Streams.** An app MUST write to a stream payload, with `writeStreamByte` or `writeStreamByteArray`, before sending it, since Google Nearby Connections does not send a stream payload that has no data yet.
 - **Location.** To discover, an app MUST hold the permissions and have the location services of the device on, also on the Android versions on which Google's documentation says that location is not needed; when they are off, `startDiscovering` asks the user to turn them on.
@@ -69,7 +70,7 @@ requestPermissions().then((response) => console.log("Granted: " + response.grant
 | `startAdvertisingName(endpointName: string, serviceId: string, advertisingOptions: AdvertisingOptions)` | `void` | Advertises this device under a name, for the given service. | `AdvertisingStarted`, `AdvertisingFailed` |
 | `startAdvertisingInfo(endpointInfo: Uint8Array, serviceId: string, advertisingOptions: AdvertisingOptions)` | `void` | Advertises this device with the given bytes as its endpoint info. | `AdvertisingStarted`, `AdvertisingFailed` |
 | `stopAdvertising()` | `void` | Stops advertising. | `AdvertisingStopped` |
-| `startDiscovering(serviceId: string, discoveringOptions: DiscoveringOptions)` | `void` | Discovers the devices that advertise the given service. When the location services are off, it asks the user to turn them on instead, and does not start: call it again once they are on. | `DiscoveringStarted`, `DiscoveringFailed`, `EndpointFound`, `EndpointLost`; when location is off, `LocationPromptAccepted` or `LocationPromptRejected`, then `LocationRequestApproved`, `LocationRequestDenied` or `LocationRequestUnknown` |
+| `startDiscovering(serviceId: string, discoveringOptions: DiscoveringOptions)` | `void` | Discovers the devices that advertise the given service. When the location services are off, it asks the user to turn them on instead, and does not start: call it again once they are on. | `DiscoveringStarted`, `DiscoveringFailed`, `EndpointFound`, `EndpointLost`; when location is off, one of: `LocationPromptAccepted`, when the location settings already satisfy the request; `LocationPromptRejected`, when the user cannot be asked to turn location on; or, once the user has answered the request, `LocationRequestApproved`, `LocationRequestDenied` or `LocationRequestUnknown` |
 | `stopDiscovering()` | `void` | Stops discovering. | `DiscoveringStopped` |
 | `stopAllEndpoints()` | `void` | Stops advertising and discovering, and disconnects from every endpoint. | `StopAllEndpoints` |
 
@@ -92,11 +93,13 @@ startDiscovering(SERVICE_ID, { strategy: "P2P_POINT_TO_POINT" });
 
 | Function | Returns | What it does | Events |
 |---|---|---|---|
-| `requestConnectionName(endpointName: string, endpointId: string, connectionOptions?: ConnectionOptions)` | `void` | Requests a connection to a discovered endpoint, sending a name. | `ConnectionRequested`, `ConnectionRequestFailed`, then `ConnectionInitiated` on both devices |
+| `requestConnectionName(endpointName: string, endpointId: string, connectionOptions?: ConnectionOptions)` | `void` | Requests a connection to a discovered endpoint, sending a name. | `ConnectionRequested` or `ConnectionRequestFailed`; `ConnectionInitiated` on both devices |
 | `requestConnectionInfo(endpointInfo: Uint8Array, endpointId: string, connectionOptions?: ConnectionOptions)` | `void` | Requests a connection to a discovered endpoint, sending bytes as the endpoint info. | as `requestConnectionName` |
-| `acceptConnection(endpointId: string)` | `void` | Accepts a connection after `ConnectionInitiated`; the connection opens when both devices accept it. | `ConnectionAccepted`, `ConnectionAcceptFailed`, then `ConnectionResult` |
-| `rejectConnection(endpointId: string)` | `void` | Rejects a connection after `ConnectionInitiated`. | `ConnectionRejected`, `ConnectionRejectFailed`, then `ConnectionResult` |
+| `acceptConnection(endpointId: string)` | `void` | Accepts a connection after `ConnectionInitiated`; the connection opens when both devices accept it. | `ConnectionAccepted` or `ConnectionAcceptFailed`; `ConnectionResult` |
+| `rejectConnection(endpointId: string)` | `void` | Rejects a connection after `ConnectionInitiated`. | `ConnectionRejected` or `ConnectionRejectFailed`; `ConnectionResult` |
 | `disconnectFromEndpoint(endpointId: string)` | `void` | Disconnects from a connected endpoint. | `DisconnectFromEndpoint`; the other device gets `EndpointDisconnection` |
+
+In the Events column of the connection functions, and of `sendPayloadToEndpoint`, the events before the first semicolon report whether the call succeeded, and the events after it come from the callbacks of Google Nearby Connections for the connection or the transfer. They come from separate callbacks, so their order is not fixed: `ConnectionInitiated` can come before `ConnectionRequested`, and `ConnectionResult` before `ConnectionAccepted`.
 
 While a connection is open, `BandwidthChanged` reports changes of its quality.
 
@@ -112,10 +115,10 @@ acceptConnection(endpointId);
 
 | Function | Returns | What it does | Events |
 |---|---|---|---|
-| `newPayloadBytes(data: Uint8Array)` | `string` | Creates a payload of bytes and returns its ID. | |
+| `newPayloadBytes(data: Uint8Array)` | `string` | Creates a payload of bytes and returns its ID; Google Nearby Connections sends at most `MAX_BYTES_DATA_SIZE` bytes in it. | |
 | `newPayloadFile(data: string, isSensitive?: boolean, fileName?: string, parentFolder?: string)` | `string \| null` | Creates a payload of the file at the URI `data`, and returns its ID. | on failure, an error event |
 | `newPayloadStream(size?: number)` | `string \| null` | Creates a stream payload with a buffer of `size` bytes, 1024 by default, and returns its ID. | on failure, an error event |
-| `sendPayloadToEndpoint(endpointId: string, payloadId: string)` | `void` | Sends a payload to a connected endpoint. | `PayloadSend`, `PayloadSendFailed`, then `PayloadTransferUpdate`; the other device gets `PayloadReceived` and `PayloadTransferUpdate` |
+| `sendPayloadToEndpoint(endpointId: string, payloadId: string)` | `void` | Sends a payload to a connected endpoint. | `PayloadSend` or `PayloadSendFailed`; `PayloadTransferUpdate`; the other device gets `PayloadReceived` and `PayloadTransferUpdate` |
 | `sendPayloadToEndpoints(endpointIds: string[], payloadId: string)` | `void` | Sends a payload to several connected endpoints. | as `sendPayloadToEndpoint` |
 | `getPayloadInfo(payloadId: string)` | `PayloadInfo \| null` | Returns the information of a payload. | on failure, an error event |
 | `getPayloadInfoList()` | `PayloadInfo[]` | Returns the information of every payload in the queue. | |
@@ -137,7 +140,7 @@ sendPayloadToEndpoint(endpointId, payloadId);
 
 ### Streams
 
-Each function takes the ID of a stream payload. The asynchronous ones resolve once the native operation has completed; on failure, they emit a payload error event and resolve with `null`, or with nothing when they return no value.
+Each function takes the ID of a stream payload. `writeStreamByte`, `writeStreamByteArray` and `flushStream` work only on a stream payload that this device created with `newPayloadStream`, and the other functions only on a stream payload that it received; on the other kind they emit `PayloadInvalidArguments`. `markStream` does nothing when `isMarkSupportedStream` returns false. The asynchronous ones resolve once the native operation has completed; on failure, they emit a payload error event and resolve with `null`, or with nothing when they return no value.
 
 | Function | Returns | What it does |
 |---|---|---|
@@ -177,7 +180,7 @@ if (payloadId) {
 
 | Type | Fields |
 |---|---|
-| `PayloadInfo` | `id: string`; `type: PayloadType`; `offset: number`; for a file, `uri?: string` and `size?: number`; for bytes, `bytes?: Uint8Array`. |
+| `PayloadInfo` | `id: string`; `type: PayloadType`; `offset: number`; for a file, `uri?: string`; for bytes, `size?: number` and `bytes?: Uint8Array`. |
 
 ### Event data
 
