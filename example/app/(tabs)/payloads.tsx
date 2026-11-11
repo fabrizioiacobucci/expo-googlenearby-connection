@@ -7,6 +7,7 @@ import StreamPayload from "../../src/components/streamPayload";
 import { Group } from "../../src/components/group";
 import Nearby, { Exception, PayloadReceivedInfo, removePayload } from "expo-googlenearby-connection";
 import Streams from "../../src/components/streams";
+import PayloadChecks from "../../src/components/payloadChecks";
 import { VStack } from "@/components/ui/vstack";
 import ThemedScrollView from "@/src/components/themedScrollView";
 import { Button, ButtonText } from "@/components/ui/button";
@@ -116,6 +117,7 @@ export default function Payloads() {
                 <Group name="Payloads inbound">{payloadsInbound}</Group>
                 <Group name="Payloads outbound">{payloadsOutbound}</Group>
                 <Streams />
+                <PayloadChecks />
             </VStack>
         </ThemedScrollView>
     );
