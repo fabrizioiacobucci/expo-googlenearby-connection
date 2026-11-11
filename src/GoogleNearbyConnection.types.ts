@@ -180,7 +180,7 @@ export type PayloadEvent = {
  * @description Represents an exception event.
  * @property {string} error - The error message.
  * @property {string} stackTrace - The stack trace of the error.
- * @property {string | number} data - Additional data related to the exception.
+ * @property {string} data - Additional data related to the exception, as a string.
  */
 export type Exception = {
     error: string;

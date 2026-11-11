@@ -114,7 +114,7 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
     /**
      * @function ConnectionAcceptFailed
      * @description Called when a connection acceptance fails.
-     * @param {EndpointEvent} event - The event data.
+     * @param {Exception} event - The event data.
      */
     ConnectionAcceptFailed(event: Exception): void;
 
@@ -295,6 +295,7 @@ export type ExpoGoogleNearbyConnectionModuleEvents = {
     /**
      * @function InvalidStrategy
      * @description Called when an invalid strategy has been passed.
+     * @param {Exception} event - The event data, whose `data` is the strategy that was not recognized.
      */
     InvalidStrategy(event: Exception): void;
 };
