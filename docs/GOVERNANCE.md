@@ -13,9 +13,10 @@ Who holds the roles in this repository, and how it follows foss-docs-made-simple
 
 This repository follows foss-docs-made-simple as the framework's [GOVERNANCE](https://github.com/fabrizioiacobucci/foss-docs-made-simple/blob/v0.3.0/framework/GOVERNANCE.md) describes; its framework tag is stated in its [README](../README.md#this-repository), and its level in its [CHECKLIST](CHECKLIST.md).
 
-Its additions to the framework rules, stated in [CONTRIBUTING](../CONTRIBUTING.md):
+Its additions to the framework rules, stated in [CONTRIBUTING](../CONTRIBUTING.md), except the last one, which [AGENTS.md](../AGENTS.md) states:
 
 - the Developer Certificate of Origin sign-off on every commit, except the merge commits that GitHub creates for pull requests;
 - Conventional Commits for every commit message, with the same exception;
 - Semantic Versioning for every version of the npm package;
-- the [GLOSSARY](GLOSSARY.md) of the terms of the project documents and the code, which a change SHOULD update when it adds a term or changes its meaning.
+- the [GLOSSARY](GLOSSARY.md) of the terms of the project documents and the code, which a change SHOULD update when it adds a term or changes its meaning;
+- while this repository is a pilot adopter of the framework, the log [FRAMEWORK-FEEDBACK.md](../FRAMEWORK-FEEDBACK.md) of the problems of the framework found while adopting it, to which an entry is added in the commit in which the problem shows up.
